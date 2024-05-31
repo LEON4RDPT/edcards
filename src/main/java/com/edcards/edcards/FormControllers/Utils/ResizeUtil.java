@@ -1,11 +1,9 @@
 package com.edcards.edcards.FormControllers.Utils;
 
-import com.edcards.edcards.ClassControllers.ProdutoEnum;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 
 public class ResizeUtil {
     public static void resizeAndCenterText(TextField textField, AnchorPane pane) {

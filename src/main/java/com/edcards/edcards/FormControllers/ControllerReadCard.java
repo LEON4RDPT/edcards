@@ -1,16 +1,11 @@
 package com.edcards.edcards.FormControllers;
 
 //import com.edcards.edcards.DataBase.BLL;
-import com.edcards.edcards.Programa.Classes.Aluno;
-import com.edcards.edcards.Programa.Controllers.LerCartao;
+
 import javafx.fxml.Initializable;
 
-import javax.smartcardio.CardException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class ControllerReadCard implements Initializable {

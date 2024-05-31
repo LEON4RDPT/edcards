@@ -1,8 +1,6 @@
 package com.edcards.edcards.ClassControllers;
 
 
-import com.edcards.edcards.Programa.Classes.Produto;
-
 public enum ProdutoEnum {
         REFEICOES,
         TAXA,

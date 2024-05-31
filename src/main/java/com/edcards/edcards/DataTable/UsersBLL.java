@@ -3,12 +3,12 @@ package com.edcards.edcards.DataTable;
 import com.edcards.edcards.ClassControllers.AseEnum;
 import com.edcards.edcards.ClassControllers.GlobalVAR;
 import com.edcards.edcards.ClassControllers.UsuarioEnum;
+import com.edcards.edcards.DataTable.Settings.DefaultBLL;
 import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Aluno;
 import com.edcards.edcards.Programa.Classes.Funcionario;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.ImageController;
-import com.edcards.edcards.DataTable.Settings.DefaultBLL;
 import javafx.scene.image.Image;
 
 import java.io.File;

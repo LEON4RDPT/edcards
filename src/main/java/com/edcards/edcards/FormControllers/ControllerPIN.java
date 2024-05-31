@@ -1,11 +1,12 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.ClassControllers.GlobalVAR;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import com.edcards.edcards.ClassControllers.GlobalVAR;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
 
 
 

@@ -4,13 +4,6 @@ import javafx.scene.image.Image;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
-import java.io.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 public abstract class Pessoa {
 

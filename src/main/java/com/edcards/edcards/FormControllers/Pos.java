@@ -2,20 +2,18 @@ package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.ClassControllers.GlobalVAR;
 import com.edcards.edcards.ClassControllers.ProdutoEnum;
-import com.edcards.edcards.ClassControllers.UsuarioEnum;
+import com.edcards.edcards.DataTable.ProdutoBLL;
 import com.edcards.edcards.DataTable.TransacaoBLL;
-import com.edcards.edcards.DataTable.UsersBLL;
-import com.edcards.edcards.FormControllers.Utils.ColorController.ColorController;
 import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
 import com.edcards.edcards.Programa.Classes.Produto;
-import com.edcards.edcards.DataTable.ProdutoBLL;
-import com.edcards.edcards.Programa.Controllers.ArredondarController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -278,6 +276,12 @@ public class Pos {
             //FAQ inserTrasacao automaticamente remove o saldo!!!
 
             TransacaoBLL.insertTransacao(fatura.toArray(new Produto[0]),GlobalVAR.Dados.getClientePOS().getIduser(),GlobalVAR.Dados.getPessoaAtual().getIduser());
+
+
+
+
+
+
         }
         else {
             //todo feedback não tem saldo!!!

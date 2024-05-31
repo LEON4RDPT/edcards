@@ -1,6 +1,5 @@
 package com.edcards.edcards.Programa.Classes;
 
-import java.sql.Date;
 import java.util.List;
 
 public class Transacao {
