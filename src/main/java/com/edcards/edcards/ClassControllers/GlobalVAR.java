@@ -31,7 +31,6 @@ public class    GlobalVAR {
 
         public static Stage currentStage;
 
-
         public static void setPessoaAtual(Pessoa pessoa) {
             pessoaAtual = pessoa;
         }
