@@ -48,6 +48,8 @@ public class    GlobalVAR {
         public static void setClientePOS(Pessoa clientePOS) {
             ClientePOS = clientePOS;
         }
+
+        //GUI HAHAHAHAHAH
     }
 
 
