@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -24,6 +25,7 @@ import static com.edcards.edcards.Programa.Controllers.ArredondarController.roun
 
 public class Pos {
 
+    public TextArea textArea;
     @FXML
     private GridPane buttonGrid;
     @FXML
@@ -142,7 +144,7 @@ public class Pos {
                 button21, button22, button23, button24
         };
 
-        resizeButtons();
+        resizeAll();
         setChoiceEnum();
 
     }
@@ -229,7 +231,7 @@ public class Pos {
         }
 
     }
-    private void resizeButtons() {
+    private void resizeAll() {
         ResizeUtil.resizeAndPositionButton(buttonVoltar, leftPane, 0.95);
         ResizeUtil.resizeAndPositionButton(buttonRefeicao, leftPane, 0.85);
         ResizeUtil.resizeAndPositionButton(buttonRemoveL, leftPane, 0.75);
@@ -239,6 +241,7 @@ public class Pos {
         ResizeUtil.resizeAndPositionButton(buttonAdd, leftPane, 0.35);
         ResizeUtil.resizeAndCenterMiddleButtons(buttonBack,buttonUp,buttonsBack);
         ResizeUtil.resizeAndCenterText(textNum,buttonsBack);
+        ResizeUtil.resizeAndPositionTextArea(textArea,leftPane,0.15);
 
     }
     public void buttonBackClick(ActionEvent actionEvent) {
@@ -277,16 +280,10 @@ public class Pos {
 
             TransacaoBLL.insertTransacao(fatura.toArray(new Produto[0]),GlobalVAR.Dados.getClientePOS().getIduser(),GlobalVAR.Dados.getPessoaAtual().getIduser());
 
-
-
-
-
-
         }
         else {
             //todo feedback não tem saldo!!!
             System.err.println("Usuario não tem saldo!!");
-            System.out.println("ya");
         }
 
 

@@ -2,6 +2,7 @@ package com.edcards.edcards.FormControllers.Utils;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -65,6 +66,20 @@ public class ResizeUtil {
             double buttonHeight = button.getPrefHeight();
             double positionY = height * relativePosition - buttonHeight / 2;
             button.setLayoutY(positionY);
+        });
+    }
+
+    public static void resizeAndPositionTextArea(TextArea textArea, AnchorPane pane, double relativePosition) {
+        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            double width = newVal.doubleValue();
+            textArea.setLayoutX((width - textArea.getPrefWidth()) / 2);
+        });
+
+        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            double height = newVal.doubleValue();
+            double buttonHeight = textArea.getPrefHeight();
+            double positionY = height * relativePosition - buttonHeight / 2;
+            textArea.setLayoutY(positionY);
         });
     }
 
