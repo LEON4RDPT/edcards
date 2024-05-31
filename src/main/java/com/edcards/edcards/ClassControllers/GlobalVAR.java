@@ -19,7 +19,7 @@ public class    GlobalVAR {
     public static class Dados {
 
         private static Pessoa pessoaAtual;
-        private static Pessoa ClientePOS;
+        private static Pessoa clientePOS;
 
         public static Stage getCurrentStage() {
             return currentStage;
@@ -42,11 +42,11 @@ public class    GlobalVAR {
         }
 
         public static Pessoa getClientePOS() {
-            return ClientePOS;
+            return clientePOS;
         }
 
         public static void setClientePOS(Pessoa clientePOS) {
-            ClientePOS = clientePOS;
+            Dados.clientePOS = clientePOS;
         }
 
         //GUI HAHAHAHAHAH

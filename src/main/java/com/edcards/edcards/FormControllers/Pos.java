@@ -249,8 +249,11 @@ public class Pos {
             return;
         }
         double valorTotal = fatura.stream().mapToDouble(Produto::getPreco).sum();
-        System.out.println(valorTotal);
-        //todo FATURA!! BLL
+
+
+
+
+
     }
     public void handleButtonClickRemoverAll(ActionEvent actionEvent) {
         fatura.clear();
