@@ -18,10 +18,8 @@ import java.io.IOException;
 public class    GlobalVAR {
     public static class Dados {
 
-        private static Admin adminAtual;
-        private static Funcionario funcionarioAtual;
-        private static Aluno alunoAtual;
         private static Pessoa pessoaAtual;
+        private static Pessoa ClientePOS;
 
         public static Stage getCurrentStage() {
             return currentStage;
@@ -33,29 +31,6 @@ public class    GlobalVAR {
 
         public static Stage currentStage;
 
-        public static Funcionario getFuncionarioAtual() {
-            return funcionarioAtual;
-        }
-
-        public static void setFuncionarioAtual(Funcionario funcionarioAtual) {
-            Dados.funcionarioAtual = funcionarioAtual;
-        }
-
-        public static Aluno getAlunoAtual() {
-            return alunoAtual;
-        }
-
-        public static void setAlunoAtual(Aluno alunoAtual) {
-            Dados.alunoAtual = alunoAtual;
-        }
-
-        public static Admin getAdminAtual() {
-            return adminAtual;
-        }
-
-        public static void setAdminAtual(Admin adminAtual) {
-            Dados.adminAtual = adminAtual;
-        }
 
         public static void setPessoaAtual(Pessoa pessoa) {
             pessoaAtual = pessoa;
@@ -67,6 +42,13 @@ public class    GlobalVAR {
         public static void setCartaoAtual(String cartao) {
         }
 
+        public static Pessoa getClientePOS() {
+            return ClientePOS;
+        }
+
+        public static void setClientePOS(Pessoa clientePOS) {
+            ClientePOS = clientePOS;
+        }
     }
 
 

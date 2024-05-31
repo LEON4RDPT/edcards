@@ -18,7 +18,6 @@ import java.io.IOException;
 import com.edcards.edcards.ClassControllers.GlobalVAR;
 
 import javax.smartcardio.CardException;
-
 public class ApplicationMainAcessPin extends Application {
     @Override
     public void start(Stage stage) throws IOException {
