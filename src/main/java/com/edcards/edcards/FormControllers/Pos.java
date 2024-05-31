@@ -1,10 +1,15 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.ClassControllers.GlobalVAR;
 import com.edcards.edcards.ClassControllers.ProdutoEnum;
+import com.edcards.edcards.ClassControllers.UsuarioEnum;
+import com.edcards.edcards.DataTable.TransacaoBLL;
+import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.FormControllers.Utils.ColorController.ColorController;
 import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
 import com.edcards.edcards.Programa.Classes.Produto;
 import com.edcards.edcards.DataTable.ProdutoBLL;
+import com.edcards.edcards.Programa.Controllers.ArredondarController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,6 +22,7 @@ import java.util.List;
 
 import static com.edcards.edcards.FormControllers.Utils.ColorController.ColorController.setButtonColor;
 import static com.edcards.edcards.FormControllers.Utils.ColorController.ColorController.setButtonColorBack;
+import static com.edcards.edcards.Programa.Controllers.ArredondarController.roundToTwoDecimalPlaces;
 
 public class Pos {
 
@@ -143,6 +149,14 @@ public class Pos {
 
     }
     private void setChoiceEnum() {
+
+        if (GlobalVAR.Dados.getPessoaAtual() == null) {
+            //todo CLOSE APP ERROR NAO AUTORIZADO!!!
+
+        }
+
+
+
         var items = choiceBoxItem.getItems();
         items.add("TUDO");
         items.addAll(ProdutoEnum.getStringValues());
@@ -248,7 +262,29 @@ public class Pos {
         if (fatura.isEmpty()) {
             return;
         }
-        double valorTotal = fatura.stream().mapToDouble(Produto::getPreco).sum();
+        double valorTotal = roundToTwoDecimalPlaces(fatura.stream().mapToDouble(Produto::getPreco).sum());
+        System.out.println(valorTotal);
+
+        var cliente = GlobalVAR.Dados.getClientePOS();
+
+        if (cliente == null) {
+            //todo feedback (não há cliente!!!)
+
+            //FIXME não há forma de adicionar o clientePOS na GlobalVAR!!!
+            return;
+        }
+
+        if (cliente.getSaldo() >= valorTotal) {
+            //FAQ inserTrasacao automaticamente remove o saldo!!!
+
+            TransacaoBLL.insertTransacao(fatura.toArray(new Produto[0]),GlobalVAR.Dados.getClientePOS().getIduser(),GlobalVAR.Dados.getPessoaAtual().getIduser());
+        }
+        else {
+            //todo feedback não tem saldo!!!
+            System.err.println("Usuario não tem saldo!!");
+        }
+
+
 
 
 
