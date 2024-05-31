@@ -44,7 +44,6 @@ public class ApplicationMainAcessPin extends Application {
         }
         System.out.println(cartao);
 
-        // Open PIN form immediately
         Platform.runLater(() -> {
             try {
                 FXMLLoader pinLoader = new FXMLLoader(getClass().getResource("PIN.fxml"));
@@ -56,7 +55,6 @@ public class ApplicationMainAcessPin extends Application {
             }
         });
 
-        // Continue retrieving user's information in the background
         Pessoa pessoa = null;
         try {
             var userByNFC = CartaoBLL.getUserByNFC(cartao);

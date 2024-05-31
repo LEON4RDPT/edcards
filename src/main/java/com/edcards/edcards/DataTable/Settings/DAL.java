@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.util.Dictionary;
 
 public class DAL {
-    private final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/db_escola";
-    private final String USERNAME = "root";
-    private final String PASSWORD = "";
+    private final String CONNECTION_STRING = "jdbc:mysql://ptgui.myddns.me:3306/db_escola";
+    private final String USERNAME = "Litz18";
+    private final String PASSWORD = "Gui1803##";
 
     private Connection connection = null;
     private String tableName = null;
