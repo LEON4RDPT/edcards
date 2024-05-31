@@ -1,0 +1,17 @@
+.button-red {
+      -fx-background-radius: 10; /* Rounded corners */
+      -fx-text-fill: white; /* White text */
+      -fx-font-size: 20px; /* Font size */
+      -fx-padding: 10px 20px; /* Padding */
+      -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 1); /* Shadow */
+      -fx-font-family: "Verdana";
+
+      white-space: normal;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+
+      -fx-min-width: 150px; /* Set minimum width */
+      -fx-max-width: 150px; /* Set maximum width */
+      -fx-min-height: 150px; /* Set minimum height */
+      -fx-max-height: 150px; /* Set maximum height */
+}

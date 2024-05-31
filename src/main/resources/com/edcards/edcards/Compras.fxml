@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.ControllerCompras">
+   <children>
+      <BorderPane prefHeight="720.0" prefWidth="1280.0">
+         <left>
+            <Pane prefHeight="591.0" prefWidth="332.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="buttonSell" layoutX="11.0" layoutY="14.0" mnemonicParsing="false" onAction="#buttonClickTest" prefHeight="66.0" prefWidth="309.0" text="Vender" />
+                  <Button fx:id="buttonSearchImage" layoutX="12.0" layoutY="93.0" mnemonicParsing="false" onAction="#searchImage" prefHeight="66.0" prefWidth="309.0" text="Buscar Imagem" />
+               </children>
+            </Pane>
+         </left>
+         <top>
+            <Pane prefHeight="52.0" prefWidth="1280.0" BorderPane.alignment="CENTER" />
+         </top>
+         <center>
+            <Pane prefHeight="668.0" prefWidth="1020.0" style="-fx-background-color: ACDEE8;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="imageSlot1" fitHeight="200.0" fitWidth="200.0" layoutX="74.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageSlot2" fitHeight="200.0" fitWidth="200.0" layoutX="274.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageSlot3" fitHeight="200.0" fitWidth="200.0" layoutX="474.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageSlot4" fitHeight="200.0" fitWidth="200.0" layoutX="674.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageSlot5" fitHeight="200.0" fitWidth="200.0" layoutX="74.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageSlot6" fitHeight="200.0" fitWidth="200.0" layoutX="274.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageSlot7" fitHeight="200.0" fitWidth="200.0" layoutX="474.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageSlot8" fitHeight="200.0" fitWidth="200.0" layoutX="674.0" layoutY="234.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageSlot9" fitHeight="200.0" fitWidth="200.0" layoutX="74.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageSlot10" fitHeight="200.0" fitWidth="200.0" layoutX="274.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageSlot11" fitHeight="200.0" fitWidth="200.0" layoutX="474.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imageSlot12" fitHeight="200.0" fitWidth="200.0" layoutX="674.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true" />
+               </children></Pane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
