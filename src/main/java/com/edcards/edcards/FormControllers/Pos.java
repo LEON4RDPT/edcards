@@ -282,6 +282,7 @@ public class Pos {
         else {
             //todo feedback não tem saldo!!!
             System.err.println("Usuario não tem saldo!!");
+            System.out.println("ya");
         }
 
 
