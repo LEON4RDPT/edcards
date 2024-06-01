@@ -1,6 +1,9 @@
 package com.edcards.edcards.Programa.Controllers;
 
+import javafx.application.Platform;
+
 import javax.smartcardio.*;
+import javax.swing.*;
 import java.util.concurrent.TimeUnit;
 
 public class LerCartao {
@@ -34,6 +37,10 @@ public class LerCartao {
                     card.disconnect(false);
                     return idCartao;
                 }
+//                else{
+//                    JOptionPane.showMessageDialog(null, "O leitor de Cartoes não esta presente... A sair...", "Validação", JOptionPane.INFORMATION_MESSAGE);
+//                    Platform.exit();
+//                }
                 //TimeUnit.SECONDS.sleep(2); // Espera 2 segundos antes de verificar novamente
             } catch (CardException | InterruptedException e) {
                 e.printStackTrace();

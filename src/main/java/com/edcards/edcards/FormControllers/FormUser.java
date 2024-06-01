@@ -1,52 +1,63 @@
 package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.ClassControllers.GlobalVAR;
-import com.edcards.edcards.ClassControllers.UsuarioEnum;
 import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Aluno;
 import com.edcards.edcards.Programa.Classes.Funcionario;
 import com.edcards.edcards.Programa.Classes.Pessoa;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class FormUser {
     @FXML
-    Image imageUser;
+    private ImageView imageUser;
     @FXML
-    Button btnPos;
+    private Button btnPos;
     @FXML
-    Button btnHorario;
+    private Button btnHorario;
     @FXML
-    Button btnHistComp;
+    private Button btnHistComp;
     @FXML
-    Button btnMarcRef;
+    private Button btnMarcRef;
     @FXML
-    Button btnRefMarc;
+    private Button btnRefMarc;
     @FXML
-    String labelNome;
+    private Label labelNome;
     @FXML
-    String labelSaldo;
+    private Label labelSaldo;
     @FXML
-    String labelTipo;
+    private Label labelTipo;
+    @FXML
+    public void initialize() {
+        Pessoa pessoaA = GlobalVAR.Dados.getPessoaAposPin();
+        imageUser.setImage(pessoaA.getFoto());
+        labelNome.setText(pessoaA.getNome());
+        labelSaldo.setText(String.valueOf(pessoaA.getSaldo()));
 
-    @FXML
-    public void initialize(){
-
-        var pessoa = GlobalVAR.Dados.getPessoaAtual();
-        imageUser = pessoa.getFoto();
-        labelNome = pessoa.getNome();
-        labelSaldo = String.valueOf(pessoa.getSaldo());
-
-        if (pessoa instanceof Funcionario){
-            labelTipo = "Funcionario";
-        } else if (pessoa instanceof Aluno){
-            labelTipo = "Aluno";
-        } else if (pessoa instanceof Admin){
-            labelTipo = "Administrador";
+        if (pessoaA instanceof Funcionario) {
+            labelTipo.setText("Funcionario");
+        } else if (pessoaA instanceof Aluno) {
+            labelTipo.setText("Aluno");
+        } else if (pessoaA instanceof Admin) {
+            labelTipo.setText("Administrador");
         }
+    }
 
-
-
+    @FXML
+    private void handlePosClick(ActionEvent event) throws IOException {
+        Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/Pos.fxml"));
+        Scene posScene = new Scene(newSceneParent);
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setScene(posScene);
+        stage.show();
     }
 }

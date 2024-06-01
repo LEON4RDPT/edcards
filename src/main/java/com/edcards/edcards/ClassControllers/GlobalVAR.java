@@ -16,6 +16,7 @@ public class    GlobalVAR {
 
         private static Pessoa pessoaAtual;
         private static Pessoa clientePOS;
+        private static Pessoa pessoaAposPin;
 
         public static Stage getCurrentStage() {
             return currentStage;
@@ -45,6 +46,12 @@ public class    GlobalVAR {
             Dados.clientePOS = clientePOS;
         }
 
+        public static Pessoa getPessoaAposPin() {
+            return pessoaAposPin;
+        }
+        public static void setPessoaAposPin(Pessoa pessoaAtual) {
+            pessoaAposPin = pessoaAtual;
+        }
         //GUI HAHAHAHAHAH
     }
 

@@ -1,6 +1,5 @@
-package com.edcards.edcards.tests;
+package com.edcards.edcards;
 
-import com.edcards.edcards.ApplicationMainAcessPin;
 import com.edcards.edcards.FormControllers.ControllerPIN;
 import javafx.application.Application;
 import javafx.application.Platform;

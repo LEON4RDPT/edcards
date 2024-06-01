@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import javax.smartcardio.CardException;
 import java.io.IOException;
+
 public class ApplicationMainAcessPin extends Application {
     @Override
     public void start(Stage stage) throws IOException {
@@ -32,10 +33,26 @@ public class ApplicationMainAcessPin extends Application {
             }
         };
 
+        task.setOnSucceeded(event -> {
+            Pessoa pessoa = task.getValue();
+            if (pessoa != null) {
+                Platform.runLater(() -> {
+                    try {
+                        FXMLLoader pinLoader = new FXMLLoader(getClass().getResource("PIN.fxml"));
+                        Parent pinRoot = pinLoader.load();
+                        Scene pinScene = new Scene(pinRoot);
+                        GlobalVAR.Dados.getCurrentStage().setScene(pinScene);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+        });
+
         new Thread(task).start();
     }
 
-    public Pessoa cartaoLido(){
+    public Pessoa cartaoLido() {
         String cartao;
         try {
             cartao = LerCartao.lerIDCartao();
@@ -43,17 +60,6 @@ public class ApplicationMainAcessPin extends Application {
             throw new RuntimeException(e);
         }
         System.out.println(cartao);
-
-        Platform.runLater(() -> {
-            try {
-                FXMLLoader pinLoader = new FXMLLoader(getClass().getResource("PIN.fxml"));
-                Parent pinRoot = pinLoader.load();
-                Scene pinScene = new Scene(pinRoot);
-                GlobalVAR.Dados.getCurrentStage().setScene(pinScene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
 
         Pessoa pessoa = null;
         try {
