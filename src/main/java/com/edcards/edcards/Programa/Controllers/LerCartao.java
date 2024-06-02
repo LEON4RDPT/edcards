@@ -1,9 +1,6 @@
 package com.edcards.edcards.Programa.Controllers;
 
-import javafx.application.Platform;
-
 import javax.smartcardio.*;
-import javax.swing.*;
 import java.util.concurrent.TimeUnit;
 
 public class LerCartao {

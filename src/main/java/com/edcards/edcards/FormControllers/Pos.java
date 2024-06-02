@@ -6,7 +6,6 @@ import com.edcards.edcards.DataTable.ProdutoBLL;
 import com.edcards.edcards.DataTable.TransacaoBLL;
 import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
 import com.edcards.edcards.Programa.Classes.Funcionario;
-import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Classes.Produto;
 import com.edcards.edcards.Programa.Controllers.ArredondarController;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
