@@ -6,6 +6,8 @@ import com.edcards.edcards.DataTable.ProdutoBLL;
 import com.edcards.edcards.DataTable.TransacaoBLL;
 import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
 import com.edcards.edcards.Programa.Classes.Produto;
+import com.edcards.edcards.Programa.Controllers.LerCartao;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,8 +18,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+import javax.smartcardio.CardException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import static com.edcards.edcards.FormControllers.Utils.ColorController.ColorController.setButtonColor;
 import static com.edcards.edcards.FormControllers.Utils.ColorController.ColorController.setButtonColorBack;
@@ -25,6 +31,7 @@ import static com.edcards.edcards.Programa.Controllers.ArredondarController.roun
 
 public class Pos {
 
+    private ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
     public TextArea textArea;
     @FXML
     private GridPane buttonGrid;
@@ -113,7 +120,7 @@ public class Pos {
     private void initialize() {
 
 
-
+        aguardarCartao();
         rootHBox.widthProperty().addListener((observable, oldValue, newValue) -> {
             double width = newValue.doubleValue();
             leftPane.setPrefWidth(width / 4);
@@ -147,6 +154,30 @@ public class Pos {
         resizeAll();
         setChoiceEnum();
 
+    }
+
+    private void aguardarCartao() {
+        nfcExecutar.submit(() -> {
+
+
+            while (true) {
+                try {
+                    String idCartao = LerCartao.lerIDCartao();
+                    Platform.runLater(() -> cartaoAluno(idCartao));
+                    break;
+
+                } catch (CardException | InterruptedException e) {
+                    System.err.println("Error reading card");
+                }
+
+            }
+        });
+    }
+
+    private void cartaoAluno(String idCartao){
+        Platform.runLater(() -> {
+            System.out.println("Cartão lido: " + idCartao);
+        });
     }
     private void setChoiceEnum() {
 

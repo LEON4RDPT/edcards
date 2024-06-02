@@ -37,11 +37,7 @@ public class LerCartao {
                     card.disconnect(false);
                     return idCartao;
                 }
-//                else{
-//                    JOptionPane.showMessageDialog(null, "O leitor de Cartoes não esta presente... A sair...", "Validação", JOptionPane.INFORMATION_MESSAGE);
-//                    Platform.exit();
-//                }
-                //TimeUnit.SECONDS.sleep(2); // Espera 2 segundos antes de verificar novamente
+                TimeUnit.SECONDS.sleep(2);
             } catch (CardException | InterruptedException e) {
                 e.printStackTrace();
             }

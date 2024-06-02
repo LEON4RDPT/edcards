@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 
 import javax.smartcardio.CardException;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class ApplicationMainAcessPin extends Application {
     @Override
@@ -53,28 +54,41 @@ public class ApplicationMainAcessPin extends Application {
     }
 
     public Pessoa cartaoLido() {
-        String cartao;
-        try {
-            cartao = LerCartao.lerIDCartao();
-        } catch (CardException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(cartao);
 
-        Pessoa pessoa = null;
-        try {
-            var userByNFC = CartaoBLL.getUserByNFC(cartao);
-            if (userByNFC != null) {
-                pessoa = UsersBLL.getUser(userByNFC.getIduser());
-                System.out.println("ID: " + pessoa.getIduser());
-                System.out.println("Número do Cartão: " + pessoa.getNumCartao());
-                GlobalVAR.Dados.setPessoaAtual(pessoa);
+        while (true) {
+            try {
+                String cartao = LerCartao.lerIDCartao();
+                System.out.println(cartao);
+                Pessoa pessoa = null;
+                try {
+                    var userByNFC = CartaoBLL.getUserByNFC(cartao);
+                    if (userByNFC != null) {
+                        pessoa = UsersBLL.getUser(userByNFC.getIduser());
+                        System.out.println("ID: " + pessoa.getIduser());
+                        System.out.println("Número do Cartão: " + pessoa.getNumCartao());
+                        GlobalVAR.Dados.setPessoaAtual(pessoa);
+                        return pessoa;
+                    } else {
+                        System.err.println("Cartão não encontrado na DB.");
+                        try {
+                            TimeUnit.SECONDS.sleep(1);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } catch (CardException | InterruptedException e) {
+                throw new RuntimeException(e);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        return pessoa;
+
+
+
+
+
+        }
     }
 
     public static void main(String[] args) {
