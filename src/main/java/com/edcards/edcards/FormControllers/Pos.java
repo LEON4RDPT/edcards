@@ -5,7 +5,10 @@ import com.edcards.edcards.ClassControllers.ProdutoEnum;
 import com.edcards.edcards.DataTable.ProdutoBLL;
 import com.edcards.edcards.DataTable.TransacaoBLL;
 import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
+import com.edcards.edcards.Programa.Classes.Funcionario;
+import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Classes.Produto;
+import com.edcards.edcards.Programa.Controllers.ArredondarController;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -19,10 +22,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static com.edcards.edcards.ClassControllers.GlobalVAR.Dados.getClientePOS;
 import static com.edcards.edcards.FormControllers.Utils.ColorController.ColorController.setButtonColor;
 import static com.edcards.edcards.FormControllers.Utils.ColorController.ColorController.setButtonColorBack;
 import static com.edcards.edcards.Programa.Controllers.ArredondarController.roundToTwoDecimalPlaces;
@@ -131,7 +137,17 @@ public class Pos {
         loadbtns();
         resizeAll();
         setChoiceEnum();
+
+        //FORTEST
+        GlobalVAR.Dados.setPessoaAtual(new Funcionario(0));
+        GlobalVAR.Dados.getPessoaAtual().setNome("Antonio");
+        //FORTEST
+
+        changeTextBox();
+
+        //aguardarCARTAO tem de ser o ultimo!!
         aguardarCartao();
+
     }
 
     private void aguardarCartao() {
@@ -143,9 +159,8 @@ public class Pos {
                     break;
 
                 } catch (Exception ignored) {
-                    //no need to feedback
+                    //nofeedback
                 }
-
             }
         });
     }
@@ -256,6 +271,7 @@ public class Pos {
                 break;
             }
         }
+        changeTextBox();
     }
     private void resizeAll() {
 
@@ -313,7 +329,7 @@ public class Pos {
         double valorTotal = roundToTwoDecimalPlaces(fatura.stream().mapToDouble(Produto::getPreco).sum());
         System.out.println(valorTotal);
 
-        var cliente = GlobalVAR.Dados.getClientePOS();
+        var cliente = getClientePOS();
 
         if (cliente == null) {
             //todo feedback (não há cliente!!!)
@@ -325,7 +341,7 @@ public class Pos {
         if (cliente.getSaldo() >= valorTotal) {
             //FAQ inserTrasacao automaticamente remove o saldo!!!
 
-            TransacaoBLL.insertTransacao(fatura.toArray(new Produto[0]),GlobalVAR.Dados.getClientePOS().getIduser(),GlobalVAR.Dados.getPessoaAtual().getIduser());
+            TransacaoBLL.insertTransacao(fatura.toArray(new Produto[0]), getClientePOS().getIduser(),GlobalVAR.Dados.getPessoaAtual().getIduser());
 
         }
         else {
@@ -343,27 +359,64 @@ public class Pos {
 
     private void changeTextBox() {
         textArea.clear();
-        String text =
-                "";
 
+        // instance var
+        double saldo; //getClientePOS().getIduser();
+        String nomeCliente;
 
+        // set var
+        if (getClientePOS() != null) { //existe!
+            saldo = getClientePOS().getSaldo();
+            nomeCliente = getClientePOS().getNome();
+        } else {
+            saldo = 0;
+            nomeCliente = "Nenhum";
+        }
 
-        textNum.setText(null);
+        // Mapa para armazenar produtos e suas quantidades
+        Map<String, Integer> produtosQuantidade = new HashMap<>();
 
+        // Contagem das quantidades de produtos
+        for (var produto : fatura) {
+            String nomeProduto = produto.getNome();
+            produtosQuantidade.put(nomeProduto, produtosQuantidade.getOrDefault(nomeProduto, 0) + 1);
+        }
 
+        // Construção da string de fatura
+        StringBuilder textInputBuilder = new StringBuilder();
+        textInputBuilder.append("Funcionario: ").append(GlobalVAR.Dados.getPessoaAtual().getNome()).append("\n\n");
+        textInputBuilder.append("-- DADOS CLIENTE --\n\n");
+        textInputBuilder.append("Cliente: ").append(nomeCliente).append("\n");
+        textInputBuilder.append("Saldo: ").append(saldo).append("\n\n");
+        textInputBuilder.append("----- FATURA -----\n");
 
+        for (var entry : produtosQuantidade.entrySet()) {
+            String nomeProduto = entry.getKey();
+            int quantidade = entry.getValue();
 
+            // Adiciona o produto à string de fatura com sua quantidade
+            textInputBuilder.append("Produto: ").append(nomeProduto).append("\n");
+            textInputBuilder.append("Quantidade: ").append(quantidade).append("\n");
+            textInputBuilder.append("Preço por unidade: ").append(fatura.getFirst().getPreco()).append("€\n");
+            textInputBuilder.append("Preço Total: ").append(ArredondarController.roundToTwoDecimalPlaces(fatura.getFirst().getPreco() * quantidade)).append("€\n");
+            textInputBuilder.append("---------------\n");
+        }
 
+        textArea.setText(textInputBuilder.toString());
     }
+
 
     public void handleButtonClickRemoverAll(ActionEvent actionEvent) {
         fatura.clear();
+        changeTextBox();
     }
     public void handleButtonClickRemoverLast(ActionEvent actionEvent) {
         if (fatura.isEmpty()){
             return;
         }
         fatura.removeLast();
+        changeTextBox();
+
     }
     public void handleChoiceBoxChange(ActionEvent actionEvent) {
         setProdutosButton();
