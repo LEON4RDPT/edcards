@@ -1,6 +1,6 @@
 package com.edcards.edcards.tests;
 
-import com.edcards.edcards.ClassControllers.ProdutoEnum;
+import com.edcards.edcards.ClassControllers.Enums.ProdutoEnum;
 
 public class MainTestDB {
     public static void main(String[] args) {

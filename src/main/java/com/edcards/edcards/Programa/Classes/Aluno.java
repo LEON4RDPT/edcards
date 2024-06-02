@@ -1,6 +1,6 @@
 package com.edcards.edcards.Programa.Classes;
 
-import com.edcards.edcards.ClassControllers.AseEnum;
+import com.edcards.edcards.ClassControllers.Enums.AseEnum;
 import javafx.scene.image.Image;
 
 import java.sql.Date;

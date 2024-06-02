@@ -1,7 +1,7 @@
 package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.ClassControllers.GlobalVAR;
-import com.edcards.edcards.ClassControllers.ProdutoEnum;
+import com.edcards.edcards.ClassControllers.Enums.ProdutoEnum;
 import com.edcards.edcards.DataTable.ProdutoBLL;
 import com.edcards.edcards.DataTable.TransacaoBLL;
 import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
@@ -163,7 +163,6 @@ public class Pos {
             }
         });
     }
-
     public void shutdown() {
         if (nfcExecutar != null && !nfcExecutar.isShutdown()) {
             isRunning = false;
@@ -171,10 +170,7 @@ public class Pos {
 
         }
     }
-
-
-
-        private void cartaoAluno(String idCartao){
+    private void cartaoAluno(String idCartao){
         Platform.runLater(() -> {
             System.out.println("Cartão lido: " + idCartao);
         });
@@ -320,42 +316,35 @@ public class Pos {
 
         }
     }
-    //VENDER
+    //VENDER FATURA
     public void handleButtonClickVender(ActionEvent actionEvent) {
         if (fatura.isEmpty()) {
+            //todo feedback
+            System.err.println("Erro! Nenhum produto Selecionado!");
             return;
         }
-        double valorTotal = roundToTwoDecimalPlaces(fatura.stream().mapToDouble(Produto::getPreco).sum());
-        System.out.println(valorTotal);
 
         var cliente = getClientePOS();
-
         if (cliente == null) {
-            //todo feedback (não há cliente!!!)
-
-            //FIXME não há forma de adicionar o clientePOS na GlobalVAR!!!
+            //todo feedback
+            System.err.println("Erro! Nenhum cliente Selecionado!");
             return;
         }
 
-        if (cliente.getSaldo() >= valorTotal) {
-            //FAQ inserTrasacao automaticamente remove o saldo!!!
+        double valorTotal = roundToTwoDecimalPlaces(fatura.stream().mapToDouble(Produto::getPreco).sum());
 
-            TransacaoBLL.insertTransacao(fatura.toArray(new Produto[0]), getClientePOS().getIduser(),GlobalVAR.Dados.getPessoaAtual().getIduser());
+        if (cliente.getSaldo() >= valorTotal) {
+            //FAQ insertTrasacao automaticamente remove o saldo!!!
+
+            var funcionario = GlobalVAR.Dados.getPessoaAtual();
+            TransacaoBLL.insertTransacao(fatura.toArray(new Produto[0]), cliente.getIduser(),funcionario.getIduser());
 
         }
         else {
             //todo feedback não tem saldo!!!
             System.err.println("Usuario não tem saldo!!");
         }
-
-
-
-
-
-
-
     }
-
     private void changeTextBox() {
         textArea.clear();
 
@@ -403,8 +392,6 @@ public class Pos {
 
         textArea.setText(textInputBuilder.toString());
     }
-
-
     public void handleButtonClickRemoverAll(ActionEvent actionEvent) {
         fatura.clear();
         changeTextBox();

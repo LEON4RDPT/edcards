@@ -1,6 +1,6 @@
 package com.edcards.edcards.Programa.Classes;
 
-import com.edcards.edcards.ClassControllers.ProdutoEnum;
+import com.edcards.edcards.ClassControllers.Enums.ProdutoEnum;
 
 public class Produto {
 

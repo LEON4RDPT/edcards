@@ -1,4 +1,4 @@
-package com.edcards.edcards.ClassControllers;
+package com.edcards.edcards.ClassControllers.Enums;
 
 public enum UsuarioEnum {
     ALUNO,
