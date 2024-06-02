@@ -1,6 +1,7 @@
 package com.edcards.edcards.tests;
 
 import com.edcards.edcards.FormControllers.Pos;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,6 +21,7 @@ public class ApplicationMainPOS extends Application {
         stage.setScene(scene);
         Pos posController = fxmlLoader.getController();
         stage.setOnCloseRequest(e -> posController.shutdown());
+        GlobalVAR.Dados.setCurrentStage(stage);
         stage.show();
     }
 

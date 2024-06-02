@@ -1,5 +1,6 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 import com.edcards.edcards.DataTable.ProdutoBLL;
@@ -12,10 +13,7 @@ import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -27,6 +25,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static com.edcards.edcards.Programa.Controllers.FeedBackController.feedbackErro;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.Dados.getClientePOS;
 import static com.edcards.edcards.FormControllers.Utils.ColorController.ColorController.setButtonColor;
 import static com.edcards.edcards.FormControllers.Utils.ColorController.ColorController.setButtonColorBack;
@@ -319,8 +318,7 @@ public class Pos {
     //VENDER FATURA
     public void handleButtonClickVender(ActionEvent actionEvent) {
         if (fatura.isEmpty()) {
-            //todo feedback
-            System.err.println("Erro! Nenhum produto Selecionado!");
+            feedbackErro("Nenhum Produto Selecionado!"); //feedback
             return;
         }
 
