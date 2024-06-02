@@ -31,6 +31,7 @@ import static com.edcards.edcards.Programa.Controllers.ArredondarController.roun
 
 public class Pos {
 
+    private volatile boolean isRunning = true;
     private ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
     public TextArea textArea;
     @FXML
@@ -117,30 +118,9 @@ public class Pos {
     private List<Produto> fatura = new ArrayList<Produto>();
     private int buttonPage = 1  ;
     @FXML
+
+
     private void initialize() {
-
-
-        aguardarCartao();
-        rootHBox.widthProperty().addListener((observable, oldValue, newValue) -> {
-            double width = newValue.doubleValue();
-            leftPane.setPrefWidth(width / 4);
-            rightPane.setPrefWidth((width / 4) * 3);
-        });
-
-        rootHBox.heightProperty().addListener((observable, oldValue, newValue) -> {
-            double height = newValue.doubleValue();
-            leftPane.setPrefHeight(height);
-            rightPane.setPrefHeight(height);
-        });
-
-        double initialWidth = rootHBox.getPrefWidth();
-        leftPane.setPrefWidth(initialWidth / 4);
-        rightPane.setPrefWidth((initialWidth / 4) * 3);
-
-        double initialHeight = rootHBox.getPrefHeight();
-        leftPane.setPrefHeight(initialHeight);
-        rightPane.setPrefHeight(initialHeight);
-
 
         btns = new Button[]{
                 button1, button2, button3, button4,
@@ -153,6 +133,8 @@ public class Pos {
 
         resizeAll();
         setChoiceEnum();
+        aguardarCartao();
+
 
     }
 
@@ -160,7 +142,7 @@ public class Pos {
         nfcExecutar.submit(() -> {
 
 
-            while (true) {
+            while (isRunning) {
                 try {
                     String idCartao = LerCartao.lerIDCartao();
                     Platform.runLater(() -> cartaoAluno(idCartao));
@@ -174,7 +156,17 @@ public class Pos {
         });
     }
 
-    private void cartaoAluno(String idCartao){
+    public void shutdown() {
+        if (nfcExecutar != null && !nfcExecutar.isShutdown()) {
+            isRunning = false;
+            nfcExecutar.shutdown();
+
+        }
+    }
+
+
+
+        private void cartaoAluno(String idCartao){
         Platform.runLater(() -> {
             System.out.println("Cartão lido: " + idCartao);
         });
@@ -249,7 +241,8 @@ public class Pos {
         }
     }
     @FXML
-    private void handleButtonClickPos(ActionEvent event) {
+    //BUTTONS POS
+    private void handleButtonClickPos(ActionEvent event)  {
         Button clickedButton = (Button) event.getSource();
         for (int i = 0; i < btns.length; i++) {
             if (produtos[i] == null) {
@@ -260,9 +253,29 @@ public class Pos {
                 break;
             }
         }
-
     }
     private void resizeAll() {
+
+
+        rootHBox.widthProperty().addListener((observable, oldValue, newValue) -> {
+            double width = newValue.doubleValue();
+            leftPane.setPrefWidth(width / 4);
+            rightPane.setPrefWidth((width / 4) * 3);
+        });
+
+        rootHBox.heightProperty().addListener((observable, oldValue, newValue) -> {
+            double height = newValue.doubleValue();
+            leftPane.setPrefHeight(height);
+            rightPane.setPrefHeight(height);
+        });
+
+        double initialWidth = rootHBox.getPrefWidth();
+        leftPane.setPrefWidth(initialWidth / 4);
+        rightPane.setPrefWidth((initialWidth / 4) * 3);
+
+        double initialHeight = rootHBox.getPrefHeight();
+        leftPane.setPrefHeight(initialHeight);
+        rightPane.setPrefHeight(initialHeight);
         ResizeUtil.resizeAndPositionButton(buttonVoltar, leftPane, 0.95);
         ResizeUtil.resizeAndPositionButton(buttonRefeicao, leftPane, 0.85);
         ResizeUtil.resizeAndPositionButton(buttonRemoveL, leftPane, 0.75);
@@ -324,6 +337,22 @@ public class Pos {
 
 
     }
+
+    private void changeTextBox() {
+        textArea.clear();
+        String text =
+                "";
+
+
+
+        textNum.setText(null);
+
+
+
+
+
+    }
+
     public void handleButtonClickRemoverAll(ActionEvent actionEvent) {
         fatura.clear();
     }

@@ -1,24 +1,25 @@
-package com.edcards.edcards;
+package com.edcards.edcards.tests;
 
+import com.edcards.edcards.FormControllers.Pos;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ApplicationMain extends Application {
+public class ApplicationMainPOS extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        LoadFont();
-        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Pos.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMainPOS.class.getResource("/com/edcards/edcards/Pos.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("POS Compras");
         stage.setMinHeight(720);
         stage.setMinWidth(1024);
         stage.setScene(scene);
+        Pos posController = fxmlLoader.getController();
+        stage.setOnCloseRequest(e -> posController.shutdown());
         stage.show();
     }
 
@@ -26,8 +27,5 @@ public class ApplicationMain extends Application {
         launch();
     }
 
-    private void LoadFont() {
-        Font.loadFont(getClass().getResourceAsStream("/fonts/Nirmala.ttf"), 12);
 
-    }
 }

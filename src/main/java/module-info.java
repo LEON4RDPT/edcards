@@ -12,4 +12,6 @@ module com.edcards.edcards {
     exports com.edcards.edcards;
     exports com.edcards.edcards.FormControllers;
     opens com.edcards.edcards.FormControllers to javafx.fxml;
+    exports com.edcards.edcards.tests;
+    opens com.edcards.edcards.tests to javafx.fxml;
 }
