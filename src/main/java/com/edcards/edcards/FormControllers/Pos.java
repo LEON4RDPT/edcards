@@ -1,7 +1,7 @@
 package com.edcards.edcards.FormControllers;
 
-import com.edcards.edcards.ClassControllers.GlobalVAR;
-import com.edcards.edcards.ClassControllers.Enums.ProdutoEnum;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
+import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 import com.edcards.edcards.DataTable.ProdutoBLL;
 import com.edcards.edcards.DataTable.TransacaoBLL;
 import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static com.edcards.edcards.ClassControllers.GlobalVAR.Dados.getClientePOS;
+import static com.edcards.edcards.Programa.Controllers.GlobalVAR.Dados.getClientePOS;
 import static com.edcards.edcards.FormControllers.Utils.ColorController.ColorController.setButtonColor;
 import static com.edcards.edcards.FormControllers.Utils.ColorController.ColorController.setButtonColorBack;
 import static com.edcards.edcards.Programa.Controllers.ArredondarController.roundToTwoDecimalPlaces;

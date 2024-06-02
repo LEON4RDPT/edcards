@@ -1,4 +1,4 @@
-package com.edcards.edcards.ClassControllers.Enums;
+package com.edcards.edcards.Programa.Controllers.Enums;
 
 public enum AseEnum {
     ASE_A,

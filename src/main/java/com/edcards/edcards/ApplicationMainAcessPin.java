@@ -1,6 +1,6 @@
 package com.edcards.edcards;
 
-import com.edcards.edcards.ClassControllers.GlobalVAR;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.Programa.Classes.Pessoa;

@@ -1,8 +1,8 @@
 package com.edcards.edcards.DataTable;
 
-import com.edcards.edcards.ClassControllers.Enums.AseEnum;
-import com.edcards.edcards.ClassControllers.GlobalVAR;
-import com.edcards.edcards.ClassControllers.Enums.UsuarioEnum;
+import com.edcards.edcards.Programa.Controllers.Enums.AseEnum;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
+import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import com.edcards.edcards.DataTable.Settings.DefaultBLL;
 import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Aluno;

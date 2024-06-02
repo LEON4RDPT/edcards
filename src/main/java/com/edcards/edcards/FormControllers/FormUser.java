@@ -1,6 +1,6 @@
 package com.edcards.edcards.FormControllers;
 
-import com.edcards.edcards.ClassControllers.GlobalVAR;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Aluno;
 import com.edcards.edcards.Programa.Classes.Funcionario;

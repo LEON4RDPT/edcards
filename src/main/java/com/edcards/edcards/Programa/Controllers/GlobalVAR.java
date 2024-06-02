@@ -1,4 +1,4 @@
-package com.edcards.edcards.ClassControllers;
+package com.edcards.edcards.Programa.Controllers;
 
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import javafx.scene.image.Image;

@@ -1,6 +1,6 @@
 package com.edcards.edcards;
 
-import com.edcards.edcards.ClassControllers.GlobalVAR;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

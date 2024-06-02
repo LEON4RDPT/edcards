@@ -1,6 +1,6 @@
 package com.edcards.edcards.DataTable;
 
-import com.edcards.edcards.ClassControllers.Enums.UsuarioEnum;
+import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import com.edcards.edcards.DataTable.Settings.DefaultBLL;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Classes.Produto;
