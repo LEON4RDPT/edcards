@@ -1,19 +1,37 @@
 package com.edcards.edcards.DataTable.Settings;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Dictionary;
+import java.util.Properties;
 
 public class DAL {
-    private final String CONNECTION_STRING = "jdbc:mysql://ptgui.myddns.me:3306/db_escola";
-    private final String USERNAME = "Litz18";
-    private final String PASSWORD = "Gui1803##";
+    private String CONNECTION_STRING;
+    private String USERNAME;
+    private String PASSWORD;
 
     private Connection connection = null;
     private String tableName = null;
 
+    private void loadDatabaseProperties() throws IOException {
+        Properties properties = new Properties();
+        try (InputStream is = getClass().getResourceAsStream("/settings.properties")) {
+            properties.load(is);
+            CONNECTION_STRING = properties.getProperty("database.url");
+            USERNAME = properties.getProperty("database.username");
+            PASSWORD = properties.getProperty("database.password");
+        } catch (FileNotFoundException e) {
+                e.printStackTrace();
+        }
+    }
+
     public DAL(String tableName) {
         try {
+            loadDatabaseProperties();
             this.connection = DriverManager.getConnection(CONNECTION_STRING, USERNAME, PASSWORD);
             this.tableName = tableName;
         } catch (Exception e) {
