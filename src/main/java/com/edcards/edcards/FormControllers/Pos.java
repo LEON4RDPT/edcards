@@ -18,12 +18,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-import javax.smartcardio.CardException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 import static com.edcards.edcards.FormControllers.Utils.ColorController.ColorController.setButtonColor;
 import static com.edcards.edcards.FormControllers.Utils.ColorController.ColorController.setButtonColorBack;
@@ -117,11 +115,8 @@ public class Pos {
     private List<Produto> listaProdutosDisponiveis = new ArrayList<Produto>();
     private List<Produto> fatura = new ArrayList<Produto>();
     private int buttonPage = 1  ;
-    @FXML
 
-
-    private void initialize() {
-
+    private void loadbtns(){
         btns = new Button[]{
                 button1, button2, button3, button4,
                 button5, button6, button7, button8,
@@ -130,26 +125,25 @@ public class Pos {
                 button17, button18, button19, button20,
                 button21, button22, button23, button24
         };
-
+    }
+    @FXML
+    private void initialize() {
+        loadbtns();
         resizeAll();
         setChoiceEnum();
         aguardarCartao();
-
-
     }
 
     private void aguardarCartao() {
         nfcExecutar.submit(() -> {
-
-
             while (isRunning) {
                 try {
                     String idCartao = LerCartao.lerIDCartao();
                     Platform.runLater(() -> cartaoAluno(idCartao));
                     break;
 
-                } catch (CardException | InterruptedException e) {
-                    System.err.println("Error reading card");
+                } catch (Exception ignored) {
+                    //no need to feedback
                 }
 
             }
@@ -178,6 +172,15 @@ public class Pos {
 
         }
 
+        btns = new Button[]{
+                button1, button2, button3, button4,
+                button5, button6, button7, button8,
+                button9, button10, button11, button12,
+                button13, button14, button15, button16,
+                button17, button18, button19, button20,
+                button21, button22, button23, button24
+        };
+
 
 
         var items = choiceBoxItem.getItems();
@@ -189,7 +192,7 @@ public class Pos {
     private void setProdutosButton() {
         for (var button : btns) {
             setButtonColorBack(button);
-        }https://motleybytes.com/w/JavaFxFonts
+        }
         textNum.setText(String.valueOf(buttonPage));
         listaProdutosDisponiveis.clear();
 
