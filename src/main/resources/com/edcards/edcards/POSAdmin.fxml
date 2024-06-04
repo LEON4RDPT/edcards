@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.POSAdmin">
+   <children>
+      <Button fx:id="exit" layoutX="11.0" layoutY="672.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="164.0" text="Sair" />
+      <Pane layoutX="183.0" prefHeight="720.0" prefWidth="1097.0" style="-fx-background-color: lightgrey;">
+         <children>
+            <Button fx:id="addUsr" layoutX="115.0" layoutY="284.0" mnemonicParsing="false" text="Adicionar Usuario" />
+            <Button fx:id="modUsr" layoutX="114.0" layoutY="343.0" mnemonicParsing="false" text="Modificar Usuario" />
+            <Button fx:id="remUsr" layoutX="116.0" layoutY="412.0" mnemonicParsing="false" text="Remover Usuario" />
+            <Button fx:id="addHorario" layoutX="469.0" layoutY="284.0" mnemonicParsing="false" text="Adicionar Horario" />
+            <Button fx:id="modHorario" layoutX="470.0" layoutY="343.0" mnemonicParsing="false" text="Modificar Horario" />
+            <Button fx:id="remHorario" layoutX="471.0" layoutY="412.0" mnemonicParsing="false" text="Remover Horario" />
+            <Button fx:id="addPrdt" layoutX="649.0" layoutY="284.0" mnemonicParsing="false" text="Adicionar Produtos" />
+            <Button fx:id="modPrdt" layoutX="648.0" layoutY="343.0" mnemonicParsing="false" text="Modificar Produtos" />
+            <Button fx:id="remPrdt" layoutX="650.0" layoutY="412.0" mnemonicParsing="false" text="Remover Produtos" />
+            <Button fx:id="addCard" layoutX="292.0" layoutY="284.0" mnemonicParsing="false" text="Adicionar Cartão" />
+            <Button fx:id="modCard" layoutX="281.0" layoutY="343.0" mnemonicParsing="false" text="Atualizar Cartão User" />
+            <Button fx:id="modPinUsr" layoutX="287.0" layoutY="412.0" mnemonicParsing="false" text="Modificar Pin User" />
+            <Button fx:id="viewTransacs" layoutX="803.0" layoutY="343.0" mnemonicParsing="false" text="Ver todas as transações" />
+            <Label layoutX="586.0" prefHeight="93.0" prefWidth="511.0" text="POS Administrador">
+               <font>
+                  <Font size="60.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
