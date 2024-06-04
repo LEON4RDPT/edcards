@@ -13,7 +13,8 @@ public enum ProdutoEnum {
         PAPELARIA,
         BAGUETES,
         BOLOS,
-        CAFETARIA;
+        CAFETARIA,
+        AGUAS;
         public int toDbValue() {return this.ordinal();}
         public static ProdutoEnum fromDbValue(int value) {
             return ProdutoEnum.values()[value];

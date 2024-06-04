@@ -1,4 +1,4 @@
-package com.edcards.edcards.FormControllers.Utils.ColorController;
+package com.edcards.edcards.Programa.Controllers.ColorController;
 
 
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
@@ -17,7 +17,8 @@ public enum ColorProdutoEnum {
     PAPELARIA(new ColorProduto(ProdutoEnum.PAPELARIA, Color.GRAY)),
     BAGUETES(new ColorProduto(ProdutoEnum.BAGUETES, Color.yellow)),
     BOLOS(new ColorProduto(ProdutoEnum.BOLOS, Color.gray)),
-    CAFETARIA(new ColorProduto(ProdutoEnum.CAFETARIA, Color.BLACK   ));
+    CAFETARIA(new ColorProduto(ProdutoEnum.CAFETARIA, Color.BLACK   )),
+    AGUAS(new ColorProduto(ProdutoEnum.AGUAS,Color.blue));
 
     private final ColorProduto colorProduto;
     ColorProdutoEnum(ColorProduto colorProduto) {

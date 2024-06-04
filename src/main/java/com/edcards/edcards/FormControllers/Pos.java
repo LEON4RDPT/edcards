@@ -1,6 +1,5 @@
 package com.edcards.edcards.FormControllers;
 
-import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 import com.edcards.edcards.DataTable.ProdutoBLL;
@@ -27,8 +26,8 @@ import java.util.concurrent.Executors;
 
 import static com.edcards.edcards.Programa.Controllers.FeedBackController.feedbackErro;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.Dados.getClientePOS;
-import static com.edcards.edcards.FormControllers.Utils.ColorController.ColorController.setButtonColor;
-import static com.edcards.edcards.FormControllers.Utils.ColorController.ColorController.setButtonColorBack;
+import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColor;
+import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColorBack;
 import static com.edcards.edcards.Programa.Controllers.ArredondarController.roundToTwoDecimalPlaces;
 
 public class Pos {
@@ -132,6 +131,8 @@ public class Pos {
     }
     @FXML
     private void initialize() {
+        loadMethods();
+
         loadbtns();
         resizeAll();
         setChoiceEnum();
@@ -147,6 +148,18 @@ public class Pos {
         aguardarCartao();
 
     }
+
+    private void loadMethods() {
+        choiceBoxItem.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            // Handle the new value
+            handleChoiceBoxChange((String) newValue);
+        });
+    }
+    private void handleChoiceBoxChange(String newValue) {
+        buttonPage = 1;
+        textNum.setText("1");
+    }
+
 
     private void aguardarCartao() {
         nfcExecutar.submit(() -> {
@@ -181,20 +194,15 @@ public class Pos {
 
         }
 
-        btns = new Button[]{
-                button1, button2, button3, button4,
-                button5, button6, button7, button8,
-                button9, button10, button11, button12,
-                button13, button14, button15, button16,
-                button17, button18, button19, button20,
-                button21, button22, button23, button24
-        };
-
-
-
         var items = choiceBoxItem.getItems();
         items.add("TUDO");
-        items.addAll(ProdutoEnum.getStringValues());
+        //items.addAll(ProdutoEnum.getStringValues());
+        var categorias = ProdutoEnum.getStringValues();
+        for (var cat : categorias) {
+            if (!cat.equals("REFEICOES")) {
+                items.add(cat);
+            }
+        }
         choiceBoxItem.getSelectionModel().select(0);
 
     }
@@ -213,6 +221,7 @@ public class Pos {
             listaProdutosDisponiveis = ProdutoBLL.getALlByEnum(prodEnum);
 
         }
+
 
         int btnPg = 24 * buttonPage;
         int btnPgOld = btnPg - 24;
@@ -235,9 +244,10 @@ public class Pos {
 
             if (produtos[i] == null) {
                 btns[i].setText("NULL");
+                btns[i].setVisible(false);
                 continue;
             }
-
+            btns[i].setVisible(true);
             btns[i].setText(produtos[i].getNome());
 
 
