@@ -18,8 +18,6 @@ public class FeedBackController {
     }
 
 
-
-
     public Stage getCurrentStage() {
         return currentStage;
     }

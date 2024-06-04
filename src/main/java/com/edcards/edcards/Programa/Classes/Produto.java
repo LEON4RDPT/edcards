@@ -1,5 +1,6 @@
 package com.edcards.edcards.Programa.Classes;
 
+import com.edcards.edcards.Programa.Controllers.Enums.IvaEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 
 public class Produto {
@@ -64,5 +65,12 @@ public class Produto {
 
     public boolean isRefeicao() {
         return tipo == ProdutoEnum.REFEICOES;
+    }
+
+    public double getIva() {
+        if (tipo != null) {
+            return IvaEnum.getIva(tipo);
+        }
+        throw new IllegalStateException("Product type is not set");
     }
 }

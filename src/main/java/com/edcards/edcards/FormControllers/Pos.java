@@ -1,5 +1,6 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.Programa.Controllers.Enums.IvaEnum;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 import com.edcards.edcards.DataTable.ProdutoBLL;
@@ -357,7 +358,7 @@ public class Pos {
         textArea.clear();
 
         // instance var
-        double saldo; //getClientePOS().getIduser();
+        double saldo;
         String nomeCliente;
 
         // set var
@@ -371,11 +372,15 @@ public class Pos {
 
         // Mapa para armazenar produtos e suas quantidades
         Map<String, Integer> produtosQuantidade = new HashMap<>();
+        Map<String, Produto> produtosInfo = new HashMap<>();
 
-        // Contagem das quantidades de produtos
+        // Contagem das quantidades de produtos e armazenar produto
         for (var produto : fatura) {
             String nomeProduto = produto.getNome();
             produtosQuantidade.put(nomeProduto, produtosQuantidade.getOrDefault(nomeProduto, 0) + 1);
+            if (!produtosInfo.containsKey(nomeProduto)) {
+                produtosInfo.put(nomeProduto, produto);
+            }
         }
 
         // Construção da string de fatura
@@ -389,17 +394,20 @@ public class Pos {
         for (var entry : produtosQuantidade.entrySet()) {
             String nomeProduto = entry.getKey();
             int quantidade = entry.getValue();
+            Produto produto = produtosInfo.get(nomeProduto);
 
             // Adiciona o produto à string de fatura com sua quantidade
             textInputBuilder.append("Produto: ").append(nomeProduto).append("\n");
             textInputBuilder.append("Quantidade: ").append(quantidade).append("\n");
-            textInputBuilder.append("Preço por unidade: ").append(fatura.getFirst().getPreco()).append("€\n");
-            textInputBuilder.append("Preço Total: ").append(ArredondarController.roundToTwoDecimalPlaces(fatura.getFirst().getPreco() * quantidade)).append("€\n");
+            textInputBuilder.append("Preço por unidade: ").append(produto.getPreco()).append("€\n");
+            textInputBuilder.append("Preço Total: ").append(ArredondarController.roundToTwoDecimalPlaces(produto.getPreco() * quantidade)).append("€\n");
+            textInputBuilder.append("Iva: ").append(produto.getIva()).append(" %\n");
             textInputBuilder.append("---------------\n");
         }
 
         textArea.setText(textInputBuilder.toString());
     }
+
     public void handleButtonClickRemoverAll(ActionEvent actionEvent) {
         fatura.clear();
         changeTextBox();
