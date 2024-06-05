@@ -1,7 +1,14 @@
 package com.edcards.edcards.FormControllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class POSAdmin {
     @FXML
@@ -32,8 +39,86 @@ public class POSAdmin {
     private Button remPrdt;
     @FXML
     private Button viewTransacs;
+    @FXML
+    public void initialize() {}
+    @FXML
+    public void addUsrClick(javafx.event.ActionEvent event) throws IOException {
+        Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/NotDone/CriarUser.fxml"));
+        Scene posScene = new Scene(newSceneParent);
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Criar User");
+        stage.setScene(posScene);
+        stage.show();
+    }
 
+    public void modUsrClick(ActionEvent event) throws IOException {
+        Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/NotDone/ModUser.fxml"));
+        Scene posScene = new Scene(newSceneParent);
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Modificar User");
+        stage.setScene(posScene);
+        stage.show();
+    }
 
+    public void remUsrClick(ActionEvent event) throws IOException {
+        Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/NotDone/DelUser.fxml"));
+        Scene posScene = new Scene(newSceneParent);
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Remover User");
+        stage.setScene(posScene);
+        stage.show();
+    }
 
+    public void addCardClick(ActionEvent event) throws IOException {
+        Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/NotDone/InsertCard.fxml"));
+        Scene posScene = new Scene(newSceneParent);
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Inserir Cartão");
+        stage.setScene(posScene);
+        stage.show();
+    }
 
+    public void modCardClick(ActionEvent event) throws IOException {
+        Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/NotDone/UpdateUserCard.fxml"));
+        Scene posScene = new Scene(newSceneParent);
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Mudar cartão Usuario");
+        stage.setScene(posScene);
+        stage.show();
+    }
+
+    public void modPinUsrClick(ActionEvent event) throws IOException {
+        Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/NotDone/ChangePIN.fxml"));
+        Scene posScene = new Scene(newSceneParent);
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Mudar Pin User");
+        stage.setScene(posScene);
+        stage.show();
+    }
+    public void addHorarioClick(javafx.event.ActionEvent event) throws IOException {
+        Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/NotDone/AddHorario.fxml"));
+        Scene posScene = new Scene(newSceneParent);
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Adicionar Horario");
+        stage.setScene(posScene);
+        stage.show();
+    }
+
+    public void modHorarioClick(ActionEvent event) throws IOException {
+        Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/NotDone/ModHorario.fxml"));
+        Scene posScene = new Scene(newSceneParent);
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Modificar Horario");
+        stage.setScene(posScene);
+        stage.show();
+    }
+
+    public void remHorarioClick(ActionEvent event) throws IOException {
+        Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/NotDone/DelHorario.fxml"));
+        Scene posScene = new Scene(newSceneParent);
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Remover Horario");
+        stage.setScene(posScene);
+        stage.show();
+    }
 }

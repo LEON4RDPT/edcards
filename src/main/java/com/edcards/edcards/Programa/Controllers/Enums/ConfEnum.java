@@ -43,34 +43,36 @@ public enum ConfEnum {
     },
     conf9{
         public String toString() {
-            return "";}
+            return "Produto Adicionado com Sucesso";}
     },
     conf10{
         public String toString() {
-            return "Produto Adicionado com Sucesso";}
+            return "Produto Alterado com Sucesso";}
     },
     conf11{
         public String toString() {
-            return "Produto Alterado com Sucesso";}
+            return "Produto Removido com Sucesso";}
     },
     conf12{
         public String toString() {
-            return "Produto Removido com Sucesso";}
+            return "Saldo adicionado com sucesso";}
     }
     ,conf13{
         public String toString() {
-            return "Saldo adicionado com sucesso";}
+            return "Compra realizada e registada com sucesso";}
     },
-    conf97 {
+    conf14 {
         public String toString() {
-            return "Compra realizada e registada com sucesso";
+            return "Refeição marcada com sucesso";
         }
     },
-
-    conf99{
+    conf15 {
         public String toString() {
-            return "Refeição marcada com sucesso";}
+            return "Refeição desmarcada com sucesso";
+        }
     };
+
+
 
     public int toDbValue() {return this.ordinal();}
     public static ErrorEnum fromDbValue(int value) {

@@ -11,18 +11,18 @@
       <Button fx:id="exit" layoutX="11.0" layoutY="672.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="164.0" text="Sair" />
       <Pane layoutX="183.0" prefHeight="720.0" prefWidth="1097.0" style="-fx-background-color: lightgrey;">
          <children>
-            <Button fx:id="addUsr" layoutX="115.0" layoutY="284.0" mnemonicParsing="false" text="Adicionar Usuario" />
-            <Button fx:id="modUsr" layoutX="114.0" layoutY="343.0" mnemonicParsing="false" text="Modificar Usuario" />
-            <Button fx:id="remUsr" layoutX="116.0" layoutY="412.0" mnemonicParsing="false" text="Remover Usuario" />
-            <Button fx:id="addHorario" layoutX="469.0" layoutY="284.0" mnemonicParsing="false" text="Adicionar Horario" />
-            <Button fx:id="modHorario" layoutX="470.0" layoutY="343.0" mnemonicParsing="false" text="Modificar Horario" />
-            <Button fx:id="remHorario" layoutX="471.0" layoutY="412.0" mnemonicParsing="false" text="Remover Horario" />
+            <Button fx:id="addUsr" layoutX="115.0" layoutY="284.0" mnemonicParsing="false" onAction="#addUsrClick" text="Adicionar Usuario" />
+            <Button fx:id="modUsr" layoutX="114.0" layoutY="343.0" mnemonicParsing="false" onAction="#modUsrClick" text="Modificar Usuario" />
+            <Button fx:id="remUsr" layoutX="116.0" layoutY="412.0" mnemonicParsing="false" onAction="#remUsrClick" text="Remover Usuario" />
+            <Button fx:id="addHorario" layoutX="469.0" layoutY="284.0" mnemonicParsing="false" onAction="#addHorarioClick" text="Adicionar Horario" />
+            <Button fx:id="modHorario" layoutX="470.0" layoutY="343.0" mnemonicParsing="false" onAction="#modHorarioClick" text="Modificar Horario" />
+            <Button fx:id="remHorario" layoutX="471.0" layoutY="412.0" mnemonicParsing="false" onAction="#remHorarioClick" text="Remover Horario" />
             <Button fx:id="addPrdt" layoutX="649.0" layoutY="284.0" mnemonicParsing="false" text="Adicionar Produtos" />
             <Button fx:id="modPrdt" layoutX="648.0" layoutY="343.0" mnemonicParsing="false" text="Modificar Produtos" />
             <Button fx:id="remPrdt" layoutX="650.0" layoutY="412.0" mnemonicParsing="false" text="Remover Produtos" />
-            <Button fx:id="addCard" layoutX="292.0" layoutY="284.0" mnemonicParsing="false" text="Adicionar Cartão" />
-            <Button fx:id="modCard" layoutX="281.0" layoutY="343.0" mnemonicParsing="false" text="Atualizar Cartão User" />
-            <Button fx:id="modPinUsr" layoutX="287.0" layoutY="412.0" mnemonicParsing="false" text="Modificar Pin User" />
+            <Button fx:id="addCard" layoutX="292.0" layoutY="284.0" mnemonicParsing="false" onAction="#addCardClick" text="Adicionar Cartão" />
+            <Button fx:id="modCard" layoutX="281.0" layoutY="343.0" mnemonicParsing="false" onAction="#modCardClick" text="Atualizar Cartão User" />
+            <Button fx:id="modPinUsr" layoutX="287.0" layoutY="412.0" mnemonicParsing="false" onAction="#modPinUsrClick" text="Modificar Pin User" />
             <Button fx:id="viewTransacs" layoutX="803.0" layoutY="343.0" mnemonicParsing="false" text="Ver todas as transações" />
             <Label layoutX="586.0" prefHeight="93.0" prefWidth="511.0" text="POS Administrador">
                <font>

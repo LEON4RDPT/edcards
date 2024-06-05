@@ -18,7 +18,6 @@ public class PinInput extends Application {
         fxmlLoader.setController(controller);
 
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("PIN");
         stage.setScene(scene);
         stage.show();
     }

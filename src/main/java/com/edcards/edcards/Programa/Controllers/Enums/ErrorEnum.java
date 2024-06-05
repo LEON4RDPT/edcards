@@ -55,6 +55,9 @@ public enum ErrorEnum {
         public String toString() {
             return "Foto do horário não presente...";
         }
+    },
+    err11{
+        public String toString() {return "Categoria de Produto errada";}
     };
 
     public int toDbValue() {return this.ordinal();}
