@@ -22,7 +22,5 @@ public enum ConfEnum {
         }
     },
     conf4{
-        public String toString() {
-            return "Saldo Adicionado com sucesso";}
-    }
+        public String toString() { return "Saldo Adicionado com sucesso";}}
 }

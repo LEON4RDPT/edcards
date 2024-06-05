@@ -360,11 +360,11 @@ public class Pos {
         // instance var
         double saldo;
         String nomeCliente;
-
         // set var
         if (getClientePOS() != null) { //existe!
             saldo = getClientePOS().getSaldo();
             nomeCliente = getClientePOS().getNome();
+
         } else {
             saldo = 0;
             nomeCliente = "Nenhum";
@@ -404,7 +404,6 @@ public class Pos {
             textInputBuilder.append("Iva: ").append(produto.getIva()).append(" %\n");
             textInputBuilder.append("---------------\n");
         }
-
         textArea.setText(textInputBuilder.toString());
     }
 
