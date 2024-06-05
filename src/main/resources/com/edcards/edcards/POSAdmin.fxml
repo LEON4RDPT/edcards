@@ -17,13 +17,13 @@
             <Button fx:id="addHorario" layoutX="469.0" layoutY="284.0" mnemonicParsing="false" onAction="#addHorarioClick" text="Adicionar Horario" />
             <Button fx:id="modHorario" layoutX="470.0" layoutY="343.0" mnemonicParsing="false" onAction="#modHorarioClick" text="Modificar Horario" />
             <Button fx:id="remHorario" layoutX="471.0" layoutY="412.0" mnemonicParsing="false" onAction="#remHorarioClick" text="Remover Horario" />
-            <Button fx:id="addPrdt" layoutX="649.0" layoutY="284.0" mnemonicParsing="false" text="Adicionar Produtos" />
-            <Button fx:id="modPrdt" layoutX="648.0" layoutY="343.0" mnemonicParsing="false" text="Modificar Produtos" />
-            <Button fx:id="remPrdt" layoutX="650.0" layoutY="412.0" mnemonicParsing="false" text="Remover Produtos" />
+            <Button fx:id="addPrdt" layoutX="649.0" layoutY="284.0" mnemonicParsing="false" onAction="#addPrdtClick" text="Adicionar Produtos" />
+            <Button fx:id="modPrdt" layoutX="648.0" layoutY="343.0" mnemonicParsing="false" onAction="#modPrdtClick" text="Modificar Produtos" />
+            <Button fx:id="remPrdt" layoutX="650.0" layoutY="412.0" mnemonicParsing="false" onAction="#remPrdtClick" text="Remover Produtos" />
             <Button fx:id="addCard" layoutX="292.0" layoutY="284.0" mnemonicParsing="false" onAction="#addCardClick" text="Adicionar Cartão" />
             <Button fx:id="modCard" layoutX="281.0" layoutY="343.0" mnemonicParsing="false" onAction="#modCardClick" text="Atualizar Cartão User" />
             <Button fx:id="modPinUsr" layoutX="287.0" layoutY="412.0" mnemonicParsing="false" onAction="#modPinUsrClick" text="Modificar Pin User" />
-            <Button fx:id="viewTransacs" layoutX="803.0" layoutY="343.0" mnemonicParsing="false" text="Ver todas as transações" />
+            <Button fx:id="viewTransacs" layoutX="803.0" layoutY="343.0" mnemonicParsing="false" onAction="#viewTransacsClick" text="Ver todas as transações" />
             <Label layoutX="586.0" prefHeight="93.0" prefWidth="511.0" text="POS Administrador">
                <font>
                   <Font size="60.0" />
