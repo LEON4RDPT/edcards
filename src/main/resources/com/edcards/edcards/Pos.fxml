@@ -11,10 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<?import java.net.URL?>
 <HBox fx:id="rootHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.Pos">
-
-
     <children>
         <AnchorPane fx:id="leftPane" prefHeight="720.0" prefWidth="320.0" stylesheets="@CSS/styles.css">
             <children>
@@ -25,7 +22,7 @@
                 <Button fx:id="buttonVender" layoutX="70.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleButtonClickVender" prefHeight="56.0" prefWidth="180.0" styleClass="button-1" stylesheets="@CSS/styles.css" text="Vender" />
                 <Button fx:id="buttonAdd" layoutX="70.0" layoutY="211.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="180.0" styleClass="button-1" stylesheets="@CSS/styles.css" text="Adicionar Saldo" />
             <ChoiceBox fx:id="choiceBoxItem" layoutX="70.0" layoutY="278.0" onAction="#handleChoiceBoxChange" prefHeight="70.0" prefWidth="180.0" styleClass="button-1" stylesheets="@CSS/styles.css" />
-            <TextArea fx:id="textArea" prefHeight="200.0" prefWidth="320.0" text="Text&#10;" />
+            <TextArea fx:id="textArea" prefHeight="200.0" prefWidth="320.0" styleClass="textarea-medium" stylesheets="@CSS/styles.css" text="Text&#10;" />
             </children>
         </AnchorPane>
       <VBox prefHeight="712.0" prefWidth="895.0" style="-fx-background-color: gray;" HBox.hgrow="ALWAYS">

@@ -1,6 +1,7 @@
 package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.Programa.Controllers.Enums.IvaEnum;
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 import com.edcards.edcards.DataTable.ProdutoBLL;
@@ -26,6 +27,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static com.edcards.edcards.Programa.Controllers.FeedBackController.feedbackErro;
+import static com.edcards.edcards.Programa.Controllers.FeedBackController.feedbackYesNo;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.Dados.getClientePOS;
 import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColor;
 import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColorBack;
@@ -355,8 +357,9 @@ public class Pos {
         }
     }
     private void changeTextBox() {
-        textArea.clear();
 
+
+        textArea.clear();
         // instance var
         double saldo;
         String nomeCliente;
@@ -408,16 +411,19 @@ public class Pos {
     }
 
     public void handleButtonClickRemoverAll(ActionEvent actionEvent) {
-        fatura.clear();
-        changeTextBox();
+        if (feedbackYesNo("Deseja Limpar tudo?")) {
+            fatura.clear();
+            changeTextBox();
+        }
     }
     public void handleButtonClickRemoverLast(ActionEvent actionEvent) {
         if (fatura.isEmpty()){
             return;
         }
-        fatura.removeLast();
-        changeTextBox();
-
+        if (feedbackYesNo("Deseja Remover Ultimo?")) {
+            fatura.removeLast();
+            changeTextBox();
+        }
     }
     public void handleChoiceBoxChange(ActionEvent actionEvent) {
         setProdutosButton();

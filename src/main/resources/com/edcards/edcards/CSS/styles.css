@@ -33,7 +33,6 @@
       -fx-min-width: 0;
       -fx-max-width: infinity;
 }
-
 .button-3 {
       -fx-appearance: none;
       -fx-background-color: #FFFFFF;
@@ -51,8 +50,6 @@
       -fx-min-width: 0;
       -fx-max-width: infinity;
 }
-
-
 .button-2 {
       -fx-appearance: none;
       -fx-background-color: #818589 ;
@@ -70,4 +67,12 @@
       -fx-min-height: 60;
       -fx-min-width: 0;
       -fx-max-width: infinity;
+}
+
+.textarea-medium {
+      -fx-font-size: 15px; /* Adjust the font size as needed */
+      -fx-text-fill: black; /* Set text color to black */
+      -fx-border-radius: 5px; /* Set border radius */
+      -fx-border-color: black; /* Set border color */
+      -fx-border-width: 1px; /* Set border width */
 }
