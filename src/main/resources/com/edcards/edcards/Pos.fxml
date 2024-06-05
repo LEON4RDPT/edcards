@@ -11,7 +11,12 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<?import java.net.URL?>
 <HBox fx:id="rootHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.Pos">
+    <stylesheets>
+        <URL value="@org/kordamp/bootstrapfx/bootstrapfx.css"/>
+    </stylesheets>
+
     <children>
         <AnchorPane fx:id="leftPane" prefHeight="720.0" prefWidth="320.0" stylesheets="@CSS/styles.css">
             <children>
