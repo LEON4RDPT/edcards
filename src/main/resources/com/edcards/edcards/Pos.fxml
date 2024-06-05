@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<HBox fx:id="rootHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.Pos">
+<HBox fx:id="rootHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.Pos">
     <children>
         <AnchorPane fx:id="leftPane" prefHeight="720.0" prefWidth="320.0" stylesheets="@CSS/styles.css">
             <children>
@@ -70,9 +78,9 @@
               </AnchorPane>
             <AnchorPane fx:id="buttonsBack" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="buttonBack" layoutX="357.0" layoutY="31.0" mnemonicParsing="false" onAction="#buttonBackClick" prefHeight="38.0" prefWidth="66.0" text="&lt;" />
-                  <Button fx:id="buttonUp" layoutX="537.0" layoutY="31.0" mnemonicParsing="false" onAction="#buttonUpClick" prefHeight="38.0" prefWidth="66.0" text="&gt;" />
-                  <TextField fx:id="textNum" alignment="CENTER" layoutX="459.0" layoutY="38.0" prefHeight="25.0" prefWidth="43.0" />
+                  <Button fx:id="buttonBack" layoutX="357.0" layoutY="31.0" mnemonicParsing="false" onAction="#buttonBackClick" prefHeight="38.0" prefWidth="66.0" styleClass="button-3" text="&lt;" />
+                  <Button fx:id="buttonUp" layoutX="537.0" layoutY="31.0" mnemonicParsing="false" onAction="#buttonUpClick" prefHeight="38.0" prefWidth="66.0" styleClass="button-3" text="&gt;" />
+                  <TextField fx:id="textNum" alignment="CENTER" editable="false" layoutX="440.0" layoutY="30.0" prefHeight="40.0" prefWidth="81.0" styleClass="button-3" />
                </children>
             </AnchorPane>   
          </children>
