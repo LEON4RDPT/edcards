@@ -1,16 +1,17 @@
-package com.edcards.edcards;
+package com.edcards.edcards.TestApps;
 
+import com.edcards.edcards.ApplicationMainAcessPin;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class DelUser extends Application {
+public class CriarUser extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMainAcessPin.class.getResource("/com/edcards/edcards/NotDone/DelUser.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMainAcessPin.class.getResource("/com/edcards/edcards/CriarUser.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         stage.show();
