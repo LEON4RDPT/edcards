@@ -16,50 +16,49 @@
    <children>
       <ImageView fx:id="imageUser" fitHeight="318.0" fitWidth="328.0" layoutX="33.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/UserPicture.png" />
+            <Image url="@../images/UserPicture.png" />
          </image>
       </ImageView>
-      <Label layoutX="341.0" layoutY="155.0" text="Nome:">
+      <Label layoutX="333.0" layoutY="208.0" text="Nome:">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="341.0" layoutY="40.0" text="Tipo:">
+      <Label layoutX="333.0" layoutY="121.0" text="Tipo:">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <ComboBox layoutX="341.0" layoutY="75.0" prefHeight="25.0" prefWidth="285.0" promptText="Escolha Um" visibleRowCount="2" />
-      <TextField layoutX="341.0" layoutY="190.0" prefHeight="25.0" prefWidth="285.0" />
-      <Label layoutX="33.0" layoutY="360.0" text="Morada:">
+      <ComboBox layoutX="333.0" layoutY="156.0" prefHeight="25.0" prefWidth="285.0" promptText="Escolha Um" visibleRowCount="2" />
+      <TextField layoutX="333.0" layoutY="243.0" prefHeight="25.0" prefWidth="285.0" />
+      <Label layoutX="34.0" layoutY="414.0" text="Morada:">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField layoutX="33.0" layoutY="395.0" prefHeight="25.0" prefWidth="599.0" />
-      <Text layoutX="202.0" layoutY="619.0" strokeType="OUTSIDE" strokeWidth="0.0" text="..." wrappingWidth="115.70703125">
+      <TextField layoutX="34.0" layoutY="461.0" prefHeight="25.0" prefWidth="599.0" />
+      <Text layoutX="456.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" text="..." wrappingWidth="115.70703125">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Label layoutX="33.0" layoutY="547.0" prefHeight="35.0" prefWidth="88.0" text="Cartão:">
+      <Label layoutX="333.0" layoutY="354.0" prefHeight="35.0" prefWidth="88.0" text="Cartão:">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button layoutX="34.0" layoutY="589.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="149.0" text="Selecionar Cartão" />
-      <Label layoutX="32.0" layoutY="457.0" text="NIF:">
+      <Label layoutX="32.0" layoutY="500.0" text="NIF:">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField layoutX="32.0" layoutY="492.0" prefHeight="25.0" prefWidth="285.0" />
-      <Label layoutX="342.0" layoutY="263.0" text="Data de Nascimento">
+      <TextField layoutX="32.0" layoutY="535.0" prefHeight="25.0" prefWidth="285.0" />
+      <Label layoutX="337.0" layoutY="282.0" text="Data de Nascimento">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <DatePicker layoutX="342.0" layoutY="298.0" prefHeight="26.0" prefWidth="216.0" />
+      <DatePicker layoutX="337.0" layoutY="317.0" prefHeight="26.0" prefWidth="216.0" />
       <Pane layoutX="771.0" layoutY="138.0" prefHeight="348.0" prefWidth="416.0" style="-fx-background-color: lightgrey;">
          <children>
             <Label layoutX="9.0" layoutY="56.0" text="Nº Telefone EE:">
@@ -93,6 +92,17 @@
          </font>
       </Label>
       <TextField layoutX="771.0" layoutY="80.0" prefHeight="25.0" prefWidth="166.0" />
-      <Button layoutX="968.0" layoutY="567.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="244.0" text="Inserir Aluno" />
+      <Button layoutX="1022.0" layoutY="584.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="244.0" text="Modificar Utilizador" />
+      <Label layoutX="333.0" layoutY="22.0" text="Selecionar Utilizador:">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ComboBox layoutX="333.0" layoutY="57.0" prefHeight="25.0" prefWidth="285.0" promptText="Escolha Um" visibleRowCount="2" />
+      <Button layoutX="14.0" layoutY="584.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="244.0" text="Voltar">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

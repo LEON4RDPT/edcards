@@ -18,7 +18,7 @@ public class POSAdmin {
     @FXML
     private Button modUsr;
     @FXML
-    private Button remUsr;
+    private Button modFtUsr;
     @FXML
     private Button addCard;
     @FXML
@@ -60,7 +60,7 @@ public class POSAdmin {
         stage.show();
     }
 
-    public void remUsrClick(ActionEvent event) throws IOException {
+    public void modFtUserClick(ActionEvent event) throws IOException {
         Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/ModFotoUser.fxml"));
         Scene posScene = new Scene(newSceneParent);
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
@@ -155,4 +155,6 @@ public class POSAdmin {
         stage.setScene(posScene);
         stage.show();
     }
+
+
 }
