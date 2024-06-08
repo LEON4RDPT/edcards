@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.ControllerPIN">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <Pane layoutX="406.0" layoutY="113.0" prefHeight="572.0" prefWidth="480.0" style="-fx-background-color: #0080ff; -fx-background-radius: 10px;">
          <children>
@@ -33,8 +33,8 @@
             <Button fx:id="btnConf" layoutX="283.0" layoutY="472.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="181.0" style="-fx-background-radius: 15px;" text="Confirmar" />
          </children>
       </Pane>
-      <Label layoutX="586.0" layoutY="82.0" text="Insira o PIN Antigo..." />
-      <Button layoutX="14.0" layoutY="618.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="244.0" text="Voltar">
+      <Label fx:id="pinText" layoutX="586.0" layoutY="82.0" text="Insira o PIN Antigo..." />
+      <Button fx:id="backBtn" layoutX="14.0" layoutY="618.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="244.0" text="Voltar">
          <font>
             <Font size="18.0" />
          </font>
@@ -44,13 +44,13 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <ComboBox layoutX="36.0" layoutY="65.0" prefHeight="25.0" prefWidth="285.0" promptText="Escolha Um" visibleRowCount="2" />
+      <ComboBox fx:id="userPicker" layoutX="36.0" layoutY="65.0" prefHeight="25.0" prefWidth="285.0" promptText="Escolha Um" visibleRowCount="2" />
       <Label layoutX="34.0" layoutY="119.0" text="Nome:">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Text layoutX="36.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="...">
+      <Text fx:id="nomeText" layoutX="36.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="...">
          <font>
             <Font size="24.0" />
          </font>

@@ -9,7 +9,7 @@
    <children>
       <ImageView fitHeight="330.0" fitWidth="330.0" layoutX="475.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/Sem%20título.png" />
+            <Image url="@images/logoNFCnew.png" />
          </image>
       </ImageView>
       <Label layoutX="511.0" layoutY="125.0" text="Passe o Cartão">

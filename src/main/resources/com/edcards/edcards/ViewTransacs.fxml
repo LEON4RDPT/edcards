@@ -6,7 +6,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView layoutX="189.0" prefHeight="720.0" prefWidth="1097.0" />
-      <Button layoutX="20.0" layoutY="639.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="154.0" text="Voltar" />
+      <TableView fx:id="vendasGrid" layoutX="189.0" prefHeight="720.0" prefWidth="1097.0" />
+      <Button fx:id="backBtn" layoutX="20.0" layoutY="639.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="154.0" text="Voltar" />
    </children>
 </AnchorPane>

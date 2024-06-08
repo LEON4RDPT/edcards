@@ -13,7 +13,7 @@
    <children>
       <ImageView fx:id="imageUser" fitHeight="526.0" fitWidth="511.0" layoutX="365.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@images/calendario.png" />
+            <Image url="@../images/calendario.png" />
          </image>
       </ImageView>
       <Label layoutX="26.0" layoutY="20.0" text="Selecionar Utilizador:">
