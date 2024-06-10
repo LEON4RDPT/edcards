@@ -1,9 +1,11 @@
 package com.edcards.edcards.FormControllers;
 
-import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,29 +18,19 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class insertUser {
+public class CriarUserController {
     String nome, morada, email, nif, num, numEE, turma, tipo, idCartao;
     Image imgUser;
     private volatile boolean isRunning = true;
     private ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
     @FXML
-    private TextField nameField;
+    private TextField nameField, moradaField, emailField, nifField, numField, numEEfield;
     @FXML
-    private TextField moradaField;
+    private DatePicker dateField ;
     @FXML
-    private TextField emailField;
+    private ComboBox<String> tipoPicker;
     @FXML
-    private TextField nifField;
-    @FXML
-    private DatePicker dateField;
-    @FXML
-    private TextField numEEfield;
-    @FXML
-    private String turmaPicker;
-    @FXML
-    private String tipoPicker;
-    @FXML
-    private TextField numField;
+    private ComboBox<String> turmaPicker;
     @FXML
     private ImageView imageUser;
     @FXML
@@ -48,16 +40,19 @@ public class insertUser {
 
     @FXML
     public void initialize(){
-        nome = nameField.getText();
-        morada = moradaField.getText();
-        email = emailField.getText();
-        nif = nifField.getText();
-        numEE = numEEfield.getText();
-        num = numField.getText();
-        turma = turmaPicker;
-        tipo = tipoPicker;
-        idCartao = cardID.toString();
-        imgUser = imageUser.getImage();
+        nameField = new TextField();
+        moradaField = new TextField();
+        emailField = new TextField();
+        nifField = new TextField();
+        numField = new TextField();
+        numEEfield = new TextField();
+
+
+        ObservableList<String> opcoes = FXCollections.observableArrayList(
+                "Administrador", "Aluno", "Funcionário"
+        );
+
+        tipoPicker.setItems(opcoes);
         aguardarCartao();
 
         imageUser.setOnMouseClicked(event -> {
@@ -91,9 +86,19 @@ public class insertUser {
     @FXML
     private void inserirBtnClick(ActionEvent event) throws IOException {
         if (nome == null || turma == null || morada == null || email == null || nif == null || numEE == null || num == null || numEEfield == null || imgUser == null || idCartao == null) {
-            //todo messagesBox - Avram
+            nome = nameField.getText();
+            morada = moradaField.getText();
+            email = emailField.getText();
+            nif = nifField.getText();
+            numEE = numEEfield.getText();
+            num = numField.getText();
+            turma = turmaPicker.toString();
+            tipo = tipoPicker.toString();
+            idCartao = cardID.toString();
+            imgUser = imageUser.getImage();
+            //todo
         }else {
-            //UsersBLL.inserir();
+            //todo
         }
     }
 }
