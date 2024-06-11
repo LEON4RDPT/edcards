@@ -337,7 +337,7 @@ public class Pos {
 
         var cliente = getClientePOS();
         if (cliente == null) {
-            feedbackErro("Nenhum cliente Selecionado!");             //feedback
+            feedbackErro("Nenhum cliente Selecionado!"); //feedback
             return;
         }
 
@@ -351,8 +351,8 @@ public class Pos {
 
         }
         else {
-            //todo feedback não tem saldo!!!
-            System.err.println("Usuario não tem saldo!!");
+            feedbackErro("Usuario não tem saldo");             //feedback
+
         }
     }
     private void changeTextBox() {
