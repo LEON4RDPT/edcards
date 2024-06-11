@@ -29,7 +29,7 @@ public class AddProdutoController {
     private Button addPrdt, backBtn;
     @FXML
     public void initialize(){
-        List<String> categoria = ProdutoBLL.get
-        ProdutoBLL.getALlByEnum();
+        //List<String> categoria = ProdutoBLL.get
+        //ProdutoBLL.getALlByEnum();
     }
 }

@@ -337,8 +337,7 @@ public class Pos {
 
         var cliente = getClientePOS();
         if (cliente == null) {
-            //todo feedback
-            System.err.println("Erro! Nenhum cliente Selecionado!");
+            feedbackErro("Nenhum cliente Selecionado!");             //feedback
             return;
         }
 
