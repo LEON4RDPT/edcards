@@ -94,15 +94,13 @@
       <TextField fx:id="numField" layoutX="771.0" layoutY="80.0" prefHeight="25.0" prefWidth="166.0" />
       <Button fx:id="modUser" layoutX="1022.0" layoutY="584.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="244.0" text="Modificar Utilizador" />
       <Label layoutX="14.0" layoutY="14.0" text="Selecionar Utilizador:">
-         <font>
-            <Font size="24.0" />
-         </font>
       </Label>
       <ComboBox fx:id="userPicker" layoutX="14.0" layoutY="50.0" onAction="#selectUser" prefHeight="25.0" prefWidth="285.0" promptText="Escolha Um" visibleRowCount="2" />
       <Button fx:id="backBtn" layoutX="14.0" layoutY="584.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="244.0" text="Voltar">
          <font>
-            <Font size="18.0" />
+            <Font size="24.0" />
          </font>
+
       </Button>
    </children>
 </AnchorPane>
