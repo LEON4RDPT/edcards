@@ -14,9 +14,6 @@ public class PinInput extends Application {
             System.exit(0);
         });
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMainAcessPin.class.getResource("PIN.fxml"));
-        ControllerPIN controller = new ControllerPIN();
-        fxmlLoader.setController(controller);
-
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         stage.show();
