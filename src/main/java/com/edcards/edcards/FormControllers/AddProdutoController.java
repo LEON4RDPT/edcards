@@ -1,22 +1,21 @@
 package com.edcards.edcards.FormControllers;
 
-import com.edcards.edcards.DataTable.ProdutoBLL;
-import com.edcards.edcards.Programa.Controllers.GlobalVAR;
-import com.edcards.edcards.Programa.Classes.Admin;
-import com.edcards.edcards.Programa.Classes.Aluno;
-import com.edcards.edcards.Programa.Classes.Funcionario;
-import com.edcards.edcards.Programa.Classes.Pessoa;
+import com.edcards.edcards.DataTable.UsersBLL;
+import com.edcards.edcards.Programa.Controllers.LerCartao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AddProdutoController {
     @FXML
