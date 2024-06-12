@@ -58,6 +58,9 @@ public enum ErrorEnum {
     },
     err11{
         public String toString() {return "Categoria de Produto errada";}
+    },
+    err12{
+        public String toString() {return "Utilizador não encontrado";}
     };
 
     public int toDbValue() {return this.ordinal();}
