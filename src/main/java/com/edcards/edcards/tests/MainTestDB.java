@@ -1,9 +1,17 @@
 package com.edcards.edcards.tests;
 
+import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 
 public class MainTestDB {
     public static void main(String[] args) {
+        for (var nfc : CartaoBLL.getAllCards()) {
+            System.out.println(nfc);
+        }
+
+
+
+
 //        System.out.println(UsersBLL.getNomeUser(2));
 //        String filepath = "C:/Users/Angelica/Downloads/leooo.jpg";
 //        File file = new File(filepath);

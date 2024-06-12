@@ -15,17 +15,30 @@ import javafx.stage.Stage;
 
 import javax.smartcardio.CardException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class ApplicationMainAcessPin extends Application {
+public class MainExe extends Application {
+    List<String> allNfc = new ArrayList<String>();
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMainAcessPin.class.getResource("ReadCard.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainExe.class.getResource("ReadCard.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Aplicação");
         stage.setScene(scene);
         stage.show();
         GlobalVAR.Dados.setCurrentStage(stage);
+
+        var x = CartaoBLL.getAllCards();
+        if (x == null) {
+            //feedback no cards!!
+            return;
+        }
+        allNfc = List.of(x);
+
+
+
 
         Task<Pessoa> task = new Task<Pessoa>() {
             @Override
@@ -58,7 +71,7 @@ public class ApplicationMainAcessPin extends Application {
         while (true) {
             try {
                 String cartao = LerCartao.lerIDCartao();
-                System.out.println(cartao);
+                System.out.println(cartao); //feedback
                 Pessoa pessoa = null;
                 try {
                     var userByNFC = CartaoBLL.getUserByNFC(cartao);
@@ -70,11 +83,7 @@ public class ApplicationMainAcessPin extends Application {
                         return pessoa;
                     } else {
                         System.err.println("Cartão não encontrado na DB.");
-                        try {
-                            TimeUnit.SECONDS.sleep(1);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
