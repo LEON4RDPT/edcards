@@ -1,5 +1,6 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import javafx.event.ActionEvent;
@@ -79,7 +80,7 @@ public class ControllerPIN {
                     JOptionPane.showMessageDialog(null, "O PIN digitado não corresponde ao cartão.", "Validação", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
-                System.err.println("Nenhuma pessoa encontrada");
+                FeedBackController.feedbackErro("Nenhum Usuario encontrado!");
                 clean();
             }
         }
