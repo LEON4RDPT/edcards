@@ -86,6 +86,56 @@ public Map<String, Object> getAllinOne(String columnCondition, Object objectCond
         }
     }
 
+    public List<Object> getAll(String atributeName,String joinTableSQL) {
+        Connection connection = getConnection();
+        if (connection == null) { return null; }
+
+        try {
+            String query = "SELECT " + atributeName +  " FROM " + getTableName() + " " + joinTableSQL;
+            var reader = getConnection().createStatement().executeQuery(query);
+
+            ResultSetMetaData metaData = reader.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            List<Object> rows = new ArrayList<>();
+
+            while (reader.next()) {
+                rows.add(reader.getObject("codigo"));
+            }
+
+            reader.close();
+            return rows;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Object> getAll(String atributeName) {
+        Connection connection = getConnection();
+        if (connection == null) { return null; }
+
+        try {
+            String query = "SELECT " + atributeName +  " FROM " + getTableName();
+            var reader = getConnection().createStatement().executeQuery(query);
+
+            ResultSetMetaData metaData = reader.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            List<Object> rows = new ArrayList<>();
+
+            while (reader.next()) {
+                rows.add(reader.getObject("codigo"));
+            }
+
+            reader.close();
+            return rows;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public List<Map<String, Object>> getAll() {
         Connection connection = getConnection();
         if (connection == null) { return null; }

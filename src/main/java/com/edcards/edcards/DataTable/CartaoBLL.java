@@ -4,11 +4,22 @@ import com.edcards.edcards.DataTable.Settings.DefaultBLL;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class CartaoBLL {
+    public static String[] getAllCards() {
+        DefaultBLL bll = new DefaultBLL("cartao");
+        var x = bll.getAll("codigo","INNER JOIN usuario ON cartao.codigo = usuario.cartao_id"); //check if exists on the 2 tables!
+        if (x == null) {
+            return null;
+        }
+        return x.toArray(new String[0]);
+    }
+
     public static void inserirCartao(String nfc) {
         DefaultBLL bll = new DefaultBLL("cartao");
         if (existenteNFC(nfc)) {
