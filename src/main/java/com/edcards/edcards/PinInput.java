@@ -15,6 +15,8 @@ public class PinInput extends Application {
         });
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMainAcessPin.class.getResource("PIN.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        stage.setMinHeight(640);
+        stage.setMinWidth(835);
         stage.setScene(scene);
         stage.show();
     }
