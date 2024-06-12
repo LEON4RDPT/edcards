@@ -2,6 +2,7 @@ package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Classes.Pessoa;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +17,9 @@ import java.io.IOException;
 
 public class ControllerPIN {
     public GridPane gridbuttons;
+    @FXML
+    private Button btn01;
+
     private int valorAtual;
 
     @FXML
@@ -76,11 +80,26 @@ public class ControllerPIN {
                 }
             } else {
                 System.err.println("Nenhuma pessoa encontrada");
+                clean();
             }
         }
     }
 
     private void resize() {
         
+    }
+
+    private void clean() {
+        field1.clear();
+        field2.clear();
+        field3.clear();
+        field4.clear();
+        field5.clear();
+        field6.clear();
+    }
+
+    @FXML
+    private void buttonLimpar(ActionEvent actionEvent) {
+        clean();
     }
 }
