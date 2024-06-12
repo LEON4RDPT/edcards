@@ -36,6 +36,12 @@ public class AddProdutoController {
     private Button addPrdt, backBtn;
     @FXML
     public void initialize(){
+        priceValue.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(
+                0.0,
+                1000.0,
+                0.5,
+                0.50
+        ));
         setChoiceEnum();
     }
     private void setChoiceEnum() {
