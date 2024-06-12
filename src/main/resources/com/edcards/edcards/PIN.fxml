@@ -14,8 +14,8 @@
       <HBox fx:id="myHBox" alignment="CENTER" prefHeight="720.0" prefWidth="720.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
 
-            <Pane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="594.0" prefWidth="480.0" style="-fx-background-color: #0080ff; -fx-background-radius: 10px;">
-               <GridPane fx:id="gridbuttons" hgap="10" layoutX="121.0" layoutY="149.0" vgap="10">
+            <Pane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="623.0" prefWidth="548.0" style="-fx-background-color: #0080ff; -fx-background-radius: 10px;">
+               <GridPane fx:id="gridbuttons" hgap="10" layoutX="152.0" layoutY="150.0" vgap="10">
                   <Button fx:id="btn1" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="1" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                   <Button fx:id="btn2" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="2" GridPane.columnIndex="1" GridPane.rowIndex="0" />
                   <Button fx:id="btn3" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="3" GridPane.columnIndex="2" GridPane.rowIndex="0" />
@@ -38,13 +38,13 @@
                      <RowConstraints />
                   </rowConstraints>
                </GridPane>
-               <TextField fx:id="field1" alignment="CENTER" layoutX="4.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
-               <TextField fx:id="field6" alignment="CENTER" layoutX="406.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
-               <TextField fx:id="field2" alignment="CENTER" layoutX="83.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
-               <TextField fx:id="field3" alignment="CENTER" layoutX="164.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
-               <TextField fx:id="field4" alignment="CENTER" layoutX="248.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
-               <TextField fx:id="field5" alignment="CENTER" layoutX="327.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
-               <Button fx:id="btn01" layoutX="121.0" layoutY="500.0" mnemonicParsing="false" onAction="#buttonLimpar" prefHeight="75.0" prefWidth="245.0" styleClass="button-3-big" text="Limpar" />
+               <TextField fx:id="field1" alignment="CENTER" layoutX="38.0" layoutY="65.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
+               <TextField fx:id="field6" alignment="CENTER" layoutX="440.0" layoutY="65.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
+               <TextField fx:id="field2" alignment="CENTER" layoutX="117.0" layoutY="65.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
+               <TextField fx:id="field3" alignment="CENTER" layoutX="198.0" layoutY="65.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
+               <TextField fx:id="field4" alignment="CENTER" layoutX="282.0" layoutY="65.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
+               <TextField fx:id="field5" alignment="CENTER" layoutX="361.0" layoutY="65.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
+               <Button fx:id="btn01" layoutX="152.0" layoutY="498.0" mnemonicParsing="false" onAction="#buttonLimpar" prefHeight="75.0" prefWidth="245.0" styleClass="button-3-big" text="Limpar" />
             </Pane>
          </children></HBox>
    </children>

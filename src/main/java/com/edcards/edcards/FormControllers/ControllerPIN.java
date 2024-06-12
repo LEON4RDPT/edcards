@@ -78,7 +78,8 @@ public class ControllerPIN {
                         e.printStackTrace();
                     }
                 } else {
-                    FeedBackController.feedbackErro("dfbhuwoahd");
+                    FeedBackController.feedbackErro("Password Incorreta!");
+                    clean();
                 }
             } else {
                 FeedBackController.feedbackErro("Nenhum Usuario encontrado!");
@@ -87,9 +88,6 @@ public class ControllerPIN {
         }
     }
 
-    private void resize() {
-        
-    }
 
     private void clean() {
         field1.clear();
