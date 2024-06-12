@@ -13,40 +13,38 @@
    <children>
       <HBox fx:id="myHBox" alignment="CENTER" prefHeight="720.0" prefWidth="720.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-      
+
             <Pane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="594.0" prefWidth="480.0" style="-fx-background-color: #0080ff; -fx-background-radius: 10px;">
-               <children>
-                  <GridPane fx:id="gridbuttons" hgap="10" layoutX="121.0" layoutY="149.0" vgap="10">
-                     <Button fx:id="btn1" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="1" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                     <Button fx:id="btn2" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="2" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                     <Button fx:id="btn3" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="3" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                     <Button fx:id="btn4" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="4" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                     <Button fx:id="btn5" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                     <Button fx:id="btn6" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="6" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                     <Button fx:id="btn7" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="7" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                     <Button fx:id="btn8" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="8" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                     <Button fx:id="btn9" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="9" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                     <Button fx:id="btn0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                     <columnConstraints>
-                        <ColumnConstraints />
-                        <ColumnConstraints />
-                        <ColumnConstraints />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints />
-                        <RowConstraints />
-                        <RowConstraints />
-                        <RowConstraints />
-                     </rowConstraints>
-                  </GridPane>
-                  <TextField fx:id="field1" alignment="CENTER" layoutX="4.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
-                  <TextField fx:id="field6" alignment="CENTER" layoutX="406.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
-                  <TextField fx:id="field2" alignment="CENTER" layoutX="83.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
-                  <TextField fx:id="field3" alignment="CENTER" layoutX="164.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
-                  <TextField fx:id="field4" alignment="CENTER" layoutX="248.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
-                  <TextField fx:id="field5" alignment="CENTER" layoutX="327.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
-                  <Button fx:id="btn01" layoutX="121.0" layoutY="500.0" mnemonicParsing="false" onAction="#buttonLimpar" prefHeight="75.0" prefWidth="245.0" styleClass="button-3-big" text="Limpar" />
-               </children>
+               <GridPane fx:id="gridbuttons" hgap="10" layoutX="121.0" layoutY="149.0" vgap="10">
+                  <Button fx:id="btn1" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="1" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                  <Button fx:id="btn2" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="2" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                  <Button fx:id="btn3" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="3" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                  <Button fx:id="btn4" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="4" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                  <Button fx:id="btn5" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button fx:id="btn6" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="6" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="btn7" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="7" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                  <Button fx:id="btn8" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="8" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button fx:id="btn9" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="9" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <Button fx:id="btn0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="button-3-big" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <columnConstraints>
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                     <ColumnConstraints />
+                  </columnConstraints>
+                  <rowConstraints>
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                     <RowConstraints />
+                  </rowConstraints>
+               </GridPane>
+               <TextField fx:id="field1" alignment="CENTER" layoutX="4.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
+               <TextField fx:id="field6" alignment="CENTER" layoutX="406.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
+               <TextField fx:id="field2" alignment="CENTER" layoutX="83.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
+               <TextField fx:id="field3" alignment="CENTER" layoutX="164.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
+               <TextField fx:id="field4" alignment="CENTER" layoutX="248.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
+               <TextField fx:id="field5" alignment="CENTER" layoutX="327.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
+               <Button fx:id="btn01" layoutX="121.0" layoutY="500.0" mnemonicParsing="false" onAction="#buttonLimpar" prefHeight="75.0" prefWidth="245.0" styleClass="button-3-big" text="Limpar" />
             </Pane>
          </children></HBox>
    </children>

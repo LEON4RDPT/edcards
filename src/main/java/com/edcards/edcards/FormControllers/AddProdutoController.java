@@ -47,7 +47,7 @@ public class AddProdutoController {
     }
     @FXML
     private void addPrdtClick(ActionEvent event) {
-        categoria = ProdutoEnum.valueOf(String.valueOf(cBoxCategory.getSelectionModel()));
+        categoria = ProdutoEnum.valueOf(String.valueOf(cBoxCategory.getSelectionModel().getSelectedItem()));
         nome = nameField.getText();
         preco = priceValue.getValue();
         ProdutoBLL.inserirProduto(nome,categoria, preco, true);
