@@ -171,7 +171,6 @@ public class Pos {
                     String idCartao = LerCartao.lerIDCartao();
                     Platform.runLater(() -> cartaoAluno(idCartao));
                     break;
-
                 } catch (Exception ignored) {
                     //nofeedback
                 }
