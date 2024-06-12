@@ -11,13 +11,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-
-import javax.swing.*;
+import javafx.scene.layout.HBox;
 import java.io.IOException;
 
 
 public class ControllerPIN {
     public GridPane gridbuttons;
+    @FXML
+    private HBox myHBox;
     @FXML
     private Button btn01;
 
@@ -77,7 +78,7 @@ public class ControllerPIN {
                         e.printStackTrace();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "O PIN digitado não corresponde ao cartão.", "Validação", JOptionPane.INFORMATION_MESSAGE);
+                    FeedBackController.feedbackErro("dfbhuwoahd");
                 }
             } else {
                 FeedBackController.feedbackErro("Nenhum Usuario encontrado!");

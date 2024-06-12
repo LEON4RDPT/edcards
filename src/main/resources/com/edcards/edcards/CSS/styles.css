@@ -69,6 +69,23 @@
       -fx-max-width: infinity;
 }
 
+.button-3-big {
+      -fx-appearance: none;
+      -fx-background-color: #FFFFFF;
+      -fx-border-color: #1A1A1A;
+      -fx-border-width: 0; /* Set border width to 0 */
+      -fx-background-radius: 15;
+      -fx-background-insets: 0; /* Add this to remove the border */
+      -fx-cursor: hand;
+      -fx-font-family: "Roobert", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      -fx-font-size: 18;
+      -fx-font-weight: bold;
+      -fx-text-fill: #000000;
+      -fx-text-alignment: center;
+      -fx-min-height: 40;
+      -fx-min-width: 0;
+      -fx-max-width: infinity;
+}
 .textarea-medium {
       -fx-font-size: 15px; /* Adjust the font size as needed */
       -fx-text-fill: black; /* Set text color to black */
