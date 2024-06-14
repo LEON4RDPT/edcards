@@ -54,7 +54,7 @@ public class FormUser {
 
     @FXML
     private void handlePosClick(ActionEvent event) throws IOException {
-        Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/CriarUser.fxml"));
+        Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/POSAdmin.fxml"));
         Scene posAdminScene = new Scene(newSceneParent);
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         stage.setScene(posAdminScene);
