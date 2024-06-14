@@ -1,6 +1,5 @@
-package com.edcards.edcards.NotDoneApps;
+package com.edcards.edcards;
 
-import com.edcards.edcards.MainExe;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

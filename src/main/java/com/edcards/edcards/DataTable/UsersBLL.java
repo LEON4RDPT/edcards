@@ -48,7 +48,7 @@ public class UsersBLL {
 
     //insert done (todo blob to image!!)
 
-    public static void inserir(String nfc, String nome, Date dataNc, String morada, UsuarioEnum tipo, String cc) {
+    public static void inserir(String nfc, String nome, Date dataNc, String morada, UsuarioEnum tipo, String cc, byte[] foto) {
         DefaultBLL bll = new DefaultBLL("usuario");
 
         if (bll.hasRows("cartao_id",nfc)) {
@@ -69,6 +69,7 @@ public class UsersBLL {
         columnValues.put("morada", morada);
         columnValues.put("tipo", tipo.toDbValue());
         columnValues.put("cc",cc);
+        columnValues.put("foto", foto);
         bll.insert(columnValues);
 
     }

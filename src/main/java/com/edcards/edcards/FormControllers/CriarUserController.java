@@ -1,9 +1,11 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.Programa.Controllers.Enums.AseEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 import com.edcards.edcards.Programa.Controllers.NIFValidator;
 import javafx.collections.FXCollections;
@@ -19,6 +21,8 @@ import javafx.stage.FileChooser;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -32,6 +36,7 @@ public class CriarUserController {
     LocalDate data;
     UsuarioEnum tipo;
     AseEnum ase;
+    byte[] fotoBLL;
     private volatile boolean isRunning = true;
     private ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
     @FXML
@@ -76,7 +81,11 @@ public class CriarUserController {
             selFoto.getExtensionFilters().add(extFilter);
 
             File foto = selFoto.showOpenDialog(null);
-
+            try {
+                fotoBLL = imageToByteArrayy(foto);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             if (foto != null) {
                 Image image = new Image(foto.toURI().toString());
                 imageUser.setImage(image);
@@ -102,14 +111,31 @@ public class CriarUserController {
             }
         }
     }
+    public static byte[] imageToByteArrayy(File imageFile) throws IOException {
+        try (FileInputStream fis = new FileInputStream(imageFile)) {
+            byte[] bytes = new byte[(int) imageFile.length()];
+            fis.read(bytes);
+            return bytes;
+        }
+    }
     private void aguardarCartao() {
         nfcExecutar.submit(() -> {
             while (isRunning) {
                 try {
                     String idCartao = LerCartao.lerIDCartao();
-                    cardID.setText(idCartao);
-                    break;
 
+                    if (CartaoBLL.existenteNFC(idCartao) && CartaoBLL.getIdUserByNFC(idCartao) == 0) {
+                        CartaoBLL.getIdUserByNFC(idCartao);
+                        cardID.setText(idCartao);
+                    } else {
+                        System.out.println(ErrorEnum.err2 + " ou " + ErrorEnum.err14);
+                        isRunning = true;
+                    }
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 } catch (Exception ignored) {
                 }
             }
@@ -132,10 +158,11 @@ public class CriarUserController {
             ase = AseEnum.valueOf(AsePicker.getValue());
             nus = Integer.parseInt(numUtSaudeField.getText());
 
-            if (nome != null || cardID != null||turma != 0 || morada != null || email != null || nif != null || numEE != 0 || num != 0 || numEEfield != null || imgUser != null || idCartao != null || ase != null || nus != 0) {
+            if (nome != null || idCartao != null||turma != 0 || morada != null || email != null || nif != null || numEE != 0 || num != 0 || numEEfield != null || imgUser != null || ase != null || nus != 0) {
                 System.out.println(nome + morada + email + nif + numEE + num + idCartao + imgUser + data + ase + nus);
                 if (NIFValidator.isValidNIF(nif)) {
-                    UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, nif );
+                    UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, nif, fotoBLL);
+
                     UsersBLL.inserirAluno(num, numEE, email, turma, nus, ase);
                 }
 
@@ -143,8 +170,13 @@ public class CriarUserController {
                 System.out.println(ErrorEnum.err5);
             }
         } else {
-            if (NIFValidator.isValidNIF(nif)) {
-                UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, nif );
+            if(nome!= null || cardID != null || tipo != null || morada != null || nif != null){
+                if (NIFValidator.isValidNIF(nif)) {
+                    UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, nif, fotoBLL);
+                }
+            }
+            else{
+                System.out.println(ErrorEnum.err5);
             }
         }
     }

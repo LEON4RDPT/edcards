@@ -67,7 +67,6 @@ public class    GlobalVAR {
             ByteArrayInputStream bais = new ByteArrayInputStream(byteArray);
 
             try {
-                // Read the byte array into a BufferedImage
                 BufferedImage bufferedImage = ImageIO.read(bais);
                 if (bufferedImage == null) {
                     throw new IOException("BufferedImage is null after reading byte array");
