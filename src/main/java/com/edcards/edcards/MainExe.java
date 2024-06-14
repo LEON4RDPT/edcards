@@ -57,7 +57,6 @@ public class MainExe extends Application {
                     }
                 });
 
-                // Start a new thread to run additional logic
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -100,7 +99,7 @@ public class MainExe extends Application {
                 if (userByNFC != null) {
                     var pessoa = UsersBLL.getUser(userByNFC.getIduser());
                     GlobalVAR.Dados.setPessoaAtual(pessoa);
-                    System.out.println("DEU");
+                    System.out.println("DEU"); //feedback
                     return;
                 }
             } catch (Exception e) {
