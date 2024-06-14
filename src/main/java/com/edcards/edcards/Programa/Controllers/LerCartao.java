@@ -34,7 +34,6 @@ public class LerCartao {
                     card.disconnect(false);
                     return idCartao;
                 }
-                TimeUnit.SECONDS.sleep(2);
             } catch (CardException | InterruptedException e) {
                 e.printStackTrace();
             }

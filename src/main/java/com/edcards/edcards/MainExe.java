@@ -3,7 +3,6 @@ package com.edcards.edcards;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
-import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -17,10 +16,10 @@ import javax.smartcardio.CardException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class MainExe extends Application {
-    List<String> allNfc = new ArrayList<String>();
+    private List<String> allNfc = new ArrayList<>();
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainExe.class.getResource("ReadCard.fxml"));
@@ -32,24 +31,21 @@ public class MainExe extends Application {
 
         var x = CartaoBLL.getAllCards();
         if (x == null) {
-            //feedback no cards!!
+            System.out.println("No cards available in the database.");
             return;
         }
         allNfc = List.of(x);
 
-
-
-
-        Task<Pessoa> task = new Task<Pessoa>() {
+        Task<String> initialTask = new Task<String>() {
             @Override
-            protected Pessoa call() throws Exception {
+            protected String call() throws Exception {
                 return cartaoLido();
             }
         };
 
-        task.setOnSucceeded(event -> {
-            Pessoa pessoa = task.getValue();
-            if (pessoa != null) {
+        initialTask.setOnSucceeded(event -> {
+            var card = initialTask.getValue();
+            if (card != null) {
                 Platform.runLater(() -> {
                     try {
                         FXMLLoader pinLoader = new FXMLLoader(getClass().getResource("PIN.fxml"));
@@ -60,43 +56,56 @@ public class MainExe extends Application {
                         e.printStackTrace();
                     }
                 });
+
+                // Start a new thread to run additional logic
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        runAdditionalLogic(card);
+                    }
+                }).start();
             }
         });
 
-        new Thread(task).start();
+        new Thread(initialTask).start();
     }
 
-    public Pessoa cartaoLido() {
-
+    public String cartaoLido() {
         while (true) {
             try {
                 String cartao = LerCartao.lerIDCartao();
-                System.out.println(cartao); //feedback
-                Pessoa pessoa = null;
-                try {
-                    var userByNFC = CartaoBLL.getUserByNFC(cartao);
-                    if (userByNFC != null) {
-                        pessoa = UsersBLL.getUser(userByNFC.getIduser());
-                        System.out.println("ID: " + pessoa.getIduser());
-                        System.out.println("Número do Cartão: " + pessoa.getNumCartao());
-                        GlobalVAR.Dados.setPessoaAtual(pessoa);
-                        return pessoa;
-                    } else {
-                        System.err.println("Cartão não encontrado na DB.");
 
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (!allNfc.contains(cartao)) {
+                    continue;
                 }
-            } catch (CardException | InterruptedException e) {
-                throw new RuntimeException(e);
+                return cartao;
+            } catch (CardException e) {
+                e.printStackTrace();
+                break; // Exit the loop on CardException
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                Thread.currentThread().interrupt(); // Restore interrupted status
+                break; // Exit the loop on InterruptedException
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+        }
+        return null;
+    }
 
-
-
-
-
-
+    public void runAdditionalLogic(String card) {
+        while (true) {
+            try {
+                var userByNFC = CartaoBLL.getUserByNFC(card);
+                if (userByNFC != null) {
+                    var pessoa = UsersBLL.getUser(userByNFC.getIduser());
+                    GlobalVAR.Dados.setPessoaAtual(pessoa);
+                    System.out.println("DEU");
+                    return;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
