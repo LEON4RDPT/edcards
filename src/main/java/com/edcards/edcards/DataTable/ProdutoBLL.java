@@ -116,6 +116,17 @@ public class ProdutoBLL extends DAL {
         DefaultBLL bll = new DefaultBLL("produto");
         bll.setOne("tipo", tipo.toDbValue() ,"id",id);
     }
+    public static Produto getProduto(String nome) {
+        DefaultBLL bll = new DefaultBLL("produto");
+        Map<String, Object> row = bll.getAllinOne("nome",nome);
+
+        if (row == null) {
+            return null;
+        }
+
+        transformProduto(row);
+        return null;
+    }
     public static Produto getProduto(int id) {
         DefaultBLL bll = new DefaultBLL("produto");
         Map<String, Object> row = bll.getAllinOne("id",id);
@@ -124,7 +135,8 @@ public class ProdutoBLL extends DAL {
             return null;
         }
 
-        return transformProduto(row);
+        transformProduto(row);
+        return null;
     }
     public static Produto transformProduto(Map<String,Object> ob) {
         Produto produto = new Produto(0);
