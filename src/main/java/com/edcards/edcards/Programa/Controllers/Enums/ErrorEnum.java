@@ -61,6 +61,16 @@ public enum ErrorEnum {
     },
     err12{
         public String toString() {return "Utilizador não encontrado";}
+    },
+    err13{
+        public String toString() {
+            return "Cartão já existe na BLL";
+        }
+    },
+    err14{
+        public String toString() {
+            return "Cartao com user associado";
+        }
     };
 
     public int toDbValue() {return this.ordinal();}

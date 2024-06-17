@@ -1,6 +1,7 @@
 package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.UsersBLL;
+import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -22,6 +24,7 @@ public class ModUserController {
     Image imgUser;
     private final boolean isRunning = true;
     private final ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
+    List<Pessoa> users;
     @FXML
     private TextField nameField, moradaField, emailField, nifField, numField, numEEfield;
     @FXML
@@ -46,7 +49,7 @@ public class ModUserController {
         ObservableList<String> opcoes = FXCollections.observableArrayList(
                 "Administrador", "Aluno", "Funcionário"
         );
-
+        users = UsersBLL.getUsersAll();
         tipoPicker.setItems(opcoes);
 
         imageUser.setOnMouseClicked(event -> {
@@ -65,7 +68,7 @@ public class ModUserController {
     }
     @FXML
     public void selectUser(ActionEvent event) {
-        //todo estudar isto pqp
+
     }
     private void usersLoad() {
         ObservableList<String> usersLoad = FXCollections.observableArrayList(

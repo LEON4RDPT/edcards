@@ -56,7 +56,6 @@ public class MainExe extends Application {
                         e.printStackTrace();
                     }
                 });
-
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
