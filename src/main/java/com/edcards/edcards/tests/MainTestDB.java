@@ -5,9 +5,6 @@ import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 
 public class MainTestDB {
     public static void main(String[] args) {
-        for (var nfc : CartaoBLL.getAllCards()) {
-            System.out.println(nfc);
-        }
 
 
 
