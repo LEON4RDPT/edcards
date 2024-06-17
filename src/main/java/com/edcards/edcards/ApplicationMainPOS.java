@@ -1,4 +1,4 @@
-package com.edcards.edcards.tests;
+package com.edcards.edcards;
 
 import com.edcards.edcards.FormControllers.Pos;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
@@ -6,7 +6,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.kordamp.bootstrapfx.BootstrapFX;
 
 import java.io.IOException;
 

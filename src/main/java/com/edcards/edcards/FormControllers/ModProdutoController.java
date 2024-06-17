@@ -51,7 +51,7 @@ public class ModProdutoController {
         categoria = ProdutoEnum.valueOf(String.valueOf(cBoxCategory.getSelectionModel()));
         nome = nameField.getText();
         preco = priceValue.getValue();
-        ProdutoBLL.inserirProduto(nome,categoria, preco, true);
+        //todo AVRAM - Update na bll ta onde?
     }
 
     public void loadNomes(ActionEvent eventvent) {
@@ -70,9 +70,10 @@ public class ModProdutoController {
         String produto = cBoxName.getSelectionModel().getSelectedItem();
         prodt= ProdutoBLL.getProduto(produto);
         prodt.getIdProduto();
-
         nameField.setText(prodt.getNome());
         cBoxChangeCategory.setValue(prodt.getTipo().name());
         priceValue.getValueFactory().setValue(prodt.getPreco());
     }
+
+
 }
