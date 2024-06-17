@@ -1,4 +1,4 @@
-package com.edcards.edcards.NotDoneApps;
+package com.edcards.edcards.tests;
 
 import com.edcards.edcards.MainExe;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;

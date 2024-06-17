@@ -59,39 +59,6 @@
          </font>
       </Label>
       <DatePicker fx:id="dateField" layoutX="334.0" layoutY="285.0" prefHeight="26.0" prefWidth="216.0" />
-      <Pane layoutX="771.0" layoutY="138.0" prefHeight="348.0" prefWidth="416.0" style="-fx-background-color: lightgrey;">
-         <children>
-            <Label layoutX="9.0" layoutY="56.0" text="Nº Telefone EE:">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="numEEfield" layoutX="9.0" layoutY="91.0" prefHeight="25.0" prefWidth="166.0" />
-            <Label layoutX="8.0" layoutY="164.0" text="Email Aluno:">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="emailField" layoutX="8.0" layoutY="199.0" prefHeight="25.0" prefWidth="399.0" />
-            <Label layoutX="8.0" layoutY="265.0" text="Turma Numero:">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <ComboBox fx:id="turmaPicker" layoutX="14.0" layoutY="300.0" prefHeight="25.0" prefWidth="166.0" />
-            <Label text="Dados Aluno">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Label layoutX="771.0" layoutY="45.0" text="Numero de Processo:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <TextField fx:id="numField" layoutX="771.0" layoutY="80.0" prefHeight="25.0" prefWidth="166.0" />
       <Button fx:id="modUser" layoutX="1022.0" layoutY="584.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="244.0" text="Modificar Utilizador" />
       <Label layoutX="14.0" layoutY="14.0" text="Selecionar Utilizador:">
       </Label>
@@ -102,5 +69,50 @@
          </font>
 
       </Button>
+      <Pane fx:id="alunoPane" layoutX="770.0" layoutY="106.0" prefHeight="452.0" prefWidth="416.0" style="-fx-background-color: lightgrey;">
+         <children>
+            <Label layoutX="7.0" layoutY="105.0" text="Nº Telefone EE:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="numEEfield" layoutX="7.0" layoutY="140.0" prefHeight="25.0" prefWidth="166.0" />
+            <Label layoutX="9.0" layoutY="167.0" text="Email Aluno:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="emailField" layoutX="9.0" layoutY="202.0" prefHeight="25.0" prefWidth="399.0" />
+            <Label layoutX="7.0" layoutY="232.0" text="Turma Numero:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="turmaPicker" layoutX="7.0" layoutY="267.0" prefHeight="25.0" prefWidth="166.0" />
+            <Label text="Dados Aluno">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="7.0" layoutY="300.0" text="Numero Utente de Saude">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="numUtSaudeField" layoutX="7.0" layoutY="335.0" prefHeight="25.0" prefWidth="166.0" />
+            <Label layoutX="6.0" layoutY="44.0" text="Numero de Processo:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="numField1" layoutX="6.0" layoutY="79.0" prefHeight="25.0" prefWidth="166.0" />
+            <Label layoutX="9.0" layoutY="367.0" text="Apoio Social Escolar(ASE)">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="AsePicker" layoutX="9.0" layoutY="402.0" prefHeight="25.0" prefWidth="81.0" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
