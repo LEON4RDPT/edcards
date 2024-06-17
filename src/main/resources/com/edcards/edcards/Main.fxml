@@ -16,7 +16,7 @@
          </image>
       </ImageView>
       <Button layoutX="752.0" layoutY="674.0" mnemonicParsing="false" text="Mudar PIN" />
-      <Button fx:id="exit" layoutX="14.0" layoutY="674.0" mnemonicParsing="false" text="Sair" />
+      <Button fx:id="exit" layoutX="14.0" layoutY="674.0" mnemonicParsing="false" onAction="#handleExit" text="Sair" />
       <Pane layoutX="859.0" prefHeight="720.0" prefWidth="421.0" style="-fx-background-color: #b8b8b8;">
          <children>
             <Label fx:id="labelNome" layoutX="20.0" layoutY="94.0" text="Nome:">
@@ -39,7 +39,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="btnPosAdmin" layoutX="20.0" layoutY="256.0" mnemonicParsing="false" onAction="#handlePosClick" prefHeight="25.0" prefWidth="382.0" text="POS" />
+            <Button fx:id="btnPosAdmin" layoutX="20.0" layoutY="256.0" mnemonicParsing="false" onAction="#handlePosClick" prefHeight="25.0" prefWidth="382.0" text="Painel Admin" />
          </children>
       </Pane>
    </children>
