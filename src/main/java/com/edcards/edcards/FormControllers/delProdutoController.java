@@ -17,7 +17,7 @@ import java.util.List;
 public class delProdutoController {
     String nome;
     List<Produto> nomes;
-    ProdutoEnum categoria;
+    ProdutoEnum categoriaa;
     Produto prodt;
     @FXML
     private ComboBox cBoxName;
@@ -29,9 +29,10 @@ public class delProdutoController {
     private Button remPrdt, VoltarBtn;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         setChoiceEnum();
     }
+
     private void setChoiceEnum() {
 
         var items = cBoxCategory.getItems();
@@ -39,9 +40,11 @@ public class delProdutoController {
         cBoxCategory.getSelectionModel().select(0);
 
     }
-    public void loadNomes(ActionEvent eventvent) {
-        categoria = ProdutoEnum.valueOf(String.valueOf(cBoxCategory.getSelectionModel().getSelectedItem()));
-        nomes = ProdutoBLL.getALlByEnum(categoria);
+
+    @FXML
+    public void loadNomes(ActionEvent event) {
+        categoriaa = ProdutoEnum.valueOf(String.valueOf(cBoxCategory.getSelectionModel().getSelectedItem()));
+        nomes = ProdutoBLL.getALlByEnum(categoriaa);
         if (nomes != null) {
             ObservableList<String> nomesList = FXCollections.observableArrayList();
             for (Produto p : nomes) {
@@ -51,3 +54,4 @@ public class delProdutoController {
         }
     }
 }
+

@@ -54,7 +54,7 @@ public class ModProdutoController {
         //todo AVRAM - Update na bll ta onde?
     }
 
-    public void loadNomes(ActionEvent eventvent) {
+    public void loadNomes(ActionEvent event) {
         categoria = ProdutoEnum.valueOf(String.valueOf(cBoxCategory.getSelectionModel().getSelectedItem()));
         nomes = ProdutoBLL.getALlByEnum(categoria);
         if (nomes != null) {

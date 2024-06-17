@@ -1,5 +1,6 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
@@ -44,8 +45,8 @@ public class ModUserController {
     @FXML
     public void initialize() {
 
-       usersLoad();
-
+        usersLoad();
+        aguardarCartao();
         ObservableList<String> opcoes = FXCollections.observableArrayList(
                 "Administrador", "Aluno", "Funcionário"
         );
@@ -69,6 +70,20 @@ public class ModUserController {
     @FXML
     public void selectUser(ActionEvent event) {
 
+    }
+    private void aguardarCartao() {
+        nfcExecutar.submit(() -> {
+            while (isRunning) {
+                try {
+                    String idCartao = LerCartao.lerIDCartao();
+                    int user = CartaoBLL.getIdUserByNFC(idCartao);
+                    UsersBLL.getUser(user);
+                    break;
+
+                } catch (Exception ignored) {
+                }
+            }
+        });
     }
     private void usersLoad() {
         ObservableList<String> usersLoad = FXCollections.observableArrayList(
