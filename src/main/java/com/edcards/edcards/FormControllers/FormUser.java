@@ -16,8 +16,11 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class FormUser {
+    @FXML
+    private Button exit;
     @FXML
     private ImageView imageUser;
     @FXML
@@ -40,21 +43,21 @@ public class FormUser {
     public void initialize() {
         Pessoa pessoaA = GlobalVAR.Dados.getPessoaAposPin();
         imageUser.setImage(pessoaA.getFoto());
-        labelNome.setText(pessoaA.getNome());
-        labelSaldo.setText(String.valueOf(pessoaA.getSaldo()));
+        labelNome.setText("Nome: " + pessoaA.getNome());
+        labelSaldo.setText("Saldo: " + String.valueOf(pessoaA.getSaldo()) + "€");
 
-        if (pessoaA instanceof Funcionario) {
-            labelTipo.setText("Funcionario");
-        } else if (pessoaA instanceof Aluno) {
-            labelTipo.setText("Aluno");
-        } else if (pessoaA instanceof Admin) {
-            labelTipo.setText("Administrador");
+        switch (pessoaA) {
+            case Funcionario funcionario -> labelTipo.setText("Tipo: Funcionario");
+            case Aluno aluno -> labelTipo.setText("Tipo: Aluno");
+            case Admin admin -> labelTipo.setText("Tipo: Administrador");
+            default -> {
+            }
         }
     }
 
     @FXML
     private void handlePosClick(ActionEvent event) throws IOException {
-        Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/POSAdmin.fxml"));
+        Parent newSceneParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/edcards/edcards/POSAdmin.fxml")));
         Scene posAdminScene = new Scene(newSceneParent);
         Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
         stage.setScene(posAdminScene);
