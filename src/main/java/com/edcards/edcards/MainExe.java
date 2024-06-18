@@ -20,6 +20,12 @@ import java.util.List;
 public class MainExe extends Application {
     private List<String> allNfc = new ArrayList<>();
 
+    public void loadAgain() {
+
+    }
+
+
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainExe.class.getResource("ReadCard.fxml"));
@@ -67,6 +73,8 @@ public class MainExe extends Application {
 
         new Thread(initialTask).start();
     }
+
+
 
     public String cartaoLido() {
         while (true) {
