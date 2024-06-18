@@ -44,7 +44,7 @@ public class FormUser {
     @FXML
     public void initialize() {
         setHiddenButtons();
-        Pessoa pessoaA = GlobalVAR.Dados.getPessoaAposPin();
+        Pessoa pessoaA = GlobalVAR.Dados.getPessoaAtual();
         imageUser.setImage(pessoaA.getFoto());
         labelNome.setText("Nome: " + pessoaA.getNome());
         labelSaldo.setText("Saldo: " + pessoaA.getSaldo() + "€");
@@ -59,7 +59,7 @@ public class FormUser {
     }
 
     @FXML
-    private void handlePosClick(ActionEvent event) throws IOException {
+    private void handlePosAdmClick(ActionEvent event) throws IOException {
         Parent newSceneParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/edcards/edcards/POSAdmin.fxml")));
         Scene posAdminScene = new Scene(newSceneParent);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -81,7 +81,19 @@ public class FormUser {
         }
     }
 
-    public void handleExit(ActionEvent actionEvent) {
+    @FXML
+    private void handleExit(ActionEvent actionEvent) {
+        GlobalVAR.Dados.setPessoaAtual(null);
+
+        FXMLLoader mainAppLoader = new FXMLLoader(getClass().getResource("/com/edcards/edcards/ReadCard.fxml"));
+        Parent mainAppRoot = null;
+        try {
+            mainAppRoot = mainAppLoader.load();
+        } catch (IOException ignored) { }
+        Scene mainAppScene = new Scene(mainAppRoot);
+        GlobalVAR.Dados.getCurrentStage().setScene(mainAppScene);
+
+
 
     }
 }

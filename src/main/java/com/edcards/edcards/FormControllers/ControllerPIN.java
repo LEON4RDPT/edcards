@@ -68,8 +68,6 @@ public class ControllerPIN {
                 int pinDaPessoa = pessoaAtual.getPin();
                 if (pin == pinDaPessoa) {
                     try {
-                        GlobalVAR.Dados.setPessoaAposPin(pessoaAtual);
-                        System.out.println(pessoaAtual.getNome() + " " +  pessoaAtual.getSaldo() + " " + pessoaAtual.getNumCartao());
                         FXMLLoader mainAppLoader = new FXMLLoader(getClass().getResource("/com/edcards/edcards/Main.fxml"));
                         Parent mainAppRoot = mainAppLoader.load();
                         Scene mainAppScene = new Scene(mainAppRoot);

@@ -39,7 +39,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Button fx:id="btnPosAdmin" layoutX="20.0" layoutY="256.0" mnemonicParsing="false" onAction="#handlePosClick" prefHeight="25.0" prefWidth="382.0" text="Painel Admin" />
+            <Button fx:id="btnPosAdmin" layoutX="20.0" layoutY="256.0" mnemonicParsing="false" onAction="#handlePosAdmClick" prefHeight="25.0" prefWidth="382.0" text="Painel Admin" />
          </children>
       </Pane>
    </children>
