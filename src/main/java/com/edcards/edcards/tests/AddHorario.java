@@ -7,11 +7,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class DelProduto extends Application {
+public class AddHorario extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainExe.class.getResource("/com/edcards/edcards/DelProduto.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainExe.class.getResource("/com/edcards/edcards/AddHorario.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         stage.show();

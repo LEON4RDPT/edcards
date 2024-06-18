@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class AddProdutoController {
+public class  AddProdutoController {
     String nome;
     ProdutoEnum categoria;
     Double preco;

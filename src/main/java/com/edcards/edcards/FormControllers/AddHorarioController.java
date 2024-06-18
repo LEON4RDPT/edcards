@@ -8,54 +8,34 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class ModUserController {
-    String nome, morada, email, nif, num, numEE, turma, tipo, idCartao;
-    Image imgUser;
+public class AddHorarioController {
     private final boolean isRunning = true;
     private final ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
+    @FXML
+    private ImageView HorarioUser;
+    @FXML
+    private ComboBox userPicker;
+    @FXML
+    private Text nomeText;
+    Pessoa pessoa;
     List<Pessoa> users;
     @FXML
-    private TextField nameField, moradaField, emailField, nifField, numField, numEEfield;
-    @FXML
-    private DatePicker dateField;
-    @FXML
-    private ComboBox<String> tipoPicker;
-    @FXML
-    private ComboBox<String> turmaPicker;
-    @FXML
-    private ComboBox<String> userPicker;
-    @FXML
-    private ImageView imageUser;
-    @FXML
-    private Text cardID;
-    @FXML
-    private Button modUser;
-    Pessoa pessoa;
-    @FXML
-    public void initialize() {
-
+    public void initialize(){
         usersLoad();
         aguardarCartao();
-        ObservableList<String> opcoes = FXCollections.observableArrayList(
-                "Administrador", "Aluno", "Funcionário"
-        );
-        users = UsersBLL.getUsersAll();
-        tipoPicker.setItems(opcoes);
-
-        imageUser.setOnMouseClicked(event -> {
-         FileChooser selFoto = new FileChooser();
+        HorarioUser.setOnMouseClicked(event -> {
+            FileChooser selFoto = new FileChooser();
             selFoto.setTitle("Escolha uma Foto...");
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Imagens (*.png, *.jpg)", "*.png", "*.jpg");
             selFoto.getExtensionFilters().add(extFilter);
@@ -64,13 +44,18 @@ public class ModUserController {
 
             if (foto != null) {
                 Image image = new Image(foto.toURI().toString());
-                imageUser.setImage(image);
+                HorarioUser.setImage(image);
             }
         });
     }
-    @FXML
-    public void selectUser(ActionEvent event) {
-        //todo
+    private void usersLoad() {
+        ObservableList<String> usersLoad = FXCollections.observableArrayList(
+                UsersBLL.getUsersAll().toString()
+        );
+    }
+    public void loadUser(ActionEvent event) {
+        pessoa = (Pessoa) userPicker.getSelectionModel().getSelectedItem();
+        nomeText.setText(pessoa.getNome());
     }
     private void aguardarCartao() {
         nfcExecutar.submit(() -> {
@@ -85,10 +70,5 @@ public class ModUserController {
                 }
             }
         });
-    }
-    private void usersLoad() {
-        ObservableList<String> usersLoad = FXCollections.observableArrayList(
-                UsersBLL.getUsersAll().toString()
-        );
     }
 }
