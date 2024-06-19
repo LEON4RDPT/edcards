@@ -36,5 +36,23 @@
         </introspection-scope>
       </schema-mapping>
     </data-source>
+    <data-source name="@ptgui.myddns.me" uuid="45d2f073-5ac7-4bbb-8a56-4ef87d36378e">
+      <database-info product="MySQL" version="5.5.5-10.4.28-MariaDB" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-j-8.2.0 (Revision: 06a1f724497fd81c6a659131fda822c9e5085b6c)" dbms="MARIADB" exact-version="10.4.28" exact-driver-version="8.2">
+        <extra-name-characters>#@</extra-name-characters>
+        <identifier-quote-string>`</identifier-quote-string>
+        <jdbc-catalog-is-schema>true</jdbc-catalog-is-schema>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>Litz18</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema">
+            <name qname="@" />
+            <name qname="db_escola" />
+          </node>
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
   </component>
 </project>

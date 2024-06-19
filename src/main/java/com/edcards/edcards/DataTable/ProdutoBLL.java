@@ -142,7 +142,7 @@ public class ProdutoBLL extends DAL {
         Produto produto = new Produto(0);
         for (Map.Entry<String, Object> entry : ob.entrySet()) {
             switch (entry.getKey()) {
-                case "produto_id":
+                case "id":
                     produto.setId((int) entry.getValue());
                     break;
                 case "nome":

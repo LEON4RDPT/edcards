@@ -12,11 +12,13 @@ import javafx.scene.control.*;
 import java.util.List;
 
 public class ModProdutoController {
+    public CheckBox disp;
     String nome, choice;
     List<Produto> nomes, prod;
     ProdutoEnum categoriaChange, categoria, nomePicker;
+    boolean disponivel;
     Double preco;
-    Produto prodt = new Produto(0);
+    Produto prodt;
     @FXML
     private TextField nameField;
     @FXML
@@ -28,10 +30,10 @@ public class ModProdutoController {
     @FXML
     public void initialize(){
         priceValue.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(
-                0.0,
+                0.00,
                 1000.0,
-                0.5,
-                0.50
+                0.05,
+                0.05
         ));
         setChoiceEnum();
 
@@ -48,10 +50,23 @@ public class ModProdutoController {
     }
     @FXML
     private void modPrdtClick(ActionEvent event) {
-        categoria = ProdutoEnum.valueOf(String.valueOf(cBoxCategory.getSelectionModel()));
+        categoria = ProdutoEnum.valueOf(cBoxCategory.getSelectionModel().getSelectedItem());
+        System.out.println(categoria);
         nome = nameField.getText();
+        System.out.println(nome);
+
         preco = priceValue.getValue();
-        //todo AVRAM - Update na bll ta onde?
+        System.out.println(preco);
+
+        disponivel = disp.isSelected();
+        var id = prodt.getIdProduto();
+
+        System.out.println(id);
+
+        ProdutoBLL.setNome(id,nome);
+        ProdutoBLL.setTipo(id,categoria);
+        ProdutoBLL.setPreco(id,preco);
+        ProdutoBLL.setDisp(id, disponivel);
     }
 
     public void loadNomes(ActionEvent event) {
@@ -69,10 +84,11 @@ public class ModProdutoController {
     public void loadProduto(ActionEvent actionEvent) {
         String produto = cBoxName.getSelectionModel().getSelectedItem();
         prodt = ProdutoBLL.getProduto(produto);
-        var id = prodt.getIdProduto();
         nameField.setText(prodt.getNome());
         cBoxChangeCategory.setValue(prodt.getTipo().name());
         priceValue.getValueFactory().setValue(prodt.getPreco());
+        disp.setSelected(prodt.isDisponivel());
+
     }
 
 
