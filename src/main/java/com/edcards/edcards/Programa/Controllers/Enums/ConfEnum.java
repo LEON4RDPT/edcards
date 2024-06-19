@@ -70,6 +70,11 @@ public enum ConfEnum {
         public String toString() {
             return "Refeição desmarcada com sucesso";
         }
+    },
+    conf16{
+        public String toString() {
+            return "PIN's Iguais. Pin alterado com sucesso";
+        }
     };
 
 

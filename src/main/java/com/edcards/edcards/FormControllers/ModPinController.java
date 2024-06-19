@@ -1,8 +1,13 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.DataTable.CartaoBLL;
+import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.Programa.Classes.Pessoa;
+import com.edcards.edcards.Programa.Controllers.Enums.ConfEnum;
+import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
+import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,8 +20,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ModPinController {
+    private volatile boolean isRunning = true;
+    private ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
     public GridPane gridbuttons;
     public Label pinText;
     public Button backBtn;
@@ -27,15 +36,14 @@ public class ModPinController {
     @FXML
     private Button btn01;
 
-    private int valorAtual;
+    private int valorAtual, pin1, pin2;
+    boolean scnd = false;
 
     @FXML
     private TextField field1, field2, field3, field4, field5, field6;
 
     @FXML
     private Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
-
-    private int pin;
     @FXML
     public void initialize() {
         valorAtual = 0;
@@ -53,44 +61,53 @@ public class ModPinController {
 
     private void ifButtonPressed(Button button) {
         valorAtual = Integer.parseInt(button.getText());
-        if (field1.getText().isEmpty()) {
-            field1.setText(String.valueOf(valorAtual));
-        } else if (field2.getText().isEmpty()) {
-            field2.setText(String.valueOf(valorAtual));
-        } else if (field3.getText().isEmpty()) {
-            field3.setText(String.valueOf(valorAtual));
-        } else if (field4.getText().isEmpty()) {
-            field4.setText(String.valueOf(valorAtual));
-        } else if (field5.getText().isEmpty()) {
-            field5.setText(String.valueOf(valorAtual));
-        } else if (field6.getText().isEmpty()) {
-            field6.setText(String.valueOf(valorAtual));
-            pin = Integer.parseInt(field1.getText() + field2.getText() + field3.getText() + field4.getText() + field5.getText() + field6.getText());
-            System.out.println(pin);
-
-            Pessoa pessoaAtual = GlobalVAR.Dados.getPessoaAtual();
-            if (pessoaAtual != null) {
-                int pinDaPessoa = pessoaAtual.getPin();
-                if (pin == pinDaPessoa) {
-                    try {
-                        //GlobalVAR.Dados.setPessoaAposPin(pessoaAtual);
-                        System.out.println(pessoaAtual.getNome() + " " +  pessoaAtual.getSaldo() + " " + pessoaAtual.getNumCartao());
-                        FXMLLoader mainAppLoader = new FXMLLoader(getClass().getResource("/com/edcards/edcards/Main.fxml"));
-                        Parent mainAppRoot = mainAppLoader.load();
-                        Scene mainAppScene = new Scene(mainAppRoot);
-                        GlobalVAR.Dados.getCurrentStage().setScene(mainAppScene);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    FeedBackController.feedbackErro("Password Incorreta!");
-                    clean();
-                }
-            } else {
-                FeedBackController.feedbackErro("Nenhum Usuario encontrado!");
+        if (scnd == false) {
+            if (field1.getText().isEmpty()) {
+                field1.setText(String.valueOf(valorAtual));
+            } else if (field2.getText().isEmpty()) {
+                field2.setText(String.valueOf(valorAtual));
+            } else if (field3.getText().isEmpty()) {
+                field3.setText(String.valueOf(valorAtual));
+            } else if (field4.getText().isEmpty()) {
+                field4.setText(String.valueOf(valorAtual));
+            } else if (field5.getText().isEmpty()) {
+                field5.setText(String.valueOf(valorAtual));
+            } else if (field6.getText().isEmpty()) {
+                field6.setText(String.valueOf(valorAtual));
+                pin1 = Integer.parseInt(field1.getText() + field2.getText() + field3.getText() + field4.getText() + field5.getText() + field6.getText());
+                System.out.println(pin1);
                 clean();
+                scnd = true;
+            }
+        }else if (scnd == true) {
+            if (field1.getText().isEmpty()) {
+                field1.setText(String.valueOf(valorAtual));
+            } else if (field2.getText().isEmpty()) {
+                field2.setText(String.valueOf(valorAtual));
+            } else if (field3.getText().isEmpty()) {
+                field3.setText(String.valueOf(valorAtual));
+            } else if (field4.getText().isEmpty()) {
+                field4.setText(String.valueOf(valorAtual));
+            } else if (field5.getText().isEmpty()) {
+                field5.setText(String.valueOf(valorAtual));
+            } else if (field6.getText().isEmpty()) {
+                field6.setText(String.valueOf(valorAtual));
+                pin2 = Integer.parseInt(field1.getText() + field2.getText() + field3.getText() + field4.getText() + field5.getText() + field6.getText());
+                System.out.println(pin2);
+                clean();
+                if (pin1 == pin2){
+                    System.out.println(ConfEnum.conf16);
+                    pin1=0;
+                    pin2=0;
+                } else{
+                    System.err.println(ErrorEnum.err15);
+                    scnd = false;
+                    pin1=0;
+                    pin2=0;
+                }
             }
         }
+
     }
 
 
@@ -106,5 +123,20 @@ public class ModPinController {
     @FXML
     private void buttonLimpar(ActionEvent actionEvent) {
         clean();
+    }
+
+    private void aguardarCartao() {
+        nfcExecutar.submit(() -> {
+            while (isRunning) {
+                try {
+                    String idCartao = LerCartao.lerIDCartao();
+                    int user = CartaoBLL.getIdUserByNFC(idCartao);
+                    UsersBLL.getUser(user);
+                    break;
+
+                } catch (Exception ignored) {
+                }
+            }
+        });
     }
 }

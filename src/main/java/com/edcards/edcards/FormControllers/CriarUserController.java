@@ -162,7 +162,6 @@ public class CriarUserController {
                 System.out.println(nome + morada + email + nif + numEE + num + idCartao + imgUser + data + ase + nus);
                 if (NIFValidator.isValidNIF(nif)) {
                     UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, nif, fotoBLL);
-
                     UsersBLL.inserirAluno(num, numEE, email, turma, nus, ase);
                 }
 

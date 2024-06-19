@@ -71,6 +71,11 @@ public enum ErrorEnum {
         public String toString() {
             return "Cartao com user associado";
         }
+    },
+    err15{
+        public String toString() {
+            return "PIN's não Iguais!!!";
+        }
     };
 
     public int toDbValue() {return this.ordinal();}
