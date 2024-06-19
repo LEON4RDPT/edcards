@@ -16,7 +16,7 @@ public class ModProdutoController {
     List<Produto> nomes, prod;
     ProdutoEnum categoriaChange, categoria, nomePicker;
     Double preco;
-    Produto prodt;
+    Produto prodt = new Produto(0);
     @FXML
     private TextField nameField;
     @FXML
@@ -68,8 +68,8 @@ public class ModProdutoController {
 
     public void loadProduto(ActionEvent actionEvent) {
         String produto = cBoxName.getSelectionModel().getSelectedItem();
-        prodt= ProdutoBLL.getProduto(produto);
-        prodt.getIdProduto();
+        prodt = ProdutoBLL.getProduto(produto);
+        var id = prodt.getIdProduto();
         nameField.setText(prodt.getNome());
         cBoxChangeCategory.setValue(prodt.getTipo().name());
         priceValue.getValueFactory().setValue(prodt.getPreco());

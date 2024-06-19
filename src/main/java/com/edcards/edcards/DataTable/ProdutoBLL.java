@@ -124,8 +124,8 @@ public class ProdutoBLL extends DAL {
             return null;
         }
 
-        transformProduto(row);
-        return null;
+
+        return transformProduto(row);
     }
     public static Produto getProduto(int id) {
         DefaultBLL bll = new DefaultBLL("produto");
