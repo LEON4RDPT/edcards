@@ -96,4 +96,15 @@ public class FormUser {
 
 
     }
+
+    @FXML
+    private void handlePosClick(ActionEvent event) throws IOException {
+
+        Parent newSceneParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/edcards/edcards/POS.fxml")));
+        Scene pos = new Scene(newSceneParent);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(pos);
+        stage.show();
+
+    }
 }

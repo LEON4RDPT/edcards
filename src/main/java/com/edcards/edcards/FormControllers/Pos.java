@@ -1,5 +1,8 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.DataTable.CartaoBLL;
+import com.edcards.edcards.DataTable.UsersBLL;
+import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.Enums.IvaEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
@@ -140,10 +143,7 @@ public class Pos {
         resizeAll();
         setChoiceEnum();
 
-        //FORTEST
-        GlobalVAR.Dados.setPessoaAtual(new Funcionario(0));
-        GlobalVAR.Dados.getPessoaAtual().setNome("Antonio");
-        //FORTEST
+
 
         changeTextBox();
 
@@ -170,7 +170,7 @@ public class Pos {
                 try {
                     String idCartao = LerCartao.lerIDCartao();
                     Platform.runLater(() -> cartaoAluno(idCartao));
-                    break;
+                    return;
                 } catch (Exception ignored) {
                     //nofeedback
                 }
@@ -186,7 +186,8 @@ public class Pos {
     }
     private void cartaoAluno(String idCartao){
         Platform.runLater(() -> {
-            System.out.println("Cartão lido: " + idCartao);
+            GlobalVAR.Dados.setClientePOS(CartaoBLL.getUserByNFC(idCartao));
+            changeTextBox();
         });
     }
     private void setChoiceEnum() {
