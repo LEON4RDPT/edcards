@@ -1,5 +1,6 @@
 package com.edcards.edcards.Programa.Controllers;
 
+import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import javafx.application.Platform;
 import javafx.scene.image.Image;
@@ -20,18 +21,23 @@ public class    GlobalVAR {
         public static Stage currentStage;
 
 
-
         public static void setCurrentStage(Stage currentStage) {
             Dados.currentStage = currentStage;
-
         }
 
         public static void confirmExit() {
-            if (FeedBackController.feedbackYesNo("Tem a certeza que quer fechar a aplicação?","Confimação?")) {
-                Platform.exit(); // Exit the application
-                System.exit(0);
+            if (pessoaAtual == null) {
+                return;
+            }
+            if (pessoaAtual instanceof Admin) {
+                if (FeedBackController.feedbackYesNo("Tem a certeza que quer fechar a aplicação?", "Confimação?")) {
+                    Platform.exit(); // Exit the application
+                    System.exit(0);
+                }
             }
         }
+
+
 
         public static Stage getCurrentStage() {
             return currentStage;
