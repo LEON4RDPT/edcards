@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
+
 public class FormUser {
     public Button btnPosAdmin;
     @FXML
@@ -59,11 +61,8 @@ public class FormUser {
 
     @FXML
     private void handlePosAdmClick(ActionEvent event) throws IOException {
-        Parent newSceneParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/edcards/edcards/POSAdmin.fxml")));
-        Scene posAdminScene = new Scene(newSceneParent);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(posAdminScene);
-        stage.show();
+        setStage("/com/edcards/edcards/POSAdmin.fxml");
+
     }
 
     private void setHiddenButtons() {
@@ -81,26 +80,13 @@ public class FormUser {
     }
 
     @FXML
-    private void handleExit(ActionEvent actionEvent) {
+    private void handleExit(ActionEvent actionEvent) throws IOException {
         GlobalVAR.Dados.setPessoaAtual(null);
-
-        FXMLLoader mainAppLoader = new FXMLLoader(getClass().getResource("/com/edcards/edcards/ReadCard.fxml"));
-        Parent mainAppRoot = null;
-        try {
-            mainAppRoot = mainAppLoader.load();
-        } catch (IOException ignored) { }
-        Scene mainAppScene = new Scene(mainAppRoot);
-        GlobalVAR.Dados.getCurrentStage().setScene(mainAppScene);
-
+        setStage("/com/edcards/edcards/ReadCard.fxml");
     }
 
     @FXML
     private void handlePosClick(ActionEvent event) throws IOException {
-        Parent newSceneParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/edcards/edcards/POS.fxml")));
-        Scene pos = new Scene(newSceneParent);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(pos);
-        stage.show();
-
+        setStage("/com/edcards/edcards/POS.fxml");
     }
 }

@@ -1,5 +1,7 @@
 package com.edcards.edcards;
 
+import com.edcards.edcards.DataTable.UsersBLL;
+import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

@@ -433,11 +433,9 @@ public class Pos {
 
     public void handleButtonClickVoltar(ActionEvent actionEvent) throws IOException {
         if (FeedBackController.feedbackYesNo("Deseja sair?","Confirmação")) {
-            Parent newSceneParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/edcards/edcards/Main.fxml")));
-            Scene main = new Scene(newSceneParent);
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(main);
-            stage.show();
+            GlobalVAR.Dados.setClientePOS(null);
+            GlobalVAR.StageController.setStage("/com/edcards/edcards/Main.fxml");
+
         }
     }
 }

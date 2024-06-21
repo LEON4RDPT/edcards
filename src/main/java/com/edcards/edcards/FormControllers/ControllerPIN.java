@@ -14,6 +14,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import java.io.IOException;
 
+import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
+
 
 public class ControllerPIN {
     public GridPane gridbuttons;
@@ -68,10 +70,7 @@ public class ControllerPIN {
                 int pinDaPessoa = pessoaAtual.getPin();
                 if (pin == pinDaPessoa) {
                     try {
-                        FXMLLoader mainAppLoader = new FXMLLoader(getClass().getResource("/com/edcards/edcards/Main.fxml"));
-                        Parent mainAppRoot = mainAppLoader.load();
-                        Scene mainAppScene = new Scene(mainAppRoot);
-                        GlobalVAR.Dados.getCurrentStage().setScene(mainAppScene);
+                        setStage("/com/edcards/edcards/Main.fxml");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
