@@ -1,5 +1,8 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.DataTable.CartaoBLL;
+import com.edcards.edcards.DataTable.UsersBLL;
+import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.Enums.IvaEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
@@ -14,15 +17,18 @@ import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -140,10 +146,7 @@ public class Pos {
         resizeAll();
         setChoiceEnum();
 
-        //FORTEST
-        GlobalVAR.Dados.setPessoaAtual(new Funcionario(0));
-        GlobalVAR.Dados.getPessoaAtual().setNome("Antonio");
-        //FORTEST
+
 
         changeTextBox();
 
@@ -170,7 +173,7 @@ public class Pos {
                 try {
                     String idCartao = LerCartao.lerIDCartao();
                     Platform.runLater(() -> cartaoAluno(idCartao));
-                    break;
+                    return;
                 } catch (Exception ignored) {
                     //nofeedback
                 }
@@ -186,7 +189,8 @@ public class Pos {
     }
     private void cartaoAluno(String idCartao){
         Platform.runLater(() -> {
-            System.out.println("Cartão lido: " + idCartao);
+            GlobalVAR.Dados.setClientePOS(CartaoBLL.getUserByNFC(idCartao));
+            changeTextBox();
         });
     }
     private void setChoiceEnum() {
@@ -425,5 +429,15 @@ public class Pos {
     }
     public void handleChoiceBoxChange(ActionEvent actionEvent) {
         setProdutosButton();
+    }
+
+    public void handleButtonClickVoltar(ActionEvent actionEvent) throws IOException {
+        if (FeedBackController.feedbackYesNo("Deseja sair?","Confirmação")) {
+            Parent newSceneParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/edcards/edcards/Main.fxml")));
+            Scene main = new Scene(newSceneParent);
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setScene(main);
+            stage.show();
+        }
     }
 }

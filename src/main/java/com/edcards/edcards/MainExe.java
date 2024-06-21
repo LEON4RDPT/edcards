@@ -17,7 +17,12 @@ public class MainExe extends Application {
         stage.setTitle("Aplicação");
         stage.setScene(scene);
         GlobalVAR.Dados.setCurrentStage(stage);
+        GlobalVAR.Dados.getCurrentStage().setOnCloseRequest(event -> {
+            event.consume(); // Consume the close event to prevent the stage from closing
+            GlobalVAR.Dados.confirmExit();
+        });
         stage.show();
+
     }
 
     public static void main(String[] args) {

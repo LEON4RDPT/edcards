@@ -1,6 +1,7 @@
 package com.edcards.edcards.Programa.Controllers;
 
 import com.edcards.edcards.Programa.Classes.Pessoa;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -16,16 +17,25 @@ public class    GlobalVAR {
 
         private static Pessoa pessoaAtual;
         private static Pessoa clientePOS;
+        public static Stage currentStage;
+
+
+
+        public static void setCurrentStage(Stage currentStage) {
+            Dados.currentStage = currentStage;
+
+        }
+
+        public static void confirmExit() {
+            if (FeedBackController.feedbackYesNo("Tem a certeza que quer fechar a aplicação?","Confimação?")) {
+                Platform.exit(); // Exit the application
+                System.exit(0);
+            }
+        }
 
         public static Stage getCurrentStage() {
             return currentStage;
         }
-
-        public static void setCurrentStage(Stage currentStage) {
-            Dados.currentStage = currentStage;
-        }
-
-        public static Stage currentStage;
 
         public static void setPessoaAtual(Pessoa pessoa) {
             pessoaAtual = pessoa;

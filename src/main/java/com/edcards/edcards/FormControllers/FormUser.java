@@ -53,8 +53,7 @@ public class FormUser {
             case Funcionario funcionario -> labelTipo.setText("Tipo: Funcionario");
             case Aluno aluno -> labelTipo.setText("Tipo: Aluno");
             case Admin admin -> labelTipo.setText("Tipo: Administrador");
-            default -> {
-            }
+            default -> { }
         }
     }
 
@@ -93,7 +92,15 @@ public class FormUser {
         Scene mainAppScene = new Scene(mainAppRoot);
         GlobalVAR.Dados.getCurrentStage().setScene(mainAppScene);
 
+    }
 
+    @FXML
+    private void handlePosClick(ActionEvent event) throws IOException {
+        Parent newSceneParent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/edcards/edcards/POS.fxml")));
+        Scene pos = new Scene(newSceneParent);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(pos);
+        stage.show();
 
     }
 }
