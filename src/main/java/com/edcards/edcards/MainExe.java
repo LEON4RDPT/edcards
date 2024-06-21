@@ -21,6 +21,10 @@ public class MainExe extends Application {
             event.consume(); // Consume the close event to prevent the stage from closing
             GlobalVAR.Dados.confirmExit();
         });
+        stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
+
+
         stage.show();
 
     }

@@ -44,10 +44,8 @@ public class ControllerReadCard implements Initializable {
             if (card!= null) {
                 Platform.runLater(() -> {
                     try {
-                        FXMLLoader pinLoader = new FXMLLoader(getClass().getResource("/com/edcards/edcards/PIN.fxml"));
-                        Parent pinRoot = pinLoader.load();
-                        Scene pinScene = new Scene(pinRoot);
-                        GlobalVAR.Dados.getCurrentStage().setScene(pinScene);
+                        GlobalVAR.StageController.setStage("/com/edcards/edcards/PIN.fxml");
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

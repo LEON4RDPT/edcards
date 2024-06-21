@@ -1,8 +1,11 @@
 package com.edcards.edcards.Programa.Controllers;
 
+import com.edcards.edcards.MainExe;
 import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
@@ -14,6 +17,18 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 public class    GlobalVAR {
+    public static class StageController {
+        public static void setStage(String fxml) throws IOException {
+            FXMLLoader fxmlLoader = new FXMLLoader(StageController.class.getResource(fxml));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = GlobalVAR.Dados.getCurrentStage();
+
+            stage.setScene(scene);
+            stage.setFullScreen(true);
+            stage.setFullScreenExitHint("");
+            GlobalVAR.Dados.setCurrentStage(stage);
+        }
+    }
     public static class Dados {
 
         private static Pessoa pessoaAtual;
