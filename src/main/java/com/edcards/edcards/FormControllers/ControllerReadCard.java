@@ -73,11 +73,11 @@ public class ControllerReadCard implements Initializable {
                 return cartao;
             } catch (CardException e) {
                 e.printStackTrace();
-                break; // Exit the loop on CardException
+                break;
             } catch (InterruptedException e) {
                 e.printStackTrace();
-                Thread.currentThread().interrupt(); // Restore interrupted status
-                break; // Exit the loop on InterruptedException
+                Thread.currentThread().interrupt();
+                break;
             } catch (Exception e) {
                 e.printStackTrace();
             }

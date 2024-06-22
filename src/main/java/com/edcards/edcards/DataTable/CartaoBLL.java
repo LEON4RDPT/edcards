@@ -61,6 +61,14 @@ public class CartaoBLL {
         }
         return (double) value;
     }
+    public static boolean getEntSaiu(String nfc) {
+        DefaultBLL bll = new DefaultBLL("cartao");
+        var e_s = bll.getOne("entrou","codigo",nfc);
+        if (e_s == null) {
+            return false;
+        }
+        return (boolean) e_s;
+    }
     public static void setSaldo(String nfc,double saldo) {
         DefaultBLL bll = new DefaultBLL("cartao");
         bll.setOne("saldo",saldo,"codigo",nfc);
