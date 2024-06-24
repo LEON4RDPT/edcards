@@ -22,7 +22,7 @@ public class LerCartao {
                     if (responseAPDU.getSW() != 0x9000) {
                         System.out.println("Não foi possível ler o ID do cartão. Tente novamente.");
                         card.disconnect(false);
-                        TimeUnit.SECONDS.sleep(2); // Espera 2 segundos antes de tentar novamente
+                        TimeUnit.SECONDS.sleep(1);
                         continue;
                     }
 

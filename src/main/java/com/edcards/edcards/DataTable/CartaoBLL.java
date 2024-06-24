@@ -105,7 +105,10 @@ public class CartaoBLL {
         bll.setOne("codigo",novoNfc,"codigo",nfc);
     }
 
-    //todo entradas e saidas
+    public static void setEntrouSaiu(String nfc, boolean es) {
+        DefaultBLL bll = new DefaultBLL("cartao");
+        bll.setOne("Entrou",es,"codigo",nfc);
+    }
 
 
     public static boolean existenteNFC(String nfc) {

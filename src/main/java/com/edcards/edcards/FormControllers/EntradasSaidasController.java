@@ -2,11 +2,14 @@ package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
+import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -16,11 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntradasSaidasController {
+    public ImageView userImage;
     private List<String> allNfc = new ArrayList<>();
     public Label entsai;
     public Label nome;
     public Pane mainPane;
     String nomePessoa, es;
+    Image img;
     boolean e_s, s_e;
     private double paneWidth = 200;
     private double paneHeight = 262;
@@ -45,17 +50,27 @@ public class EntradasSaidasController {
         allNfc = List.of(x);
     }
 
+    private void waits() throws InterruptedException {
+        cartaoLido();
+        Thread.sleep(500);
+    }
 
-    private void addPane() {
+    private void addPane(String nomePessoa, String es, Image userImage) {
         paneCount++;
         Pane pane = new Pane();
         pane.setPrefSize(paneWidth, paneHeight);
-        
 
-        Label label = new Label("Pane " + paneCount);
-        pane.getChildren().add(label);
 
-        paneContainer.getChildren().add(0, pane); // Add to the beginning
+        Label nameLabel = new Label(nomePessoa);
+        Label entsaiLabel = new Label(es);
+
+        ImageView userImageView = new ImageView(userImage);
+        userImageView.setFitWidth(50);
+        userImageView.setFitHeight(50);
+
+        pane.getChildren().addAll(nameLabel, entsaiLabel, userImageView);
+
+        paneContainer.getChildren().add(0, pane);
 
         for (int i = 0; i < paneContainer.getChildren().size(); i++) {
             Pane p = (Pane) paneContainer.getChildren().get(i);
@@ -80,6 +95,7 @@ public class EntradasSaidasController {
                     if (userByNFC != null) {
                         nomePessoa = UsersBLL.getNomeUser(userByNFC.getIduser());
                         e_s=CartaoBLL.getEntSaiu(cartao);
+                        userImage.setImage(userByNFC.getFoto());
                         if(!e_s){
                             es= "Entrou";
                             s_e=true;
@@ -87,8 +103,12 @@ public class EntradasSaidasController {
                             es= "Saiu";
                             s_e=false;
                         }
-                        System.out.println(nomePessoa);
-                        System.out.println(s_e);
+                        if(nomePessoa != null){
+                            nome.setText(nomePessoa);
+                            entsai.setText(es);
+                            addPane(nomePessoa,es,userByNFC.getFoto());
+                            CartaoBLL.setEntrouSaiu(cartao,s_e);
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
