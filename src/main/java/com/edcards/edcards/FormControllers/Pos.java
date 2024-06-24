@@ -178,9 +178,7 @@ public class Pos {
                         Platform.runLater(() -> cartaoAluno(idCartao));
                     }
                     return;
-                } catch (Exception ignored) {
-                    //nofeedback
-                }
+                } catch (Exception ignored) { }
             }
         });
     }
