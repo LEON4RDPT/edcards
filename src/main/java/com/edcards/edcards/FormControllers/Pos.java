@@ -38,6 +38,7 @@ import static com.edcards.edcards.Programa.Controllers.GlobalVAR.Dados.getClient
 import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColor;
 import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColorBack;
 import static com.edcards.edcards.Programa.Controllers.ArredondarController.roundToTwoDecimalPlaces;
+import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
 
 public class Pos {
 
@@ -434,8 +435,18 @@ public class Pos {
     public void handleButtonClickVoltar(ActionEvent actionEvent) throws IOException {
         if (FeedBackController.feedbackYesNo("Deseja sair?","Confirmação")) {
             GlobalVAR.Dados.setClientePOS(null);
-            GlobalVAR.StageController.setStage("/com/edcards/edcards/Main.fxml");
+            setStage("/com/edcards/edcards/Main.fxml");
 
         }
+    }
+
+    public void handleButtonAddSaldo(ActionEvent actionEvent) throws IOException {
+        if (GlobalVAR.Dados.getClientePOS() != null) {
+            setStage("/com/edcards/edcards/CarregarCartao.fxml");
+        } else {
+            FeedBackController.feedbackErro("Nenhum Cliente Selecionado");
+
+        }
+
     }
 }

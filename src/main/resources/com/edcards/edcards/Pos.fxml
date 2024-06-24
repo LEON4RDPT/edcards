@@ -12,7 +12,7 @@
                 <Button fx:id="buttonRemoveL" layoutX="43.0" layoutY="510.0" mnemonicParsing="false" onAction="#handleButtonClickRemoverLast" prefHeight="56.0" prefWidth="234.0" styleClass="button-1" stylesheets="@CSS/styles.css" text="Remover Ultimo Item" />
                 <Button fx:id="buttonRemoveA" layoutX="43.0" layoutY="438.0" mnemonicParsing="false" onAction="#handleButtonClickRemoverAll" prefHeight="56.0" prefWidth="234.0" styleClass="button-1" stylesheets="@CSS/styles.css" text="Remover Itens" />
                 <Button fx:id="buttonVender" layoutX="43.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleButtonClickVender" prefHeight="56.0" prefWidth="234.0" styleClass="button-1" stylesheets="@CSS/styles.css" text="Vender" />
-                <Button fx:id="buttonAdd" layoutX="43.0" layoutY="210.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="234.0" styleClass="button-1" stylesheets="@CSS/styles.css" text="Adicionar Saldo" />
+                <Button fx:id="buttonAdd" layoutX="43.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleButtonAddSaldo" prefHeight="56.0" prefWidth="234.0" styleClass="button-1" stylesheets="@CSS/styles.css" text="Adicionar Saldo" />
             <ChoiceBox fx:id="choiceBoxItem" layoutX="43.0" layoutY="276.0" onAction="#handleChoiceBoxChange" prefHeight="70.0" prefWidth="234.0" styleClass="button-1" stylesheets="@CSS/styles.css" />
             <TextArea fx:id="textArea" editable="false" prefHeight="200.0" prefWidth="320.0" styleClass="textarea-medium" stylesheets="@CSS/styles.css" text="Text&#10;" />
             </children>
