@@ -195,31 +195,31 @@ public class UsersBLL {
         return UsuarioEnum.fromDbValue( (int) new DefaultBLL("usuario").getOne("tipo","id",idUser));
     }
     public static String getCCUser(int id) {
-        if (!isAluno(id)) {
+        if (!existe(id)) {
             return null;
         }
         return (String) new DefaultBLL("usuario").getOne("cc","id",id);
     }
     public static Date getDataNcUser(int id) {
-        if (!isAluno(id)) {
+        if (!existe(id)) {
             return null;
         }
         return (Date) new DefaultBLL("usuario").getOne("data","id",id);
     }
     public static String getNFCUser(int id) {
-        if (!isAluno(id)) {
+        if (!existe(id)) {
             return null;
         }
         return (String) new DefaultBLL("usuario").getOne("cartao_id","id",id);
     }
     public static String getNomeUser(int id) {
-        if (!isAluno(id)) {
+        if (!existe(id)) {
             return null;
         }
         return (String) new DefaultBLL("usuario").getOne("nome","id",id);
     }
     public static String getMoradaUser(int id) {
-        if (!isAluno(id)) {
+        if (!existe(id)) {
             return null;
         }
         return (String) new DefaultBLL("usuario").getOne("morada","id",id);

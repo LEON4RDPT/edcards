@@ -5,12 +5,15 @@ import com.edcards.edcards.DataTable.Settings.DefaultBLL;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Classes.Produto;
 import com.edcards.edcards.Programa.Classes.Refeicao;
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.edcards.edcards.Programa.Controllers.FeedBackController.feedbackErro;
 
 public class TransacaoBLL {
 
@@ -90,14 +93,17 @@ public class TransacaoBLL {
 
     //insert done
 
-    public static void insertTransacao(Produto[] produtos,int idUser,int idFunc) {
+    public static int insertTransacao(Produto[] produtos,int idUser,int idFunc) {
 
         if (!UsersBLL.existe(idUser) || !UsersBLL.existe(idFunc)) {
-            return; //TEEM DE EXESTIR!!
+            feedbackErro("Usuarios Nao Existem!");
+            return -1; //TEEM DE EXESTIR!!
         }
 
         if (UsersBLL.getTipoUser(idFunc) == UsuarioEnum.ALUNO) {
-            return; //ALUNO NAO PODE VENDER!!!
+            feedbackErro("Aluno nao pode Vender!");
+
+            return -1; //ALUNO NAO PODE VENDER!!!
         }
 
         double valorTotal = 0;
@@ -109,7 +115,9 @@ public class TransacaoBLL {
         double saldo = CartaoBLL.getSaldo(UsersBLL.getNFCUser(idUser));
 
         if (saldo < valorTotal) {
-            return;
+            feedbackErro("Saldo Insufeciente!");
+
+            return -1;
         }
         saldo -= valorTotal;
 
@@ -121,7 +129,8 @@ public class TransacaoBLL {
         int idTransacaoCriada = new DefaultBLL("transacao").insertAndGetId(transacaoCol);
 
         if (idTransacaoCriada == 0) {
-            return;
+            feedbackErro("Erro Interno");
+            return -1;
         }
 
         for (Produto produto : produtos) {
@@ -129,9 +138,11 @@ public class TransacaoBLL {
             transacaoDadosCol.put("produto_id",produto.getIdProduto());
             transacaoDadosCol.put("transacao_id",idTransacaoCriada);
             transacaoDadosCol.put("valorpago",produto.getPreco());
-            new DefaultBLL("transacao_dados").insert(transacaoDadosCol);
+            new DefaultBLL("transacao_detalhe").insert(transacaoDadosCol);
         }
+
         CartaoBLL.setSaldo(UsersBLL.getNFCUser(idUser),saldo);
+        return 0;
     }
 
     public static void insertRefeicaoTrasacao(Refeicao refeicao, int idUser, int idFunc) {
