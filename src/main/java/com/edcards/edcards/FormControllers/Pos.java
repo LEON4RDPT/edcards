@@ -38,6 +38,7 @@ import static com.edcards.edcards.Programa.Controllers.GlobalVAR.Dados.getClient
 import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColor;
 import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColorBack;
 import static com.edcards.edcards.Programa.Controllers.ArredondarController.roundToTwoDecimalPlaces;
+import static com.edcards.edcards.Programa.Controllers.GlobalVAR.Dados.getPessoaAtual;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
 
 public class Pos {
@@ -173,7 +174,9 @@ public class Pos {
             while (isRunning) {
                 try {
                     String idCartao = LerCartao.lerIDCartao();
-                    Platform.runLater(() -> cartaoAluno(idCartao));
+                    if (!idCartao.equals(getPessoaAtual().getNumCartao())) {
+                        Platform.runLater(() -> cartaoAluno(idCartao));
+                    }
                     return;
                 } catch (Exception ignored) {
                     //nofeedback
@@ -196,7 +199,7 @@ public class Pos {
     }
     private void setChoiceEnum() {
 
-        if (GlobalVAR.Dados.getPessoaAtual() == null) {
+        if (getPessoaAtual() == null) {
             //todo CLOSE APP ERROR NAO AUTORIZADO!!!
 
         }
@@ -350,7 +353,7 @@ public class Pos {
         if (cliente.getSaldo() >= valorTotal) {
             //FAQ insertTrasacao automaticamente remove o saldo!!!
 
-            var funcionario = GlobalVAR.Dados.getPessoaAtual();
+            var funcionario = getPessoaAtual();
             TransacaoBLL.insertTransacao(fatura.toArray(new Produto[0]), cliente.getIduser(),funcionario.getIduser());
 
         }
@@ -391,7 +394,7 @@ public class Pos {
 
         // Construção da string de fatura
         StringBuilder textInputBuilder = new StringBuilder();
-        textInputBuilder.append("Funcionario: ").append(GlobalVAR.Dados.getPessoaAtual().getNome()).append("\n\n");
+        textInputBuilder.append("Funcionario: ").append(getPessoaAtual().getNome()).append("\n\n");
         textInputBuilder.append("-- DADOS CLIENTE --\n\n");
         textInputBuilder.append("Cliente: ").append(nomeCliente).append("\n");
         textInputBuilder.append("Saldo: ").append(saldo).append("\n\n");
