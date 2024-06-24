@@ -197,11 +197,6 @@ public class Pos {
     }
     private void setChoiceEnum() {
 
-        if (getPessoaAtual() == null) {
-            //todo CLOSE APP ERROR NAO AUTORIZADO!!!
-
-        }
-
         var items = choiceBoxItem.getItems();
         items.add("TUDO");
         //items.addAll(ProdutoEnum.getStringValues());

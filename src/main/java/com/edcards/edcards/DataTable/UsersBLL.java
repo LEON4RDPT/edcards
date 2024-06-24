@@ -318,7 +318,7 @@ public class UsersBLL {
             case ALUNO:
                 if (!isAluno(pessoa.getIduser())) {
                     System.out.println("ERRO - USUARIO TIPO ALUNO SEM DADOS ALUNO!!!");
-                    return null;
+                    return (Aluno) pessoa;
                 }
                 Aluno aluno = (Aluno) pessoa;
                 aluno.setNumTurma(getTurmaAluno(pessoa.getIduser()));

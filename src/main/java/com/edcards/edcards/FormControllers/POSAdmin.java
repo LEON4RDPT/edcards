@@ -1,5 +1,6 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -157,4 +158,9 @@ public class POSAdmin {
     }
 
 
+    public void handleButtonSair(ActionEvent actionEvent) {
+        if (FeedBackController.feedbackYesNo("Deseja Sair?", "Confirmação")){
+
+        }
+    }
 }
