@@ -1,5 +1,6 @@
 package com.edcards.edcards.DataTable;
 
+import com.edcards.edcards.Programa.Controllers.ArredondarController;
 import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import com.edcards.edcards.DataTable.Settings.DefaultBLL;
 import com.edcards.edcards.Programa.Classes.Pessoa;
@@ -109,10 +110,10 @@ public class TransacaoBLL {
         double valorTotal = 0;
 
         for (Produto produto : produtos) {
-            valorTotal+= produto.getPreco();
+            ArredondarController.roundToTwoDecimalPlaces(valorTotal+= produto.getPreco());
         }
 
-        double saldo = CartaoBLL.getSaldo(UsersBLL.getNFCUser(idUser));
+        double saldo = ArredondarController.roundToTwoDecimalPlaces(CartaoBLL.getSaldo(UsersBLL.getNFCUser(idUser)));
 
         if (saldo < valorTotal) {
             feedbackErro("Saldo Insufeciente!");
@@ -120,7 +121,7 @@ public class TransacaoBLL {
             return -1;
         }
         saldo -= valorTotal;
-
+        saldo = ArredondarController.roundToTwoDecimalPlaces(saldo);
 
         Map<String, Object> transacaoCol= new HashMap<>();
         transacaoCol.put("cliente_id",idUser);

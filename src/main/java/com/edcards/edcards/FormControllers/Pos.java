@@ -345,17 +345,16 @@ public class Pos {
 
         if (cliente.getSaldo() >= valorTotal) {
             //FAQ insertTrasacao automaticamente remove o saldo!!!
-            feedbackErro("Deu");
 
             var funcionario = getPessoaAtual();
             var x = TransacaoBLL.insertTransacao(fatura.toArray(new Produto[0]), cliente.getIduser(),funcionario.getIduser());
             if (x == 0) {
-                //todo Vendeu limpar dados
-
-
-
+                feedbackErro("Operação Sucedida");
             }
-
+            GlobalVAR.Dados.setClientePOS(null);
+            fatura.clear();
+            changeTextBox();
+            aguardarCartao();
          }
         else {
             feedbackErro("Usuario não tem saldo");             //feedback
