@@ -10,11 +10,11 @@ public class ColorController {
 
         String colorStyle =
                 String.format("-fx-background-color: rgba(%d, %d, %d, %f);",
-                (int) (color.getRed() * 255),
-                (int) (color.getGreen() * 255),
-                (int) (color.getBlue() * 255),
-                color.getOpacity());
-                button.setStyle(colorStyle);
+                        (int) (color.getRed() * 255),
+                        (int) (color.getGreen() * 255),
+                        (int) (color.getBlue() * 255),
+                        color.getOpacity());
+        button.setStyle(colorStyle);
     }
 
     public static void setButtonColorBack(Button button) {

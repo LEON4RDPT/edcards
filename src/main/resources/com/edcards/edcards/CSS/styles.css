@@ -1,95 +1,99 @@
 .button-red {
-      -fx-background-radius: 10; /* Rounded corners */
-      -fx-text-fill: white; /* White text */
-      -fx-font-size: 20px; /* Font size */
-      -fx-padding: 10px 20px; /* Padding */
-      -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 1); /* Shadow */
-      -fx-font-family: "Verdana";
+    -fx-background-radius: 10; /* Rounded corners */
+    -fx-text-fill: white; /* White text */
+    -fx-font-size: 20px; /* Font size */
+    -fx-padding: 10px 20px; /* Padding */
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.2), 5, 0, 0, 1); /* Shadow */
+    -fx-font-family: "Verdana";
 
-      white-space: normal;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 
-      -fx-min-width: 150px; /* Set minimum width */
-      -fx-max-width: 150px; /* Set maximum width */
-      -fx-min-height: 150px; /* Set minimum height */
-      -fx-max-height: 150px; /* Set maximum height */
+    -fx-min-width: 150px; /* Set minimum width */
+    -fx-max-width: 150px; /* Set maximum width */
+    -fx-min-height: 150px; /* Set minimum height */
+    -fx-max-height: 150px; /* Set maximum height */
 }
+
 .button-1 {
-      -fx-appearance: none;
-      -fx-background-color: #818589 ;
-      -fx-border-color: #1A1A1A;
-      -fx-border-width: 0; /* Set border width to 0 */
-      -fx-background-radius: 15;
-      -fx-background-insets: 0; /* Add this to remove the border */
-      -fx-cursor: hand;
-      -fx-font-family: "Roobert", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-      -fx-font-size: 14;
-      -fx-font-weight: bold;
-      -fx-text-fill: #FFFFFF;
-      -fx-padding: 12 20;
-      -fx-text-alignment: center;
-      -fx-min-height: 40;
-      -fx-min-width: 0;
-      -fx-max-width: infinity;
+    -fx-appearance: none;
+    -fx-background-color: #818589;
+    -fx-border-color: #1A1A1A;
+    -fx-border-width: 0; /* Set border width to 0 */
+    -fx-background-radius: 15;
+    -fx-background-insets: 0; /* Add this to remove the border */
+    -fx-cursor: hand;
+    -fx-font-family: "Roobert", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 12 20;
+    -fx-text-alignment: center;
+    -fx-min-height: 40;
+    -fx-min-width: 0;
+    -fx-max-width: infinity;
 }
+
 .button-3 {
-      -fx-appearance: none;
-      -fx-background-color: #FFFFFF;
-      -fx-border-color: #1A1A1A;
-      -fx-border-width: 0; /* Set border width to 0 */
-      -fx-background-radius: 15;
-      -fx-background-insets: 0; /* Add this to remove the border */
-      -fx-cursor: hand;
-      -fx-font-family: "Roobert", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-      -fx-font-size: 14;
-      -fx-font-weight: bold;
-      -fx-text-fill: #000000;
-      -fx-text-alignment: center;
-      -fx-min-height: 40;
-      -fx-min-width: 0;
-      -fx-max-width: infinity;
+    -fx-appearance: none;
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #1A1A1A;
+    -fx-border-width: 0; /* Set border width to 0 */
+    -fx-background-radius: 15;
+    -fx-background-insets: 0; /* Add this to remove the border */
+    -fx-cursor: hand;
+    -fx-font-family: "Roobert", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+    -fx-text-alignment: center;
+    -fx-min-height: 40;
+    -fx-min-width: 0;
+    -fx-max-width: infinity;
 }
+
 .button-2 {
-      -fx-appearance: none;
-      -fx-background-color: #818589 ;
-      -fx-border-color: #1A1A1A;
-      -fx-border-width: 0; /* Set border width to 0 */
-      -fx-background-radius: 13;
-      -fx-background-insets: 0; /* Add this to remove the border */
-      -fx-cursor: hand;
-      -fx-font-family: "Roobert", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-      -fx-font-size: 10;
-      -fx-font-weight: bold;
-      -fx-text-fill: #FFFFFF;
-      -fx-padding: 16 24;
-      -fx-text-alignment: center;
-      -fx-min-height: 60;
-      -fx-min-width: 0;
-      -fx-max-width: infinity;
+    -fx-appearance: none;
+    -fx-background-color: #818589;
+    -fx-border-color: #1A1A1A;
+    -fx-border-width: 0; /* Set border width to 0 */
+    -fx-background-radius: 13;
+    -fx-background-insets: 0; /* Add this to remove the border */
+    -fx-cursor: hand;
+    -fx-font-family: "Roobert", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    -fx-font-size: 10;
+    -fx-font-weight: bold;
+    -fx-text-fill: #FFFFFF;
+    -fx-padding: 16 24;
+    -fx-text-alignment: center;
+    -fx-min-height: 60;
+    -fx-min-width: 0;
+    -fx-max-width: infinity;
 }
 
 .button-3-big {
-      -fx-appearance: none;
-      -fx-background-color: #FFFFFF;
-      -fx-border-color: #1A1A1A;
-      -fx-border-width: 0; /* Set border width to 0 */
-      -fx-background-radius: 15;
-      -fx-background-insets: 0; /* Add this to remove the border */
-      -fx-cursor: hand;
-      -fx-font-family: "Roobert", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-      -fx-font-size: 18;
-      -fx-font-weight: bold;
-      -fx-text-fill: #000000;
-      -fx-text-alignment: center;
-      -fx-min-height: 40;
-      -fx-min-width: 0;
-      -fx-max-width: infinity;
+    -fx-appearance: none;
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #1A1A1A;
+    -fx-border-width: 0; /* Set border width to 0 */
+    -fx-background-radius: 15;
+    -fx-background-insets: 0; /* Add this to remove the border */
+    -fx-cursor: hand;
+    -fx-font-family: "Roobert", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    -fx-font-size: 18;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000;
+    -fx-text-alignment: center;
+    -fx-min-height: 40;
+    -fx-min-width: 0;
+    -fx-max-width: infinity;
 }
+
 .textarea-medium {
-      -fx-font-size: 15px; /* Adjust the font size as needed */
-      -fx-text-fill: black; /* Set text color to black */
-      -fx-border-radius: 5px; /* Set border radius */
-      -fx-border-color: black; /* Set border color */
-      -fx-border-width: 1px; /* Set border width */
+    -fx-font-size: 15px; /* Adjust the font size as needed */
+    -fx-text-fill: black; /* Set text color to black */
+    -fx-border-radius: 5px; /* Set border radius */
+    -fx-border-color: black; /* Set border color */
+    -fx-border-width: 1px; /* Set border width */
 }

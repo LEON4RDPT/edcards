@@ -2,24 +2,18 @@ package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
-import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.Enums.ConfEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
-import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
-import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -44,6 +38,7 @@ public class ModPinController {
 
     @FXML
     private Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
+
     @FXML
     public void initialize() {
         valorAtual = 0;
@@ -79,7 +74,7 @@ public class ModPinController {
                 clean();
                 scnd = true;
             }
-        }else if (scnd == true) {
+        } else if (scnd == true) {
             if (field1.getText().isEmpty()) {
                 field1.setText(String.valueOf(valorAtual));
             } else if (field2.getText().isEmpty()) {
@@ -95,15 +90,15 @@ public class ModPinController {
                 pin2 = Integer.parseInt(field1.getText() + field2.getText() + field3.getText() + field4.getText() + field5.getText() + field6.getText());
                 FeedBackController.feedbackErro(String.valueOf(pin2));
                 clean();
-                if (pin1 == pin2){
+                if (pin1 == pin2) {
                     FeedBackController.feedbackErro(String.valueOf(ConfEnum.conf16));
-                    pin1=0;
-                    pin2=0;
-                } else{
+                    pin1 = 0;
+                    pin2 = 0;
+                } else {
                     System.err.println(ErrorEnum.err15);
                     scnd = false;
-                    pin1=0;
-                    pin2=0;
+                    pin1 = 0;
+                    pin2 = 0;
                 }
             }
         }

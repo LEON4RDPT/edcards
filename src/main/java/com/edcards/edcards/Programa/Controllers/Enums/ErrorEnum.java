@@ -56,29 +56,36 @@ public enum ErrorEnum {
             return "Foto do horário não presente...";
         }
     },
-    err11{
-        public String toString() {return "Categoria de Produto errada";}
+    err11 {
+        public String toString() {
+            return "Categoria de Produto errada";
+        }
     },
-    err12{
-        public String toString() {return "Utilizador não encontrado";}
+    err12 {
+        public String toString() {
+            return "Utilizador não encontrado";
+        }
     },
-    err13{
+    err13 {
         public String toString() {
             return "Cartão já existe na BLL";
         }
     },
-    err14{
+    err14 {
         public String toString() {
             return "Cartao com user associado";
         }
     },
-    err15{
+    err15 {
         public String toString() {
             return "PIN's não Iguais!!!";
         }
     };
 
-    public int toDbValue() {return this.ordinal();}
+    public int toDbValue() {
+        return this.ordinal();
+    }
+
     public static ErrorEnum fromDbValue(int value) {
         return ErrorEnum.values()[value];
     }

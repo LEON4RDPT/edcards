@@ -11,9 +11,11 @@ public class DefaultBLL extends DAL {
 
     public void deleteOneRow(String identity, Object identityObject) {
         Connection connection = getConnection();
-        if (connection == null) { return; }
+        if (connection == null) {
+            return;
+        }
         try {
-            String querry = "DELETE FROM " + getTableName() + " WHERE " + formatCondition(identity,identityObject);
+            String querry = "DELETE FROM " + getTableName() + " WHERE " + formatCondition(identity, identityObject);
             var reader = connection.createStatement().executeQuery(querry);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -22,11 +24,13 @@ public class DefaultBLL extends DAL {
     }
 
 
-    public Object getOne(String column,String identity,Object identityOb) {
+    public Object getOne(String column, String identity, Object identityOb) {
         Connection connection = getConnection();
-        if (connection == null) { return null; }
-        try{
-            String query = "SELECT " + column + " FROM " + getTableName() + formatCondition(identity,identityOb);
+        if (connection == null) {
+            return null;
+        }
+        try {
+            String query = "SELECT " + column + " FROM " + getTableName() + formatCondition(identity, identityOb);
             var reader = getConnection().createStatement().executeQuery(query);
             if (reader.next()) {
                 return reader.getObject(column);
@@ -38,39 +42,43 @@ public class DefaultBLL extends DAL {
         }
     }
 
-public Map<String, Object> getAllinOne(String columnCondition, Object objectCondition) {
-    Connection connection = getConnection();
-    if (connection == null) { return null; }
-
-    try {
-        String query = "SELECT * FROM " + getTableName() + formatCondition(columnCondition, objectCondition);
-        var reader = getConnection().createStatement().executeQuery(query);
-
-        ResultSetMetaData metaData = reader.getMetaData();
-        int columnCount = metaData.getColumnCount();
-
-        Map<String, Object> rowMap = new HashMap<>();
-
-        if (reader.next()) {
-            for (int i = 1; i <= columnCount; i++) {
-                Object columnValue = reader.getObject(i);
-                String columnName = metaData.getColumnName(i);
-
-                rowMap.put(columnName, columnValue);
-            }
+    public Map<String, Object> getAllinOne(String columnCondition, Object objectCondition) {
+        Connection connection = getConnection();
+        if (connection == null) {
+            return null;
         }
 
-        reader.close();
-        return rowMap;
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return null;
+        try {
+            String query = "SELECT * FROM " + getTableName() + formatCondition(columnCondition, objectCondition);
+            var reader = getConnection().createStatement().executeQuery(query);
+
+            ResultSetMetaData metaData = reader.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            Map<String, Object> rowMap = new HashMap<>();
+
+            if (reader.next()) {
+                for (int i = 1; i <= columnCount; i++) {
+                    Object columnValue = reader.getObject(i);
+                    String columnName = metaData.getColumnName(i);
+
+                    rowMap.put(columnName, columnValue);
+                }
+            }
+
+            reader.close();
+            return rowMap;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
-}
 
     public List<Map<String, Object>> getAll(String columnCondition, Object objectCondition) {
         Connection connection = getConnection();
-        if (connection == null) { return null; }
+        if (connection == null) {
+            return null;
+        }
 
         try {
             String query = "SELECT * FROM " + getTableName() + formatCondition(columnCondition, objectCondition);
@@ -99,12 +107,14 @@ public Map<String, Object> getAllinOne(String columnCondition, Object objectCond
         }
     }
 
-    public List<Object> getAll(String atributeName,String joinTableSQL) {
+    public List<Object> getAll(String atributeName, String joinTableSQL) {
         Connection connection = getConnection();
-        if (connection == null) { return null; }
+        if (connection == null) {
+            return null;
+        }
 
         try {
-            String query = "SELECT " + atributeName +  " FROM " + getTableName() + " " + joinTableSQL;
+            String query = "SELECT " + atributeName + " FROM " + getTableName() + " " + joinTableSQL;
             var reader = getConnection().createStatement().executeQuery(query);
 
             ResultSetMetaData metaData = reader.getMetaData();
@@ -126,10 +136,12 @@ public Map<String, Object> getAllinOne(String columnCondition, Object objectCond
 
     public List<Object> getAll(String atributeName) {
         Connection connection = getConnection();
-        if (connection == null) { return null; }
+        if (connection == null) {
+            return null;
+        }
 
         try {
-            String query = "SELECT " + atributeName +  " FROM " + getTableName();
+            String query = "SELECT " + atributeName + " FROM " + getTableName();
             var reader = getConnection().createStatement().executeQuery(query);
 
             ResultSetMetaData metaData = reader.getMetaData();
@@ -151,7 +163,9 @@ public Map<String, Object> getAllinOne(String columnCondition, Object objectCond
 
     public List<Map<String, Object>> getAll() {
         Connection connection = getConnection();
-        if (connection == null) { return null; }
+        if (connection == null) {
+            return null;
+        }
 
         try {
             String query = "SELECT * FROM " + getTableName();
@@ -182,7 +196,9 @@ public Map<String, Object> getAllinOne(String columnCondition, Object objectCond
 
     public List<Map<String, Object>> getAllOrdered(String orderByColumn, String sortOrder) {
         Connection connection = getConnection();
-        if (connection == null) { return null; }
+        if (connection == null) {
+            return null;
+        }
 
         try {
             // Construct the query with ORDER BY clause
@@ -212,7 +228,7 @@ public Map<String, Object> getAllinOne(String columnCondition, Object objectCond
         }
     }
 
-    public List<Map<String, Object>> getAllOrdered(String orderByColumn, String sortOrder,Object obCondition, String ColCondition) {
+    public List<Map<String, Object>> getAllOrdered(String orderByColumn, String sortOrder, Object obCondition, String ColCondition) {
         Connection connection = getConnection();
         if (connection == null) {
             return null;
@@ -220,7 +236,7 @@ public Map<String, Object> getAllinOne(String columnCondition, Object objectCond
 
         try {
             // Construct the query with ORDER BY clause
-            String query = "SELECT * FROM " + getTableName() + " " + DefaultBLL.formatDifCondition(orderByColumn,obCondition) + " ORDER BY " + orderByColumn + " " + sortOrder  ;
+            String query = "SELECT * FROM " + getTableName() + " " + DefaultBLL.formatDifCondition(orderByColumn, obCondition) + " ORDER BY " + orderByColumn + " " + sortOrder;
             var reader = connection.createStatement().executeQuery(query);
 
             ResultSetMetaData metaData = reader.getMetaData();
@@ -268,34 +284,34 @@ public Map<String, Object> getAllinOne(String columnCondition, Object objectCond
             return;
         }
         try {
-            String sql = "DELETE FROM " + getTableName() + formatCondition(column,columnOb);
+            String sql = "DELETE FROM " + getTableName() + formatCondition(column, columnOb);
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
             statement.close();
 
-        } catch (SQLException e)  {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void setOne(String column,Object columnOb,String columnCondition, Object columnConditionOb) {
+    public void setOne(String column, Object columnOb, String columnCondition, Object columnConditionOb) {
         Connection connection = getConnection();
         if (connection == null) {
             return;
         }
         try {
-            String sql = "UPDATE " + getTableName() + " SET " + column + " = ? " + formatCondition(columnCondition,columnConditionOb);
+            String sql = "UPDATE " + getTableName() + " SET " + column + " = ? " + formatCondition(columnCondition, columnConditionOb);
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setObject(1,columnOb);
+            statement.setObject(1, columnOb);
             statement.executeUpdate();
             statement.close();
-        } catch (SQLException e)  {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void setOne(String column,Object columnOb) {
+    public void setOne(String column, Object columnOb) {
         Connection connection = getConnection();
         if (connection == null) {
             return;
@@ -305,7 +321,7 @@ public Map<String, Object> getAllinOne(String columnCondition, Object objectCond
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.executeUpdate();
             statement.close();
-        } catch (SQLException e)  {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -385,13 +401,13 @@ public Map<String, Object> getAllinOne(String columnCondition, Object objectCond
         return 0;
     }
 
-    public boolean hasRows(String column,Object columnOb) {
+    public boolean hasRows(String column, Object columnOb) {
         Connection connection = getConnection();
         if (connection == null) {
             return false;
         }
-        try{
-            String query = "SELECT * FROM " + getTableName() + formatCondition(column,columnOb);
+        try {
+            String query = "SELECT * FROM " + getTableName() + formatCondition(column, columnOb);
             var reader = getConnection().createStatement().executeQuery(query);
             return reader.next();
         } catch (SQLException e) {
@@ -400,15 +416,15 @@ public Map<String, Object> getAllinOne(String columnCondition, Object objectCond
         }
     }
 
-    public boolean hasObject(String column,Object columnOb,String identity,Object idIdentity) {
+    public boolean hasObject(String column, Object columnOb, String identity, Object idIdentity) {
         Connection connection = getConnection();
         if (connection == null) {
             return false;
         }
-        try{
+        try {
             Dictionary<String, Object> condicions = new Hashtable<>();
-            condicions.put(column,columnOb);
-            condicions.put(identity,idIdentity);
+            condicions.put(column, columnOb);
+            condicions.put(identity, idIdentity);
             String query = "SELECT * FROM " + getTableName() + formatConditions(condicions);
             var reader = getConnection().createStatement().executeQuery(query);
             return reader.next();

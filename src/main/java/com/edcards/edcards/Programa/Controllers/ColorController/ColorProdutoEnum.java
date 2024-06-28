@@ -17,16 +17,19 @@ public enum ColorProdutoEnum {
     PAPELARIA(new ColorProduto(ProdutoEnum.PAPELARIA, Color.GRAY)),
     BAGUETES(new ColorProduto(ProdutoEnum.BAGUETES, Color.yellow)),
     BOLOS(new ColorProduto(ProdutoEnum.BOLOS, Color.gray)),
-    CAFETARIA(new ColorProduto(ProdutoEnum.CAFETARIA, Color.BLACK   )),
-    AGUAS(new ColorProduto(ProdutoEnum.AGUAS,Color.blue));
+    CAFETARIA(new ColorProduto(ProdutoEnum.CAFETARIA, Color.BLACK)),
+    AGUAS(new ColorProduto(ProdutoEnum.AGUAS, Color.blue));
 
     private final ColorProduto colorProduto;
+
     ColorProdutoEnum(ColorProduto colorProduto) {
         this.colorProduto = colorProduto;
     }
+
     public ColorProduto getColorProduto() {
         return colorProduto;
     }
+
     public javafx.scene.paint.Color convertColorFX() {
         int r = this.getColor().getRed();
         int g = this.getColor().getGreen();
@@ -34,6 +37,7 @@ public enum ColorProdutoEnum {
         int a = this.getColor().getAlpha();
         return javafx.scene.paint.Color.rgb(r, g, b, a / 255.0);
     }
+
     public static javafx.scene.paint.Color convertColorFX(ColorProdutoEnum colorProduto) {
         int r = colorProduto.getColor().getRed();
         int g = colorProduto.getColor().getGreen();
@@ -41,6 +45,7 @@ public enum ColorProdutoEnum {
         int a = colorProduto.getColor().getAlpha();
         return javafx.scene.paint.Color.rgb(r, g, b, a / 255.0);
     }
+
     public static javafx.scene.paint.Color convertColorFX(Color colorProduto) {
         int r = colorProduto.getRed();
         int g = colorProduto.getGreen();

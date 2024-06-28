@@ -5,7 +5,10 @@ public enum UsuarioEnum {
     FUNCIONARIO,
     ADMINISTRADOR;
 
-    public int toDbValue() {return this.ordinal();}
+    public int toDbValue() {
+        return this.ordinal();
+    }
+
     public static UsuarioEnum fromDbValue(int value) {
         return UsuarioEnum.values()[value];
     }

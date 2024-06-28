@@ -80,8 +80,6 @@ public abstract class Pessoa {
     }
 
 
-
-
     public String getMorada() {
         return morada;
     }

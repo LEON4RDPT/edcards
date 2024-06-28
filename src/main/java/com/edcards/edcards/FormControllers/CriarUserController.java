@@ -10,7 +10,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -24,7 +27,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class CriarUserController {
     public Button backBtn;
@@ -51,7 +53,7 @@ public class CriarUserController {
     @FXML
     private TextField numUtSaudeField;
     @FXML
-    private DatePicker dateField ;
+    private DatePicker dateField;
     @FXML
     private ComboBox<String> tipoPicker;
     @FXML
@@ -65,9 +67,9 @@ public class CriarUserController {
     private Button inserirBtn;
     @FXML
     private Pane alunoPane;
-    @FXML
-    public void initialize(){
 
+    @FXML
+    public void initialize() {
 
 
         ObservableList<String> opcoes = FXCollections.observableArrayList(
@@ -96,8 +98,9 @@ public class CriarUserController {
             }
         });
     }
+
     @FXML
-    private void tipoAction(){
+    private void tipoAction() {
         String selectedTipo = tipoPicker.getValue();
         alunoPane.setVisible(false);
 
@@ -115,6 +118,7 @@ public class CriarUserController {
             }
         }
     }
+
     public static byte[] imageToByteArray(File imageFile) throws IOException {
         try (FileInputStream fis = new FileInputStream(imageFile)) {
             byte[] bytes = new byte[(int) imageFile.length()];
@@ -149,7 +153,7 @@ public class CriarUserController {
             ase = AseEnum.valueOf(AsePicker.getValue());
             nus = Integer.parseInt(numUtSaudeField.getText());
 
-            if (nome != null || idCartao != null||turma != 0 || morada != null || email != null || cc != null || numEE != 0 || num != 0 || numEEfield != null || imgUser != null || ase != null || nus != 0) {
+            if (nome != null || idCartao != null || turma != 0 || morada != null || email != null || cc != null || numEE != 0 || num != 0 || numEEfield != null || imgUser != null || ase != null || nus != 0) {
                 FeedBackController.feedbackErro(nome + morada + email + cc + numEE + num + idCartao + imgUser + data + ase + nus);
                 UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL);
                 UsersBLL.inserirAluno(num, numEE, email, turma, nus, ase);
@@ -158,8 +162,7 @@ public class CriarUserController {
             } else {
                 FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err5));
             }
-        }
-        else {
+        } else {
 
             UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL);
 
@@ -168,7 +171,7 @@ public class CriarUserController {
     }
 
     public void handleButtonBack(ActionEvent actionEvent) throws IOException {
-        if (FeedBackController.feedbackYesNo("Deseja sair?","Confirmação")) {
+        if (FeedBackController.feedbackYesNo("Deseja sair?", "Confirmação")) {
             GlobalVAR.StageController.setStage("/com/edcards/edcards/POSAdmin.fxml");
         }
     }

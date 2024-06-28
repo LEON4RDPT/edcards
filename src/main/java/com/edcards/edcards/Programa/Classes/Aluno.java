@@ -16,7 +16,7 @@ public class Aluno extends Pessoa {
     private int numTurma;
 
     public Aluno(int id, String numCartao, String nome, Double saldo, Image foto, LocalDateTime ultimaVezEntrado, String morada, int pin, Date dataNasc, String cartaoC, Image horario, int numTurma, AseEnum ase, String emailEE, int numEE, int numUtente) {
-        super(id,numCartao, nome, saldo, foto, ultimaVezEntrado, morada, pin, dataNasc, cartaoC, horario);
+        super(id, numCartao, nome, saldo, foto, ultimaVezEntrado, morada, pin, dataNasc, cartaoC, horario);
         this.ase = ase;
         this.emailEE = emailEE;
         this.numEE = numEE;

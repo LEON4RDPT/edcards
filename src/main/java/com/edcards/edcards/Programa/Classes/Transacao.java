@@ -65,19 +65,21 @@ public class Transacao {
 
     public void addProduct(Produto produto) {
         this.produtos.add(produto);
-        valorpago+=produto.getPreco();
+        valorpago += produto.getPreco();
     }
+
     public void addProduct(Produto[] produtoArr) {
         for (Produto produto : produtoArr) {
             produtos.add(produto);
-            valorpago+=produto.getPreco();
+            valorpago += produto.getPreco();
         }
     }
-    public void removeProduct(Produto produto){
+
+    public void removeProduct(Produto produto) {
         for (Produto prod : produtos) {
             if (prod.getIdProduto() == produto.getIdProduto()) {
                 produtos.remove(prod);
-                valorpago-=prod.getPreco();
+                valorpago -= prod.getPreco();
             }
         }
     }

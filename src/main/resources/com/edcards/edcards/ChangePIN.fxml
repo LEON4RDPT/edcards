@@ -1,59 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.ModPinController">
-   <children>
-      <Pane layoutX="406.0" layoutY="113.0" prefHeight="572.0" prefWidth="480.0" style="-fx-background-color: #0080ff; -fx-background-radius: 10px;">
-         <children>
-            <Button fx:id="btn1" layoutX="121.0" layoutY="149.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" style="-fx-background-radius: 15px;" text="1" />
-            <Button fx:id="btn2" layoutX="205.0" layoutY="149.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" style="-fx-background-radius: 15px;" text="2" />
-            <Button fx:id="btn3" layoutX="289.0" layoutY="149.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" style="-fx-background-radius: 15px;" text="3" />
-            <Button fx:id="btn4" layoutX="121.0" layoutY="232.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" style="-fx-background-radius: 15px;" text="4" />
-            <Button fx:id="btn5" layoutX="205.0" layoutY="232.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" style="-fx-background-radius: 15px;" text="5" />
-            <Button fx:id="btn6" layoutX="289.0" layoutY="232.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" style="-fx-background-radius: 15px;" text="6" />
-            <Button fx:id="btn7" layoutX="121.0" layoutY="315.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" style="-fx-background-radius: 15px;" text="7" />
-            <Button fx:id="btn8" layoutX="205.0" layoutY="315.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" style="-fx-background-radius: 15px;" text="8" />
-            <Button fx:id="btn9" layoutX="288.0" layoutY="314.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" style="-fx-background-radius: 15px;" text="9" />
-            <Button fx:id="btn0" layoutX="205.0" layoutY="397.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" style="-fx-background-radius: 15px;" text="0" />
-            <TextField fx:id="field1" alignment="CENTER" layoutX="5.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" />
-            <TextField fx:id="field6" alignment="CENTER" layoutX="406.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" />
-            <TextField fx:id="field2" alignment="CENTER" layoutX="83.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" />
-            <TextField fx:id="field3" alignment="CENTER" layoutX="164.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" />
-            <TextField fx:id="field4" alignment="CENTER" layoutX="248.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" />
-            <TextField fx:id="field5" alignment="CENTER" layoutX="327.0" layoutY="63.0" prefHeight="70.0" prefWidth="70.0" />
-            <Button fx:id="btnClr" layoutX="24.0" layoutY="472.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="181.0" style="-fx-background-radius: 15px;" text="Limpar" />
-            <Button fx:id="btnConf" layoutX="283.0" layoutY="472.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="181.0" style="-fx-background-radius: 15px;" text="Confirmar" />
-         </children>
-      </Pane>
-      <Label fx:id="pinText" layoutX="586.0" layoutY="82.0" text="Insira o PIN Antigo..." />
-      <Button fx:id="backBtn" layoutX="14.0" layoutY="618.0" mnemonicParsing="false" prefHeight="88.0" prefWidth="244.0" text="Voltar">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <Label layoutX="36.0" layoutY="30.0" text="Selecionar Utilizador:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="userPicker" layoutX="36.0" layoutY="65.0" prefHeight="25.0" prefWidth="285.0" promptText="Escolha Um" visibleRowCount="2" />
-      <Label layoutX="34.0" layoutY="119.0" text="Nome:">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Text fx:id="nomeText" layoutX="36.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="...">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
-   </children>
+<?import javafx.scene.text.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
+            prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.edcards.edcards.FormControllers.ModPinController">
+    <children>
+        <Pane layoutX="406.0" layoutY="113.0" prefHeight="572.0" prefWidth="480.0"
+              style="-fx-background-color: #0080ff; -fx-background-radius: 10px;">
+            <children>
+                <Button fx:id="btn1" layoutX="121.0" layoutY="149.0" mnemonicParsing="false" prefHeight="75.0"
+                        prefWidth="75.0" style="-fx-background-radius: 15px;" text="1"/>
+                <Button fx:id="btn2" layoutX="205.0" layoutY="149.0" mnemonicParsing="false" prefHeight="75.0"
+                        prefWidth="75.0" style="-fx-background-radius: 15px;" text="2"/>
+                <Button fx:id="btn3" layoutX="289.0" layoutY="149.0" mnemonicParsing="false" prefHeight="75.0"
+                        prefWidth="75.0" style="-fx-background-radius: 15px;" text="3"/>
+                <Button fx:id="btn4" layoutX="121.0" layoutY="232.0" mnemonicParsing="false" prefHeight="75.0"
+                        prefWidth="75.0" style="-fx-background-radius: 15px;" text="4"/>
+                <Button fx:id="btn5" layoutX="205.0" layoutY="232.0" mnemonicParsing="false" prefHeight="75.0"
+                        prefWidth="75.0" style="-fx-background-radius: 15px;" text="5"/>
+                <Button fx:id="btn6" layoutX="289.0" layoutY="232.0" mnemonicParsing="false" prefHeight="75.0"
+                        prefWidth="75.0" style="-fx-background-radius: 15px;" text="6"/>
+                <Button fx:id="btn7" layoutX="121.0" layoutY="315.0" mnemonicParsing="false" prefHeight="75.0"
+                        prefWidth="75.0" style="-fx-background-radius: 15px;" text="7"/>
+                <Button fx:id="btn8" layoutX="205.0" layoutY="315.0" mnemonicParsing="false" prefHeight="75.0"
+                        prefWidth="75.0" style="-fx-background-radius: 15px;" text="8"/>
+                <Button fx:id="btn9" layoutX="288.0" layoutY="314.0" mnemonicParsing="false" prefHeight="75.0"
+                        prefWidth="75.0" style="-fx-background-radius: 15px;" text="9"/>
+                <Button fx:id="btn0" layoutX="205.0" layoutY="397.0" mnemonicParsing="false" prefHeight="75.0"
+                        prefWidth="75.0" style="-fx-background-radius: 15px;" text="0"/>
+                <TextField fx:id="field1" alignment="CENTER" layoutX="5.0" layoutY="63.0" prefHeight="70.0"
+                           prefWidth="70.0"/>
+                <TextField fx:id="field6" alignment="CENTER" layoutX="406.0" layoutY="63.0" prefHeight="70.0"
+                           prefWidth="70.0"/>
+                <TextField fx:id="field2" alignment="CENTER" layoutX="83.0" layoutY="63.0" prefHeight="70.0"
+                           prefWidth="70.0"/>
+                <TextField fx:id="field3" alignment="CENTER" layoutX="164.0" layoutY="63.0" prefHeight="70.0"
+                           prefWidth="70.0"/>
+                <TextField fx:id="field4" alignment="CENTER" layoutX="248.0" layoutY="63.0" prefHeight="70.0"
+                           prefWidth="70.0"/>
+                <TextField fx:id="field5" alignment="CENTER" layoutX="327.0" layoutY="63.0" prefHeight="70.0"
+                           prefWidth="70.0"/>
+                <Button fx:id="btnClr" layoutX="24.0" layoutY="472.0" mnemonicParsing="false" prefHeight="75.0"
+                        prefWidth="181.0" style="-fx-background-radius: 15px;" text="Limpar"/>
+                <Button fx:id="btnConf" layoutX="283.0" layoutY="472.0" mnemonicParsing="false" prefHeight="75.0"
+                        prefWidth="181.0" style="-fx-background-radius: 15px;" text="Confirmar"/>
+            </children>
+        </Pane>
+        <Label fx:id="pinText" layoutX="586.0" layoutY="82.0" text="Insira o PIN Antigo..."/>
+        <Button fx:id="backBtn" layoutX="14.0" layoutY="618.0" mnemonicParsing="false" prefHeight="88.0"
+                prefWidth="244.0" text="Voltar">
+            <font>
+                <Font size="18.0"/>
+            </font>
+        </Button>
+        <Label layoutX="36.0" layoutY="30.0" text="Selecionar Utilizador:">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Label>
+        <ComboBox fx:id="userPicker" layoutX="36.0" layoutY="65.0" prefHeight="25.0" prefWidth="285.0"
+                  promptText="Escolha Um" visibleRowCount="2"/>
+        <Label layoutX="34.0" layoutY="119.0" text="Nome:">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Label>
+        <Text fx:id="nomeText" layoutX="36.0" layoutY="186.0" strokeType="OUTSIDE" strokeWidth="0.0" text="...">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Text>
+    </children>
 </AnchorPane>

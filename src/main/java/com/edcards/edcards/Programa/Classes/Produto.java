@@ -18,6 +18,7 @@ public class Produto {
         this.idProduto = idProduto;
         this.tipo = tipo;
     }
+
     public Produto(int id) {
         this.disponivel = false;
         this.nome = "";
@@ -57,7 +58,10 @@ public class Produto {
     public ProdutoEnum getTipo() {
         return tipo;
     }
-    public void setId(int id) {this.idProduto = id;}
+
+    public void setId(int id) {
+        this.idProduto = id;
+    }
 
     public void setTipo(ProdutoEnum tipo) {
         this.tipo = tipo;

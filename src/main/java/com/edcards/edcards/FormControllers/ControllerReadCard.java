@@ -1,18 +1,13 @@
 package com.edcards.edcards.FormControllers;
 
-import com.edcards.edcards.Programa.Controllers.FeedBackController;
-import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 import javax.smartcardio.CardException;
 import java.io.IOException;
@@ -42,7 +37,7 @@ public class ControllerReadCard implements Initializable {
 
         initialTask.setOnSucceeded(event -> {
             var card = initialTask.getValue();
-            if (card!= null) {
+            if (card != null) {
                 Platform.runLater(() -> {
                     try {
                         GlobalVAR.StageController.setStage("/com/edcards/edcards/PIN.fxml");
@@ -90,7 +85,7 @@ public class ControllerReadCard implements Initializable {
         while (true) {
             try {
                 var userByNFC = CartaoBLL.getUserByNFC(card);
-                if (userByNFC!= null) {
+                if (userByNFC != null) {
                     var pessoa = UsersBLL.getUser(userByNFC.getIduser());
                     GlobalVAR.Dados.setPessoaAtual(pessoa);
                     FeedBackController.feedbackErro("DEU"); //feedback

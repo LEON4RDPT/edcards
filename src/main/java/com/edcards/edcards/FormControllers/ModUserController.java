@@ -1,24 +1,28 @@
 package com.edcards.edcards.FormControllers;
 
-import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.Programa.Classes.Pessoa;
-import com.edcards.edcards.Programa.Controllers.LerCartao;
+import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 public class ModUserController {
     String nome, morada, email, nif, num, numEE, turma, tipo, idCartao;
@@ -27,7 +31,7 @@ public class ModUserController {
     private final ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
     List<Pessoa> users;
     @FXML
-    private TextField nameField, moradaField, emailField, nifField, numField, numEEfield;
+    private TextField nameField, moradaField, emailField, nifField, numEEfield;
     @FXML
     private DatePicker dateField;
     @FXML
@@ -43,19 +47,24 @@ public class ModUserController {
     @FXML
     private Button modUser;
     Pessoa pessoa;
+
     @FXML
     public void initialize() {
 
         usersLoad();
-        aguardarCartao();
+
         ObservableList<String> opcoes = FXCollections.observableArrayList(
-                "Administrador", "Aluno", "Funcionário"
+                Arrays.stream(UsuarioEnum.values())
+                        .map(Enum::name)
+                        .collect(Collectors.toList())
         );
+
+
         users = UsersBLL.getUsersAll();
         tipoPicker.setItems(opcoes);
 
         imageUser.setOnMouseClicked(event -> {
-         FileChooser selFoto = new FileChooser();
+            FileChooser selFoto = new FileChooser();
             selFoto.setTitle("Escolha uma Foto...");
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Imagens (*.png, *.jpg)", "*.png", "*.jpg");
             selFoto.getExtensionFilters().add(extFilter);
@@ -68,27 +77,20 @@ public class ModUserController {
             }
         });
     }
+
     @FXML
     public void selectUser(ActionEvent event) {
         //todo
     }
-    private void aguardarCartao() {
-        nfcExecutar.submit(() -> {
-            while (isRunning) {
-                try {
-                    String idCartao = LerCartao.lerIDCartao();
-                    int user = CartaoBLL.getIdUserByNFC(idCartao);
-                    UsersBLL.getUser(user);
-                    break;
 
-                } catch (Exception ignored) {
-                }
-            }
-        });
-    }
     private void usersLoad() {
         ObservableList<String> usersLoad = FXCollections.observableArrayList(
-                UsersBLL.getUsersAll().toString()
+                Arrays.stream(Objects.requireNonNull(UsersBLL.getUsersAll()).toArray(new Pessoa[0]))
+                        .map(Pessoa::getNome)
+                        .collect(Collectors.toList())
+
         );
+
+        userPicker.setItems(usersLoad);
     }
 }

@@ -1,6 +1,5 @@
 package com.edcards.edcards.Programa.Controllers;
 
-import com.edcards.edcards.MainExe;
 import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import javafx.application.Platform;
@@ -16,7 +15,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-public class    GlobalVAR {
+
+public class GlobalVAR {
     public static class StageController {
         public static void setStage(String fxml) throws IOException {
             FXMLLoader fxmlLoader = new FXMLLoader(StageController.class.getResource(fxml));
@@ -29,6 +29,7 @@ public class    GlobalVAR {
             GlobalVAR.Dados.setCurrentStage(stage);
         }
     }
+
     public static class Dados {
 
         private static Pessoa pessoaAtual;
@@ -53,7 +54,6 @@ public class    GlobalVAR {
         }
 
 
-
         public static Stage getCurrentStage() {
             return currentStage;
         }
@@ -61,6 +61,7 @@ public class    GlobalVAR {
         public static void setPessoaAtual(Pessoa pessoa) {
             pessoaAtual = pessoa;
         }
+
         public static Pessoa getPessoaAtual() {
             return pessoaAtual;
         }
@@ -76,15 +77,13 @@ public class    GlobalVAR {
             Dados.clientePOS = clientePOS;
         }
 
-      
+
         //GUI HAHAHAHAHAH
     }
 
 
-
-
     public static class ImageController {
-        public static Image byteArrayToImage(byte[] byteArray){
+        public static Image byteArrayToImage(byte[] byteArray) {
             if (byteArray == null) {
                 return null;
             }

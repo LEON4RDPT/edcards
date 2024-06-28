@@ -1,17 +1,15 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
-import com.edcards.edcards.Programa.Classes.Pessoa;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+
 import java.io.IOException;
 
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
@@ -33,6 +31,7 @@ public class ControllerPIN {
     private Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
 
     private int pin;
+
     @FXML
     public void initialize() {
         valorAtual = 0;

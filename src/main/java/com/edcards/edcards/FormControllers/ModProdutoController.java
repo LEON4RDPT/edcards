@@ -28,8 +28,9 @@ public class ModProdutoController {
     ComboBox<String> cBoxCategory, cBoxChangeCategory, cBoxName;
     @FXML
     private Button modPrdt, backBtn;
+
     @FXML
-    public void initialize(){
+    public void initialize() {
         priceValue.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(
                 0.00,
                 1000.0,
@@ -39,6 +40,7 @@ public class ModProdutoController {
         setChoiceEnum();
 
     }
+
     private void setChoiceEnum() {
 
         var itemsU = cBoxChangeCategory.getItems();
@@ -49,6 +51,7 @@ public class ModProdutoController {
         cBoxCategory.getSelectionModel().select(0);
 
     }
+
     @FXML
     private void modPrdtClick(ActionEvent event) {
         categoria = ProdutoEnum.valueOf(cBoxCategory.getSelectionModel().getSelectedItem());
@@ -64,9 +67,9 @@ public class ModProdutoController {
 
         FeedBackController.feedbackErro(String.valueOf(id));
 
-        ProdutoBLL.setNome(id,nome);
-        ProdutoBLL.setTipo(id,categoria);
-        ProdutoBLL.setPreco(id,preco);
+        ProdutoBLL.setNome(id, nome);
+        ProdutoBLL.setTipo(id, categoria);
+        ProdutoBLL.setPreco(id, preco);
         ProdutoBLL.setDisp(id, disponivel);
     }
 

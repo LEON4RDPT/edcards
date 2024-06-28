@@ -13,7 +13,7 @@ public enum IvaEnum {
     BAGUETES(ProdutoEnum.BAGUETES, 0.13),
     BOLOS(ProdutoEnum.BOLOS, 0.13),
     CAFETARIA(ProdutoEnum.CAFETARIA, 0.13),
-    AGUAS(ProdutoEnum.AGUAS, 0.13 );
+    AGUAS(ProdutoEnum.AGUAS, 0.13);
 
     private final ProdutoEnum produtoEnum;
     private final double iva;
@@ -30,6 +30,7 @@ public enum IvaEnum {
     public double getIVA() {
         return iva;
     }
+
     public static double getIva(ProdutoEnum produtoEnum) {
         for (IvaEnum produtoVatEnum : values()) {
             if (produtoVatEnum.getProdutoEnum() == produtoEnum) {

@@ -19,6 +19,7 @@ public class ResizeUtil {
         });
 
     }
+
     public static void resizeAndCenterButton(Button button, AnchorPane pane) {
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
             double width = newVal.doubleValue();
@@ -55,6 +56,7 @@ public class ResizeUtil {
 
         // Add a listener for height changes if necessary
     }
+
     public static void resizeAndPositionButton(Button button, AnchorPane pane, double relativePosition) {
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
             double width = newVal.doubleValue();

@@ -5,17 +5,20 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.ControllerReadCard">
-   <children>
-      <ImageView fitHeight="330.0" fitWidth="330.0" layoutX="475.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/logoNFCnew.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="511.0" layoutY="125.0" text="Passe o Cartão">
-         <font>
-            <Font size="40.0" />
-         </font>
-      </Label>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
+            prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.edcards.edcards.FormControllers.ControllerReadCard">
+    <children>
+        <ImageView fitHeight="330.0" fitWidth="330.0" layoutX="475.0" layoutY="195.0" pickOnBounds="true"
+                   preserveRatio="true">
+            <image>
+                <Image url="@images/logoNFCnew.png"/>
+            </image>
+        </ImageView>
+        <Label layoutX="511.0" layoutY="125.0" text="Passe o Cartão">
+            <font>
+                <Font size="40.0"/>
+            </font>
+        </Label>
+    </children>
 </AnchorPane>

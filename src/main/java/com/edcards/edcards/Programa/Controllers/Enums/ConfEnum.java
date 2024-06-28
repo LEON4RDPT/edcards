@@ -6,7 +6,7 @@ public enum ConfEnum {
             return "Utilizador registado com sucesso";
         }
     },
-    conf1{
+    conf1 {
         public String toString() {
             return "Utilizador alterado com sucesso";
         }
@@ -21,45 +21,54 @@ public enum ConfEnum {
             return "PIN alterado com sucesso";
         }
     },
-    conf4{
+    conf4 {
         public String toString() {
-            return "Horario adicionado com Sucesso";}
+            return "Horario adicionado com Sucesso";
+        }
     },
-    conf5{
+    conf5 {
         public String toString() {
-            return "Horario alterado com Sucesso";}
+            return "Horario alterado com Sucesso";
+        }
     },
-    conf6{
+    conf6 {
         public String toString() {
-            return "Horario removido com Sucesso";}
+            return "Horario removido com Sucesso";
+        }
     },
-    conf7{
+    conf7 {
         public String toString() {
-            return "Cartão Adicionado com Sucesso";}
+            return "Cartão Adicionado com Sucesso";
+        }
     },
-    conf8{
+    conf8 {
         public String toString() {
-            return "Cartão do utilizador alterado com Sucesso";}
+            return "Cartão do utilizador alterado com Sucesso";
+        }
     },
-    conf9{
+    conf9 {
         public String toString() {
-            return "Produto Adicionado com Sucesso";}
+            return "Produto Adicionado com Sucesso";
+        }
     },
-    conf10{
+    conf10 {
         public String toString() {
-            return "Produto Alterado com Sucesso";}
+            return "Produto Alterado com Sucesso";
+        }
     },
-    conf11{
+    conf11 {
         public String toString() {
-            return "Produto Removido com Sucesso";}
+            return "Produto Removido com Sucesso";
+        }
     },
-    conf12{
+    conf12 {
         public String toString() {
-            return "Saldo adicionado com sucesso";}
-    }
-    ,conf13{
+            return "Saldo adicionado com sucesso";
+        }
+    }, conf13 {
         public String toString() {
-            return "Compra realizada e registada com sucesso";}
+            return "Compra realizada e registada com sucesso";
+        }
     },
     conf14 {
         public String toString() {
@@ -71,15 +80,17 @@ public enum ConfEnum {
             return "Refeição desmarcada com sucesso";
         }
     },
-    conf16{
+    conf16 {
         public String toString() {
             return "PIN's Iguais. Pin alterado com sucesso";
         }
     };
 
 
+    public int toDbValue() {
+        return this.ordinal();
+    }
 
-    public int toDbValue() {return this.ordinal();}
     public static ErrorEnum fromDbValue(int value) {
         return ErrorEnum.values()[value];
     }

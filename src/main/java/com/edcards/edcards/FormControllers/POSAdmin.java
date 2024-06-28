@@ -41,8 +41,11 @@ public class POSAdmin {
     private Button remPrdt;
     @FXML
     private Button viewTransacs;
+
     @FXML
-    public void initialize() {}
+    public void initialize() {
+    }
+
     @FXML
     public void addUsrClick(javafx.event.ActionEvent event) throws IOException {
         Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/CriarUser.fxml"));
@@ -97,6 +100,7 @@ public class POSAdmin {
         stage.setScene(posScene);
         stage.show();
     }
+
     public void addHorarioClick(javafx.event.ActionEvent event) throws IOException {
         Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/AddHorario.fxml"));
         Scene posScene = new Scene(newSceneParent);
@@ -141,6 +145,7 @@ public class POSAdmin {
         stage.setScene(posScene);
         stage.show();
     }
+
     public void remPrdtClick(ActionEvent event) throws IOException {
         Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/DelProduto.fxml"));
         Scene posScene = new Scene(newSceneParent);
@@ -161,7 +166,7 @@ public class POSAdmin {
 
 
     public void handleButtonSair(ActionEvent actionEvent) throws IOException {
-        if (FeedBackController.feedbackYesNo("Deseja Sair?", "Confirmação")){
+        if (FeedBackController.feedbackYesNo("Deseja Sair?", "Confirmação")) {
             GlobalVAR.StageController.setStage("/com/edcards/edcards/Main.fxml");
         }
     }

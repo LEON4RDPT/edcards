@@ -13,8 +13,7 @@ public class Refeicao {
 
         if (!pratoPrincipal.isRefeicao()) {
             this.pratoPrincipal = null;
-        }
-        else {
+        } else {
             this.pratoPrincipal = pratoPrincipal;
         }
 
@@ -35,9 +34,11 @@ public class Refeicao {
     public Produto getPratoPrincipal() {
         return pratoPrincipal;
     }
+
     public Produto getSopa() {
         return sopa;
     }
+
     public Produto getSobremesa() {
         return sobremesa;
     }
@@ -45,9 +46,11 @@ public class Refeicao {
     public void setPratoPrincipal(Produto pratoPrincipal) {
         this.pratoPrincipal = pratoPrincipal;
     }
+
     public void setSopa(Produto sopa) {
         this.sopa = sopa;
     }
+
     public void setSobremesa(Produto sobremesa) {
         this.sobremesa = sobremesa;
     }

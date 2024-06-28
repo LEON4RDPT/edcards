@@ -30,8 +30,9 @@ public class AddHorarioController {
     private Text nomeText;
     Pessoa pessoa;
     List<Pessoa> users;
+
     @FXML
-    public void initialize(){
+    public void initialize() {
         usersLoad();
         aguardarCartao();
         HorarioUser.setOnMouseClicked(event -> {
@@ -48,15 +49,18 @@ public class AddHorarioController {
             }
         });
     }
+
     private void usersLoad() {
         ObservableList<String> usersLoad = FXCollections.observableArrayList(
                 UsersBLL.getUsersAll().toString()
         );
     }
+
     public void loadUser(ActionEvent event) {
         pessoa = (Pessoa) userPicker.getSelectionModel().getSelectedItem();
         nomeText.setText(pessoa.getNome());
     }
+
     private void aguardarCartao() {
         nfcExecutar.submit(() -> {
             while (isRunning) {

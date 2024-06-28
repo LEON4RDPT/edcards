@@ -13,7 +13,7 @@ public class ImageController {
         return fotob;
     }
 
-    public static Image convertByteToImage(byte[] foto){   //new
+    public static Image convertByteToImage(byte[] foto) {   //new
         return new Image(new ByteArrayInputStream(foto));
     }
 }
