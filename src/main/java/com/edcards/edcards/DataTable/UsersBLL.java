@@ -1,6 +1,7 @@
 package com.edcards.edcards.DataTable;
 
 import com.edcards.edcards.Programa.Controllers.Enums.AseEnum;
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import com.edcards.edcards.DataTable.Settings.DefaultBLL;
@@ -51,16 +52,15 @@ public class UsersBLL {
     public static void inserir(String nfc, String nome, Date dataNc, String morada, UsuarioEnum tipo, String cc, byte[] foto) {
         DefaultBLL bll = new DefaultBLL("usuario");
 
-        if (bll.hasRows("cartao_id",nfc)) {
-            return;
+        if (nfc != null) {
+            if (bll.hasRows("cartao_id",nfc)) {
+                return;
+            }
         }
         if (bll.hasRows("cc",cc)) {
             return;
         }
 
-        if (!CartaoBLL.existenteNFC(nfc)) {
-            return;
-        }
 
         Map<String, Object> columnValues = new HashMap<>();
         columnValues.put("cartao_id", nfc);
@@ -316,7 +316,7 @@ public class UsersBLL {
         switch (tipo) {
             case ALUNO:
                 if (!isAluno(pessoa.getIduser())) {
-                    System.out.println("ERRO - USUARIO TIPO ALUNO SEM DADOS ALUNO!!!");
+                    FeedBackController.feedbackErro("ERRO - USUARIO TIPO ALUNO SEM DADOS ALUNO!!!");
                     return (Aluno) pessoa;
                 }
                 Aluno aluno = (Aluno) pessoa;

@@ -14,7 +14,7 @@ import java.io.IOException;
 public class MainExeNoCard extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        GlobalVAR.Dados.setPessoaAtual(UsersBLL.getUser(2));
+        GlobalVAR.Dados.setPessoaAtual(UsersBLL.getUser(8));
         FXMLLoader fxmlLoader = new FXMLLoader(MainExe.class.getResource("Main.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Aplicação");

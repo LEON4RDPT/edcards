@@ -3,6 +3,7 @@ package com.edcards.edcards.FormControllers;
 import com.edcards.edcards.DataTable.ProdutoBLL;
 import com.edcards.edcards.Programa.Classes.Produto;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -51,17 +52,17 @@ public class ModProdutoController {
     @FXML
     private void modPrdtClick(ActionEvent event) {
         categoria = ProdutoEnum.valueOf(cBoxCategory.getSelectionModel().getSelectedItem());
-        System.out.println(categoria);
+        FeedBackController.feedbackErro(String.valueOf(categoria));
         nome = nameField.getText();
-        System.out.println(nome);
+        FeedBackController.feedbackErro(nome);
 
         preco = priceValue.getValue();
-        System.out.println(preco);
+        FeedBackController.feedbackErro(String.valueOf(preco));
 
         disponivel = disp.isSelected();
         var id = prodt.getIdProduto();
 
-        System.out.println(id);
+        FeedBackController.feedbackErro(String.valueOf(id));
 
         ProdutoBLL.setNome(id,nome);
         ProdutoBLL.setTipo(id,categoria);

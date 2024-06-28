@@ -1,5 +1,6 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -75,6 +76,6 @@ public class ControllerCompras implements Initializable {
 
     @FXML
     private void buttonClickTest() {
-        System.out.println("hahahha");
+        FeedBackController.feedbackErro("hahahha");
     }
 }

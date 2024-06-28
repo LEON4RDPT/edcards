@@ -63,7 +63,7 @@ public class ControllerPIN {
         } else if (field6.getText().isEmpty()) {
             field6.setText(String.valueOf(valorAtual));
             pin = Integer.parseInt(field1.getText() + field2.getText() + field3.getText() + field4.getText() + field5.getText() + field6.getText());
-            System.out.println(pin);
+            FeedBackController.feedbackErro(String.valueOf(pin));
 
             Pessoa pessoaAtual = GlobalVAR.Dados.getPessoaAtual();
             if (pessoaAtual != null) {

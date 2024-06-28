@@ -1,5 +1,6 @@
 package com.edcards.edcards;
 
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 
 import javax.smartcardio.CardException;
@@ -12,8 +13,10 @@ public class MainNfc {
 
             try {
                 var x = lerIDCartao();
-                System.out.println(x);
-                return;
+                if (x != null) {
+                    FeedBackController.feedbackErro(x);
+                    return;
+                }
             } catch (CardException e) {
                 throw new RuntimeException(e);
             } catch (InterruptedException e) {

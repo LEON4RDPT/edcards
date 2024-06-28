@@ -1,6 +1,7 @@
 package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -148,6 +149,7 @@ public class POSAdmin {
         stage.setScene(posScene);
         stage.show();
     }
+
     public void viewTransacsClick(ActionEvent event) throws IOException {
         Parent newSceneParent = FXMLLoader.load(getClass().getResource("/com/edcards/edcards/ViewTransacs.fxml"));
         Scene posScene = new Scene(newSceneParent);
@@ -158,9 +160,9 @@ public class POSAdmin {
     }
 
 
-    public void handleButtonSair(ActionEvent actionEvent) {
+    public void handleButtonSair(ActionEvent actionEvent) throws IOException {
         if (FeedBackController.feedbackYesNo("Deseja Sair?", "Confirmação")){
-
+            GlobalVAR.StageController.setStage("/com/edcards/edcards/Main.fxml");
         }
     }
 }

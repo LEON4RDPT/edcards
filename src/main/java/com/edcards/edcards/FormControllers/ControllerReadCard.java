@@ -1,5 +1,6 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
@@ -27,7 +28,7 @@ public class ControllerReadCard implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         var x = CartaoBLL.getAllCards();
         if (x == null) {
-            System.out.println("No cards available in the database.");
+            FeedBackController.feedbackErro("No cards available in the database.");
             return;
         }
         allNfc = List.of(x);
@@ -92,7 +93,7 @@ public class ControllerReadCard implements Initializable {
                 if (userByNFC!= null) {
                     var pessoa = UsersBLL.getUser(userByNFC.getIduser());
                     GlobalVAR.Dados.setPessoaAtual(pessoa);
-                    System.out.println("DEU"); //feedback
+                    FeedBackController.feedbackErro("DEU"); //feedback
                     return;
                 }
             } catch (Exception e) {

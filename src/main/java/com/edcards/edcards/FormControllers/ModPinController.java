@@ -75,7 +75,7 @@ public class ModPinController {
             } else if (field6.getText().isEmpty()) {
                 field6.setText(String.valueOf(valorAtual));
                 pin1 = Integer.parseInt(field1.getText() + field2.getText() + field3.getText() + field4.getText() + field5.getText() + field6.getText());
-                System.out.println(pin1);
+                FeedBackController.feedbackErro(String.valueOf(pin1));
                 clean();
                 scnd = true;
             }
@@ -93,10 +93,10 @@ public class ModPinController {
             } else if (field6.getText().isEmpty()) {
                 field6.setText(String.valueOf(valorAtual));
                 pin2 = Integer.parseInt(field1.getText() + field2.getText() + field3.getText() + field4.getText() + field5.getText() + field6.getText());
-                System.out.println(pin2);
+                FeedBackController.feedbackErro(String.valueOf(pin2));
                 clean();
                 if (pin1 == pin2){
-                    System.out.println(ConfEnum.conf16);
+                    FeedBackController.feedbackErro(String.valueOf(ConfEnum.conf16));
                     pin1=0;
                     pin2=0;
                 } else{

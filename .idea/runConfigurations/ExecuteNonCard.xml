@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ExecuteNonCard" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.edcards.edcards.MainExeNoCard" />
+    <module name="edcards" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

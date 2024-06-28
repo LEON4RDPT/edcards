@@ -2,6 +2,7 @@ package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Aluno;
@@ -44,7 +45,7 @@ public class AddCardController {
                         CartaoBLL.getIdUserByNFC(idCartao);
                         cardNumber.setText(idCartao);
                     } else {
-                        System.out.println(ErrorEnum.err13);
+                        FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err13));
                         isRunning = true;
                     }
                     try {
