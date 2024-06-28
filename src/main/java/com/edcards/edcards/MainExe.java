@@ -20,7 +20,7 @@ public class MainExe extends Application {
         stage.setScene(scene);
         GlobalVAR.Dados.setCurrentStage(stage);
         GlobalVAR.Dados.getCurrentStage().setOnCloseRequest(event -> {
-            event.consume(); // Consume the close event to prevent the stage from closing
+            event.consume();
             GlobalVAR.Dados.confirmExit();
         });
         stage.setFullScreen(true);

@@ -19,6 +19,7 @@ public abstract class Pessoa {
     private String cartaoC;
     private Image horario;
 
+
     public Pessoa(int iduser, String numCartao, String nome, Double saldo, Image foto, LocalDateTime ultimaVezEntrado, String morada, int pin, Date dataNasc, String cartaoC, Image horario) {
         this.iduser = iduser;
         this.numCartao = numCartao;
@@ -31,6 +32,7 @@ public abstract class Pessoa {
         this.dataNasc = dataNasc;
         this.cartaoC = cartaoC;
         this.horario = horario;
+
     }
 
     public Pessoa(int iduser) {
@@ -45,6 +47,7 @@ public abstract class Pessoa {
         this.pin = 0;
         this.dataNasc = null;
         this.cartaoC = "";
+
     }
 
     public String getNumCartao() {
@@ -78,8 +81,6 @@ public abstract class Pessoa {
     public void setFoto(Image foto) {
         this.foto = foto;
     }
-
-
 
 
     public String getMorada() {

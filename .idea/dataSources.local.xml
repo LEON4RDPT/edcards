@@ -30,6 +30,7 @@
       <schema-mapping>
         <introspection-scope>
           <node kind="schema">
+            <name qname="db_escoladmp" />
             <name qname="@" />
             <name qname="db_escola" />
           </node>
