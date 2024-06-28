@@ -9,6 +9,19 @@ public class DefaultBLL extends DAL {
         super(cat);
     }
 
+    public void deleteOneRow(String identity, Object identityObject) {
+        Connection connection = getConnection();
+        if (connection == null) { return; }
+        try {
+            String querry = "DELETE FROM " + getTableName() + " WHERE " + formatCondition(identity,identityObject);
+            var reader = connection.createStatement().executeQuery(querry);
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+
     public Object getOne(String column,String identity,Object identityOb) {
         Connection connection = getConnection();
         if (connection == null) { return null; }

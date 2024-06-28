@@ -45,6 +45,30 @@ public class CartaoBLL {
         columnValues.put("pin", pin);
         bll.insert(columnValues);
     }
+
+    public static void setNfcDiferente(String nfcAntigo, String nfcNovo) {
+        DefaultBLL bll = new DefaultBLL("cartao");
+        if (existenteNFC(nfcNovo)) {
+            return;
+        }
+
+        if (!existenteNFC(nfcAntigo)) {
+            //o antigo tem de existir para ser trocado!
+            return;
+        }
+
+        Map<String, Object> columnValues = new HashMap<>();
+        columnValues.put("codigo", nfcNovo);
+        columnValues.put("saldo", getSaldo(nfcAntigo));
+        columnValues.put("ultima_vez_passou", getLastTimePassed(nfcAntigo));
+        columnValues.put("pin", getPin(nfcAntigo));
+        bll.insert(columnValues);
+
+        new DefaultBLL("usuario").setOne("cartao_id",nfcNovo,"cartao_id",nfcAntigo);
+        bll.delete("codigo",nfcAntigo);
+    }
+
+
     public static void deleteALL() {
         DefaultBLL bll = new DefaultBLL("cartao");
         bll.deleteALL();
@@ -72,10 +96,6 @@ public class CartaoBLL {
             return 0;
         }
         return (int) ob;
-    }
-    public static void setPin(String nfc,int pin) {
-        DefaultBLL bll = new DefaultBLL("cartao");
-        bll.setOne("pin",pin,"codigo",nfc);
     }
     public static void setLastTimePassed(String nfc) {
         DefaultBLL bll = new DefaultBLL("cartao");
@@ -133,5 +153,6 @@ public class CartaoBLL {
         }
         return new DefaultBLL("cartao").hasObject("pin",PIN,"codigo",nfc);
     }
+
 
 }

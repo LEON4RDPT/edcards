@@ -72,6 +72,8 @@ public class UsersBLL {
         columnValues.put("foto", foto);
         bll.insert(columnValues);
 
+
+
     }
 
     public static void inserirAluno(int idAluno, int num_ee, String email, int numTurma, int numUtente, AseEnum ase) {
@@ -89,7 +91,6 @@ public class UsersBLL {
         new DefaultBLL("dados_aluno").insert(dic);
     }
 
-    //set todo (horario , foto)
     public static void setTipoUser(int id, UsuarioEnum tipo) {
         if (!existe(id)) {
             return;
@@ -103,8 +104,6 @@ public class UsersBLL {
         if (!existe(id)) {
             return;
         }
-
-        //todo IMG TO BLOB
         try {
             new DefaultBLL("usuario").setOne("horario", ImageController.convertImgToByteArr(horario),"id",id);
         } catch (IOException e) {
@@ -115,8 +114,6 @@ public class UsersBLL {
         if (!existe(id)) {
             return;
         }
-
-        //todo IMG TO BLOB
         try {
             new DefaultBLL("usuario").setOne("foto",ImageController.convertImgToByteArr(foto),"id",id);
         } catch (IOException e) {
@@ -225,13 +222,17 @@ public class UsersBLL {
         return (String) new DefaultBLL("usuario").getOne("morada","id",id);
     }
 
-    //todo getFoto()
     public static Image getFotoUser(int id) {
-        return null;
+        if (!existe(id)) {
+            return null;
+        }
+        return GlobalVAR.ImageController.byteArrayToImage((byte[]) new DefaultBLL("usuario").getOne("foto","id",id));
     }
-    //todo getHorario()
     public static Image getHorarioUser(int id) {
-        return null;
+        if (!existe(id)) {
+            return null;
+        }
+        return GlobalVAR.ImageController.byteArrayToImage((byte[]) new DefaultBLL("usuario").getOne("horario","id",id));
     }
 
     //gets aluno //done
@@ -266,7 +267,6 @@ public class UsersBLL {
         return (int) new DefaultBLL("dados_aluno").getOne("utente_num","id",id);
     }
 
-    //get todo img to blob!!
 
     public static Pessoa transformUser(Map<String,Object> row) {
         if (row == null) {
@@ -301,7 +301,6 @@ public class UsersBLL {
                 case "morada" -> pessoa.setMorada((String) entry.getValue());
                 case "horario" -> pessoa.setHorario(GlobalVAR.ImageController.byteArrayToImage((byte[]) entry.getValue()));
                 case "foto" -> pessoa.setFoto(GlobalVAR.ImageController.byteArrayToImage((byte[]) entry.getValue()));
-
 
             }
         }
