@@ -7,6 +7,7 @@ module com.edcards.edcards {
     requires java.sql;
     requires java.smartcardio;
     requires java.desktop;
+    requires org.apache.commons.io;
 
     opens com.edcards.edcards to javafx.fxml;
     exports com.edcards.edcards;

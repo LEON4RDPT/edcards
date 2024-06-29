@@ -22,7 +22,6 @@ public class FeedBackController {
     }
 
 
-
     public static void feedbackErro(String message) {
         currentStage = GlobalVAR.Dados.getCurrentStage();
 
@@ -48,7 +47,7 @@ public class FeedBackController {
         return result.isPresent() && result.get() == ButtonType.YES;
     }
 
-    public static boolean feedbackYesNo(String message,String title) {
+    public static boolean feedbackYesNo(String message, String title) {
         currentStage = GlobalVAR.Dados.getCurrentStage();
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

@@ -22,11 +22,14 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+
+import static com.edcards.edcards.Programa.Controllers.GlobalVAR.ImageController.imageToByteArray;
 
 public class CriarUserController {
     public Button backBtn;
@@ -87,12 +90,9 @@ public class CriarUserController {
             selFoto.getExtensionFilters().add(extFilter);
 
             File foto = selFoto.showOpenDialog(null);
-            try {
-                fotoBLL = imageToByteArray(foto);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            if (foto != null) {
+            var img = imageToByteArray(foto);
+            fotoBLL = !Arrays.equals(img, new byte[0]) ? img : null;
+            if (fotoBLL != null) {
                 Image image = new Image(foto.toURI().toString());
                 imageUser.setImage(image);
             }
@@ -109,23 +109,14 @@ public class CriarUserController {
                 case "Aluno":
                     alunoPane.setVisible(true);
                     break;
-                case "Funcionário":
-                    alunoPane.setVisible(false);
-                    break;
-                case "Admin":
+                case "Funcionário", "Admin":
                     alunoPane.setVisible(false);
                     break;
             }
         }
     }
 
-    public static byte[] imageToByteArray(File imageFile) throws IOException {
-        try (FileInputStream fis = new FileInputStream(imageFile)) {
-            byte[] bytes = new byte[(int) imageFile.length()];
-            fis.read(bytes);
-            return bytes;
-        }
-    }
+
 
     @FXML
     private void inserirBtnClick(ActionEvent event) {
@@ -176,7 +167,4 @@ public class CriarUserController {
         }
     }
 
-    public void handleChangeFoto(MouseEvent mouseEvent) {
-
-    }
 }

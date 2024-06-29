@@ -1,23 +1,17 @@
 package com.edcards.edcards.FormControllers;
 
-import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Aluno;
 import com.edcards.edcards.Programa.Classes.Funcionario;
 import com.edcards.edcards.Programa.Classes.Pessoa;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Objects;
 
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
 
@@ -43,6 +37,7 @@ public class FormUser {
     private Label labelSaldo;
     @FXML
     private Label labelTipo;
+
     @FXML
     public void initialize() {
         setHiddenButtons();
@@ -55,7 +50,8 @@ public class FormUser {
             case Funcionario funcionario -> labelTipo.setText("Tipo: Funcionario");
             case Aluno aluno -> labelTipo.setText("Tipo: Aluno");
             case Admin admin -> labelTipo.setText("Tipo: Administrador");
-            default -> { }
+            default -> {
+            }
         }
     }
 

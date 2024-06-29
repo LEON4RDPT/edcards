@@ -24,7 +24,7 @@ public class DAL {
             USERNAME = properties.getProperty("database.username");
             PASSWORD = properties.getProperty("database.password");
         } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         }
     }
 

@@ -1,7 +1,6 @@
 package com.edcards.edcards;
 
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
-import com.edcards.edcards.Programa.Controllers.LerCartao;
 
 import javax.smartcardio.CardException;
 

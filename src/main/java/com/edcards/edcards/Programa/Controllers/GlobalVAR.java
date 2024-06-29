@@ -12,9 +12,7 @@ import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import java.io.*;
 
 public class GlobalVAR {
     public static class StageController {
@@ -115,14 +113,15 @@ public class GlobalVAR {
         }
 
 
-        public static byte[] imageToByteArray(BufferedImage image, String format) {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            try {
-                ImageIO.write(image, format, baos);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        public static byte[] imageToByteArray(File imageFile)  {
+            try (FileInputStream fis = new FileInputStream(imageFile)) {
+                byte[] bytes = new byte[(int) imageFile.length()];
+                fis.read(bytes);
+                return bytes;
+            } catch (NullPointerException | IOException ignored) {
+
             }
-            return baos.toByteArray();
+            return new byte[0];
         }
 
     }
