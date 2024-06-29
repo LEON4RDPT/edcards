@@ -6,6 +6,7 @@ import com.edcards.edcards.Programa.Classes.Aluno;
 import com.edcards.edcards.Programa.Classes.Funcionario;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.Enums.AseEnum;
+import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
@@ -31,6 +32,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.edcards.edcards.Programa.Controllers.GlobalVAR.ImageController.imageToByteArray;
+
 public class ModUserController {
     @FXML
     private TextField turmaField;
@@ -45,7 +48,7 @@ public class ModUserController {
     @FXML
     private Button backBtn;
     String nome, morada, email, nif, num, numEE, turma, tipo, idCartao;
-    Image imgUser;
+    byte[] imgUserBLL;
     List<Pessoa> users;
     @FXML
     private TextField nameField;
@@ -65,7 +68,7 @@ public class ModUserController {
     private ComboBox<String> userPicker;
     @FXML
     private ImageView imageUser;
-
+    private boolean isDiffrentFoto = false;
     @FXML
     private Button modUser;
 
@@ -98,16 +101,19 @@ public class ModUserController {
             selFoto.getExtensionFilters().add(extFilter);
 
             File foto = selFoto.showOpenDialog(null);
-
+            var img = imageToByteArray(foto);
+            imgUserBLL = !Arrays.equals(img, new byte[0]) ? img : null;
             if (foto != null) {
                 Image image = new Image(foto.toURI().toString());
                 imageUser.setImage(image);
+                isDiffrentFoto = true;
             }
         });
     }
 
     @FXML
     public void selectUser(ActionEvent event) {
+        isDiffrentFoto = false;
         String nomeUser = userPicker.getValue();
 
         for (Pessoa p : users) {
@@ -174,5 +180,77 @@ public class ModUserController {
         } catch (NullPointerException ignored) {
 
         }
+    }
+
+    @FXML
+    private void handleModUser(ActionEvent actionEvent) {
+        if (pessoaAtual == null) {
+            FeedBackController.feedbackErro("Erro! Selecione o Usuario!");
+            return;
+        }
+        int id = pessoaAtual.getIduser();
+
+        if (tipoPicker.getSelectionModel().getSelectedIndex() == 0) { //caso seja ALuno OU queira inserir dados aluno
+
+            if (numEEfield.getText().isEmpty() || numEEfield.getText().length() != 9) {
+                FeedBackController.feedbackErro(ErrorEnum.err5.toString());
+                return;
+            }
+            var numEE = Integer.parseInt(numEEfield.getText());
+
+            if (emailField.getText().isEmpty()) {
+                FeedBackController.feedbackErro(ErrorEnum.err5.toString());
+                return;
+            }
+            var email = emailField.getText();
+
+            if (turmaField.getText().isEmpty()) {
+                FeedBackController.feedbackErro(ErrorEnum.err5.toString());
+                return;
+            }
+            var turma = Integer.parseInt(turmaField.getText());
+
+
+            if (numUtSaudeField.getText().isEmpty() || numUtSaudeField.getText().length() != 9) {
+                FeedBackController.feedbackErro(ErrorEnum.err5.toString());
+                return;
+            }
+            var numUt = Integer.parseInt(numUtSaudeField.getText());
+
+            if (AsePicker.getSelectionModel().getSelectedIndex() == -1) {
+                FeedBackController.feedbackErro(ErrorEnum.err5.toString());
+                return;
+            }
+            var ase = AseEnum.fromDbValue(AsePicker.getSelectionModel().getSelectedIndex());
+
+            if (pessoaAtual instanceof Aluno) {
+                UsersBLL.setEE_numAluno(id,numEE);
+                UsersBLL.setTurmaAluno(id,turma);
+                UsersBLL.setAseAluno(id,ase);
+                UsersBLL.setEmailAluno(id,email);
+                UsersBLL.setAseAluno(id,ase);
+            }
+            else {
+                UsersBLL.setTipoUser(pessoaAtual.getIduser(),UsuarioEnum.ALUNO);
+                UsersBLL.inserirAluno(pessoaAtual.getIduser(),numEE,email,turma,numUt,ase);
+            }
+
+
+
+
+        }
+        else {
+            UsersBLL.setTipoUser(id,UsuarioEnum.fromDbValue((tipoPicker.getSelectionModel().getSelectedIndex())));
+        }
+
+
+        if (isDiffrentFoto || !Arrays.equals(imgUserBLL, new byte[0])) {
+            UsersBLL.setFotoUser(id,imgUserBLL);
+        }
+
+        if
+
+
+
     }
 }

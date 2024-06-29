@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import java.io.*;
 
 public class ImageController {
+
     public static byte[] convertImgToByteArr(File file) throws IOException { //new
         byte[] fotob;
         try (InputStream fis = new FileInputStream(file)) {

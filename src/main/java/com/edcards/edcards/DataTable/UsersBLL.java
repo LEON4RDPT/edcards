@@ -45,7 +45,7 @@ public class UsersBLL {
     }
 
     public static boolean isAluno(int id) {
-        return new DefaultBLL("usuario").hasRows("id", id) && new DefaultBLL("dados_aluno").hasRows("id", id);
+        return new DefaultBLL("usuario").hasRows("id", id) && new DefaultBLL("dados_aluno").hasRows("aluno_id", id);
     }
 
     //insert done (todo blob to image!!)
@@ -101,26 +101,20 @@ public class UsersBLL {
         new DefaultBLL("usuario").setOne("tipo", tipo.toDbValue(), "id", id);
     }
 
-    public static void setHorarioUser(int id, File horario) {
+    public static void setHorarioUser(int id, byte[] horario) {
         if (!existe(id)) {
             return;
         }
-        try {
-            new DefaultBLL("usuario").setOne("horario", ImageController.convertImgToByteArr(horario), "id", id);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        new DefaultBLL("usuario").setOne("horario", horario, "id", id);
     }
 
-    public static void setFotoUser(int id, File foto) {
+
+
+    public static void setFotoUser(int id, byte[] foto) {
         if (!existe(id)) {
             return;
         }
-        try {
-            new DefaultBLL("usuario").setOne("foto", ImageController.convertImgToByteArr(foto), "id", id);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        new DefaultBLL("usuario").setOne("foto", foto, "id", id);
     }
 
     public static void setNomeUser(int id, String nome) {
@@ -160,35 +154,35 @@ public class UsersBLL {
         if (!isAluno(id)) {
             return;
         }
-        new DefaultBLL("dados_aluno").setOne("ee_num", numEE, "id", id);
+        new DefaultBLL("dados_aluno").setOne("ee_num", numEE, "aluno_id", id);
     }
 
     public static void setEmailAluno(int id, String email) {
         if (!isAluno(id)) {
             return;
         }
-        new DefaultBLL("dados_aluno").setOne("email", email, "id", id);
+        new DefaultBLL("dados_aluno").setOne("email", email, "aluno_id", id);
     }
 
     public static void setTurmaAluno(int id, int turma) {
         if (!isAluno(id)) {
             return;
         }
-        new DefaultBLL("dados_aluno").setOne("turma", turma, "id", id);
+        new DefaultBLL("dados_aluno").setOne("turma", turma, "aluno_id", id);
     }
 
     public static void setAseAluno(int id, AseEnum ase) {
         if (!isAluno(id)) {
             return;
         }
-        new DefaultBLL("dados_aluno").setOne("ase", ase.toDbValue(), "id", id);
+        new DefaultBLL("dados_aluno").setOne("ase", ase.toDbValue(), "aluno_id", id);
     }
 
     public static void setNumUtenteAluno(int id, int num) {
         if (!isAluno(id)) {
             return;
         }
-        new DefaultBLL("dados_aluno").setOne("utente_num", num, "id", id);
+        new DefaultBLL("dados_aluno").setOne("utente_num", num, "aluno_id", id);
     }
 
     //get done
@@ -254,35 +248,35 @@ public class UsersBLL {
         if (!isAluno(id)) {
             return null;
         }
-        return (String) new DefaultBLL("dados_aluno").getOne("email", "id", id);
+        return (String) new DefaultBLL("dados_aluno").getOne("email", "aluno_id", id);
     }
 
     public static AseEnum getAseAluno(int id) {
         if (!isAluno(id)) {
             return null;
         }
-        return AseEnum.fromDbValue((int) new DefaultBLL("dados_aluno").getOne("ase", "id", id));
+        return AseEnum.fromDbValue((int) new DefaultBLL("dados_aluno").getOne("ase", "aluno_id", id));
     }
 
     public static int getNumEEAluno(int id) {
         if (!isAluno(id)) {
             return 0;
         }
-        return (int) new DefaultBLL("dados_aluno").getOne("ee_num", "id", id);
+        return (int) new DefaultBLL("dados_aluno").getOne("ee_num", "aluno_id", id);
     }
 
     public static int getTurmaAluno(int id) {
         if (!isAluno(id)) {
             return 0;
         }
-        return (int) new DefaultBLL("dados_aluno").getOne("turma_num", "id", id);
+        return (int) new DefaultBLL("dados_aluno").getOne("turma_num", "aluno_id", id);
     }
 
     public static int getUtenteAluno(int id) {
         if (!isAluno(id)) {
             return 0;
         }
-        return (int) new DefaultBLL("dados_aluno").getOne("utente_num", "id", id);
+        return (int) new DefaultBLL("dados_aluno").getOne("utente_num", "aluno_id", id);
     }
 
 

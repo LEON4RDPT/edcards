@@ -91,12 +91,7 @@ public enum ErrorEnum {
     }
 
     public static String[] getStringValues() {
-        ErrorEnum[] values = ErrorEnum.values();
-        String[] stringValues = new String[values.length];
-        for (int i = 0; i < values.length; i++) {
-            stringValues[i] = values[i].toString();
-        }
-        return stringValues;
+        return ConfEnum.getStringValues();
     }
 
 }
