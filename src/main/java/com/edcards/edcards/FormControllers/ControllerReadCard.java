@@ -12,12 +12,20 @@ import javafx.fxml.Initializable;
 import javax.smartcardio.CardException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+
 
 public class ControllerReadCard implements Initializable {
-    private List<String> allNfc = new ArrayList<>();
+    private final Lock lock = new ReentrantLock();
+    private final Condition cardAvailable = lock.newCondition();
+
+    private List<String> allNfc;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -30,14 +38,18 @@ public class ControllerReadCard implements Initializable {
 
         Task<String> initialTask = new Task<String>() {
             @Override
-            protected String call() throws Exception {
-                return cartaoLido();
+            protected String call() {
+                try {
+                    return cartaoLido();
+                } catch (CardException e) {
+                    return null;
+                }
             }
         };
 
         initialTask.setOnSucceeded(event -> {
             var card = initialTask.getValue();
-            if (card != null) {
+            if (card!= null) {
                 Platform.runLater(() -> {
                     try {
                         GlobalVAR.StageController.setStage("/com/edcards/edcards/PIN.fxml");
@@ -58,37 +70,44 @@ public class ControllerReadCard implements Initializable {
         new Thread(initialTask).start();
     }
 
-    public String cartaoLido() {
-        while (true) {
-            try {
-                String cartao = LerCartao.lerIDCartao();
 
-                if (!allNfc.contains(cartao)) {
-                    continue;
+
+    public String cartaoLido() throws CardException {
+        lock.lock();
+        try {
+            while (true) {
+                try {
+                    String cartao = LerCartao.lerIDCartao();
+                    if (cartao == null) {
+                        return null;
+                    }
+
+                    if (allNfc == null || allNfc.isEmpty() || !allNfc.contains(cartao)) {
+                        cardAvailable.await(100, TimeUnit.MILLISECONDS); // wait for 100ms
+                        continue;
+                    }
+                    return cartao;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    Thread.currentThread().interrupt(); // Restore interrupted status
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                return cartao;
-            } catch (CardException e) {
-                e.printStackTrace();
-                break; // Exit the loop on CardException
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                Thread.currentThread().interrupt(); // Restore interrupted status
-                break; // Exit the loop on InterruptedException
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } finally {
+            lock.unlock();
         }
-        return null;
+
     }
 
     public void runAdditionalLogic(String card) {
         while (true) {
             try {
                 var userByNFC = CartaoBLL.getUserByNFC(card);
-                if (userByNFC != null) {
+                if (userByNFC!= null) {
                     var pessoa = UsersBLL.getUser(userByNFC.getIduser());
                     GlobalVAR.Dados.setPessoaAtual(pessoa);
-                    FeedBackController.feedbackErro("DEU"); //feedback
                     return;
                 }
             } catch (Exception e) {

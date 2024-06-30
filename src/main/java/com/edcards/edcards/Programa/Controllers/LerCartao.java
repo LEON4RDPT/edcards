@@ -1,5 +1,8 @@
 package com.edcards.edcards.Programa.Controllers;
 
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+
 import javax.smartcardio.*;
 import java.util.concurrent.TimeUnit;
 
@@ -7,7 +10,31 @@ public class LerCartao {
 
     public static String lerIDCartao() throws CardException, InterruptedException {
         TerminalFactory factory = TerminalFactory.getDefault();
-        CardTerminal terminal = factory.terminals().list().get(0);
+        CardTerminal terminal = null;
+        try{
+            terminal = factory.terminals().list().getFirst();
+        } catch (CardException e) {
+//            Platform.runLater(() -> {
+//                FeedBackController.feedbackErro("Nenhum Reader Encontrado!");
+//                Platform.exit();
+//                System.exit(1);
+//
+//            });
+
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erro");
+                alert.setHeaderText(null);
+                alert.setContentText("Nenhum Reader Encontrado!");
+                alert.initOwner(GlobalVAR.Dados.getCurrentStage());
+                alert.setOnCloseRequest(event -> {
+                    Platform.exit();
+                    System.exit(1);
+                });
+                alert.showAndWait();
+            });
+            return null;
+        }
 
         while (true) {
             try {

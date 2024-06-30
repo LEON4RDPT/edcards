@@ -48,7 +48,6 @@ public class UsersBLL {
         return new DefaultBLL("usuario").hasRows("id", id) && new DefaultBLL("dados_aluno").hasRows("aluno_id", id);
     }
 
-    //insert done (todo blob to image!!)
 
     public static void inserir(String nfc, String nome, Date dataNc, String morada, UsuarioEnum tipo, String cc, byte[] foto) {
         DefaultBLL bll = new DefaultBLL("usuario");
