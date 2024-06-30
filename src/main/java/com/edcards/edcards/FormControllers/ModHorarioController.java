@@ -20,8 +20,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ModHorarioController {
-    private final boolean isRunning = true;
-    private final ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
     @FXML
     private ImageView HorarioUser;
     @FXML
@@ -62,17 +60,6 @@ public class ModHorarioController {
     }
 
     private void aguardarCartao() {
-        nfcExecutar.submit(() -> {
-            while (isRunning) {
-                try {
-                    String idCartao = LerCartao.lerIDCartao();
-                    int user = CartaoBLL.getIdUserByNFC(idCartao);
-                    UsersBLL.getUser(user);
-                    break;
 
-                } catch (Exception ignored) {
-                }
-            }
-        });
     }
 }

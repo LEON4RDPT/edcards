@@ -7,7 +7,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Optional;
+
+import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
 
 public class FeedBackController {
     private static Stage currentStage = GlobalVAR.Dados.getCurrentStage();
@@ -20,6 +23,22 @@ public class FeedBackController {
 
         alert.setGraphic(imageView);
         //todo
+    }
+
+    public static void feedbackErroShowOtherForm(String message,String fxml) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erro");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(GlobalVAR.Dados.getCurrentStage());
+        alert.setOnCloseRequest(event -> {
+            try {
+                setStage(fxml);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        alert.showAndWait();
     }
 
     public static void feedbackErroCloseApp(String message) {

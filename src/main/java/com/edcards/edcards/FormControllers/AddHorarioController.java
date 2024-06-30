@@ -65,7 +65,7 @@ public class AddHorarioController {
         nfcExecutar.submit(() -> {
             while (isRunning) {
                 try {
-                    String idCartao = LerCartao.lerIDCartao();
+                    String idCartao = LerCartao.lerIDCartao(null);
                     int user = CartaoBLL.getIdUserByNFC(idCartao);
                     UsersBLL.getUser(user);
                     break;

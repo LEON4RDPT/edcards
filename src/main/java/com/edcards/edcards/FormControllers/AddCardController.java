@@ -28,7 +28,7 @@ public class AddCardController {
         nfcExecutar.submit(() -> {
             while (isRunning) {
                 try {
-                    String idCartao = LerCartao.lerIDCartao();
+                    String idCartao = LerCartao.lerIDCartao(null);
 
                     if (!CartaoBLL.existenteNFC(idCartao)) {
                         CartaoBLL.getIdUserByNFC(idCartao);

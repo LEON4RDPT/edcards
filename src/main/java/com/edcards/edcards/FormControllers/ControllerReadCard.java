@@ -77,7 +77,7 @@ public class ControllerReadCard implements Initializable {
         try {
             while (true) {
                 try {
-                    String cartao = LerCartao.lerIDCartao();
+                    String cartao = LerCartao.lerIDCartao(null);
                     if (cartao == null) {
                         return null;
                     }

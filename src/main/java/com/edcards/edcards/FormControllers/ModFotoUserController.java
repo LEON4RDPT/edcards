@@ -17,8 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ModFotoUserController {
-    private volatile boolean isRunning = true;
-    private ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
+
     @FXML
     private ImageView imageUser;
     @FXML
@@ -29,7 +28,6 @@ public class ModFotoUserController {
     private Button changePic, backBtn;
 
     public void initialize() {
-        aguardarCartao();
 
         imageUser.setOnMouseClicked(event -> {
             FileChooser selFoto = new FileChooser();
@@ -51,18 +49,4 @@ public class ModFotoUserController {
 
     }
 
-    private void aguardarCartao() {
-        nfcExecutar.submit(() -> {
-            while (isRunning) {
-                try {
-                    String idCartao = LerCartao.lerIDCartao();
-                    int user = CartaoBLL.getIdUserByNFC(idCartao);
-                    UsersBLL.getUser(user);
-                    break;
-
-                } catch (Exception ignored) {
-                }
-            }
-        });
-    }
 }

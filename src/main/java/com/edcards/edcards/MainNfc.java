@@ -11,7 +11,7 @@ public class MainNfc {
         while (true) {
 
             try {
-                var x = lerIDCartao();
+                var x = lerIDCartao(null);
                 if (x != null) {
                     FeedBackController.feedbackErro(x);
                     return;

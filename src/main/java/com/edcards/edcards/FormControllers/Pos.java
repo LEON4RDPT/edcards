@@ -171,7 +171,7 @@ public class Pos {
         nfcExecutar.submit(() -> {
             while (isRunning) {
                 try {
-                    String idCartao = LerCartao.lerIDCartao();
+                    String idCartao = LerCartao.lerIDCartao("/com/edcards/edcards/Main.fxml");
                     if (!idCartao.equals(getPessoaAtual().getNumCartao())) {
                         Platform.runLater(() -> cartaoAluno(idCartao));
                     }

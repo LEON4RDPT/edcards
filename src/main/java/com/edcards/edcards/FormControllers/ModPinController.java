@@ -18,8 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ModPinController {
-    private volatile boolean isRunning = true;
-    private ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
+
     public GridPane gridbuttons;
     public Label pinText;
     public Button backBtn;
@@ -56,7 +55,7 @@ public class ModPinController {
 
     private void ifButtonPressed(Button button) {
         valorAtual = Integer.parseInt(button.getText());
-        if (scnd == false) {
+        if (!scnd) {
             if (field1.getText().isEmpty()) {
                 field1.setText(String.valueOf(valorAtual));
             } else if (field2.getText().isEmpty()) {
@@ -74,7 +73,7 @@ public class ModPinController {
                 clean();
                 scnd = true;
             }
-        } else if (scnd == true) {
+        } else if (scnd) {
             if (field1.getText().isEmpty()) {
                 field1.setText(String.valueOf(valorAtual));
             } else if (field2.getText().isEmpty()) {
@@ -118,20 +117,5 @@ public class ModPinController {
     @FXML
     private void buttonLimpar(ActionEvent actionEvent) {
         clean();
-    }
-
-    private void aguardarCartao() {
-        nfcExecutar.submit(() -> {
-            while (isRunning) {
-                try {
-                    String idCartao = LerCartao.lerIDCartao();
-                    int user = CartaoBLL.getIdUserByNFC(idCartao);
-                    UsersBLL.getUser(user);
-                    break;
-
-                } catch (Exception ignored) {
-                }
-            }
-        });
     }
 }

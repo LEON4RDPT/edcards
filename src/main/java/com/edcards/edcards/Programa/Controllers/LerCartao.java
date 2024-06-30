@@ -8,15 +8,22 @@ import java.util.concurrent.TimeUnit;
 
 public class LerCartao {
 
-    public static String lerIDCartao() throws CardException, InterruptedException {
+
+    public static String lerIDCartao(String fxml) throws CardException, InterruptedException {
         TerminalFactory factory = TerminalFactory.getDefault();
         CardTerminal terminal = null;
         try{
             terminal = factory.terminals().list().getFirst();
         } catch (CardException e) {
-            Platform.runLater(() -> {
-                FeedBackController.feedbackErroCloseApp("Nenhum Reader Encontrado!");
-            });
+            if (fxml == null) {
+                Platform.runLater(() -> {
+                    FeedBackController.feedbackErroCloseApp("Nenhum Reader Encontrado!");
+                });
+            } else {
+                Platform.runLater(() -> {
+                    FeedBackController.feedbackErroShowOtherForm("Nenhum Reader Encontrado!",fxml);
+                });
+            }
             return null;
         }
 
