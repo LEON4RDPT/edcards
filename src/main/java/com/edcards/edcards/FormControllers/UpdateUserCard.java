@@ -1,8 +1,9 @@
-package com.edcards.edcards.NotDoneApps;
+package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.MainExe;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -20,5 +21,8 @@ public class UpdateUserCard extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void loadUser(ActionEvent actionEvent) {
     }
 }

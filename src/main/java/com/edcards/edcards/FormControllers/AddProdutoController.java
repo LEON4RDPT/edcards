@@ -2,9 +2,14 @@ package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.ProdutoBLL;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
+import java.io.IOException;
+
+import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
 
 public class AddProdutoController {
     String nome;
@@ -40,9 +45,15 @@ public class AddProdutoController {
 
     @FXML
     private void addPrdtClick(ActionEvent event) {
-        categoria = ProdutoEnum.valueOf(String.valueOf(cBoxCategory.getSelectionModel().getSelectedItem()));
-        nome = nameField.getText();
-        preco = priceValue.getValue();
+        categoria = ProdutoEnum.valueOf(String.valueOf(cBoxCategory.getSelectionModel().getSelectedItem())); //works
+        nome = nameField.getText(); //todo check
+        preco = priceValue.getValue(); //todo check
         ProdutoBLL.inserirProduto(nome, categoria, preco, true);
+        FeedBackController.feedbackErro("Produto Registado com sucesso!");
+    }
+
+    @FXML
+    private void handleButtonVoltar(ActionEvent actionEvent) throws IOException {
+        setStage("/com/edcards/edcards/POSAdmin.fxml");
     }
 }

@@ -28,7 +28,11 @@ public class AddCardController {
         nfcExecutar.submit(() -> {
             while (isRunning) {
                 try {
-                    String idCartao = LerCartao.lerIDCartao(null);
+                    String idCartao = LerCartao.lerIDCartao("/com/edcards/edcards/POSAdmin.fxml");
+                    if (idCartao == null) {
+                        return;
+                    }
+
 
                     if (!CartaoBLL.existenteNFC(idCartao)) {
                         CartaoBLL.getIdUserByNFC(idCartao);
@@ -36,11 +40,6 @@ public class AddCardController {
                     } else {
                         FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err13));
                         isRunning = true;
-                    }
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
                     }
                 } catch (Exception ignored) {
                 }
