@@ -1,5 +1,6 @@
 package com.edcards.edcards.Programa.Controllers;
 
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
@@ -21,11 +22,23 @@ public class FeedBackController {
         //todo
     }
 
+    public static void feedbackErroCloseApp(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erro");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(GlobalVAR.Dados.getCurrentStage());
+        alert.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(1);
+        });
+        alert.showAndWait();
+    }
 
     public static void feedbackErro(String message) {
         currentStage = GlobalVAR.Dados.getCurrentStage();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Erro");
         alert.setHeaderText(null);
         alert.setContentText(message);

@@ -14,24 +14,8 @@ public class LerCartao {
         try{
             terminal = factory.terminals().list().getFirst();
         } catch (CardException e) {
-//            Platform.runLater(() -> {
-//                FeedBackController.feedbackErro("Nenhum Reader Encontrado!");
-//                Platform.exit();
-//                System.exit(1);
-//
-//            });
-
             Platform.runLater(() -> {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erro");
-                alert.setHeaderText(null);
-                alert.setContentText("Nenhum Reader Encontrado!");
-                alert.initOwner(GlobalVAR.Dados.getCurrentStage());
-                alert.setOnCloseRequest(event -> {
-                    Platform.exit();
-                    System.exit(1);
-                });
-                alert.showAndWait();
+                FeedBackController.feedbackErroCloseApp("Nenhum Reader Encontrado!");
             });
             return null;
         }
