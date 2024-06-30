@@ -172,6 +172,12 @@ public class Pos {
             while (isRunning) {
                 try {
                     String idCartao = LerCartao.lerIDCartao("/com/edcards/edcards/Main.fxml");
+                    if (idCartao == null) {
+                        return;
+                    }
+
+
+                    //caso nao seja o funcionario.
                     if (!idCartao.equals(getPessoaAtual().getNumCartao())) {
                         Platform.runLater(() -> cartaoAluno(idCartao));
                     }
