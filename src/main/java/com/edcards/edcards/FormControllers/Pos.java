@@ -41,7 +41,7 @@ import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController
 public class Pos {
 
     private volatile boolean isRunning = true;
-    private ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
+    private final ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
     public TextArea textArea;
     @FXML
     private GridPane buttonGrid;
@@ -124,7 +124,7 @@ public class Pos {
     private Button[] btns = new Button[23];
     private Produto[] produtos = new Produto[23];
     private List<Produto> listaProdutosDisponiveis = new ArrayList<Produto>();
-    private List<Produto> fatura = new ArrayList<Produto>();
+    private final List<Produto> fatura = new ArrayList<Produto>();
     private int buttonPage = 1;
 
     private void loadbtns() {
