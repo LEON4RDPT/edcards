@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
 
-public class AddProdutoController {
+public class AddProdutoController  {
     String nome;
     ProdutoEnum categoria;
     Double preco;

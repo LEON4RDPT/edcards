@@ -1,9 +1,7 @@
 package com.edcards.edcards.FormControllers.Utils;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class ResizeUtil {
@@ -55,6 +53,39 @@ public class ResizeUtil {
         });
 
         // Add a listener for height changes if necessary
+    }
+
+    public static void resizeAndPositionLabel(Label label, AnchorPane pane, double relativePosition) {
+        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            double width = newVal.doubleValue();
+            double labelWidth = label.getWidth();
+            label.setLayoutX((width - labelWidth) / 2); // Center horizontally
+        });
+
+        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            double height = newVal.doubleValue();
+            double labelHeight = label.getHeight();
+            double positionY = height * relativePosition - labelHeight / 2; // Center vertically
+            label.setLayoutY(positionY);
+        });
+    }
+
+    public static void pinImageToCenter(ImageView imageView, AnchorPane pane, double widthRatio, double heightRatio) {
+        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            double paneWidth = newVal.doubleValue();
+            double imageWidth = paneWidth * widthRatio;
+            double imageX = (paneWidth - imageWidth) / 2;
+            imageView.setFitWidth(imageWidth);
+            imageView.setLayoutX(imageX);
+        });
+
+        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            double paneHeight = newVal.doubleValue();
+            double imageHeight = paneHeight * heightRatio;
+            double imageY = (paneHeight - imageHeight) / 2;
+            imageView.setFitHeight(imageHeight);
+            imageView.setLayoutY(imageY);
+        });
     }
 
     public static void resizeAndPositionButton(Button button, AnchorPane pane, double relativePosition) {

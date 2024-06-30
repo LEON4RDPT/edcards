@@ -1,5 +1,6 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
 import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Aluno;
 import com.edcards.edcards.Programa.Classes.Funcionario;
@@ -10,13 +11,25 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 import java.io.IOException;
 
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
 
 public class FormUser {
-    public Button btnPosAdmin;
+    @FXML
+    private Button btnChangePin;
+    @FXML
+    private AnchorPane leftPane;
+    @FXML
+    private AnchorPane rightPane;
+    @FXML
+    private Button btnPosAdmin;
+    @FXML
+    private HBox rootHBox;
     @FXML
     private Button exit;
     @FXML
@@ -38,8 +51,44 @@ public class FormUser {
     @FXML
     private Label labelTipo;
 
+
+
+    private void resizeComponents() {
+        // Ensure the panes are resized according to the proportions
+        HBox.setHgrow(leftPane, Priority.ALWAYS);
+        HBox.setHgrow(rightPane, Priority.ALWAYS);
+
+        // Bind the widths of the panes to the width of the root HBox
+        leftPane.prefWidthProperty().bind(rootHBox.widthProperty().multiply(0.6)); // 60% for leftPane
+        rightPane.prefWidthProperty().bind(rootHBox.widthProperty().multiply(0.4)); // 40% for rightPane
+
+        ResizeUtil.pinImageToCenter(imageUser,leftPane,0.5,0.5);
+        imageUser.setPreserveRatio(false);
+
+        //buttons
+
+        ResizeUtil.resizeAndPositionButton(btnHistComp, rightPane, 0.34);
+        ResizeUtil.resizeAndPositionButton(btnPos, rightPane, 0.42);
+        ResizeUtil.resizeAndPositionButton(btnMarcRef, rightPane, 0.50);
+        ResizeUtil.resizeAndPositionButton(btnHorario, rightPane, 0.58);
+        ResizeUtil.resizeAndPositionButton(btnRefMarc, rightPane, 0.66);
+        ResizeUtil.resizeAndPositionButton(btnPosAdmin, rightPane, 0.74);
+        ResizeUtil.resizeAndPositionButton(btnChangePin, rightPane, 0.82);
+        ResizeUtil.resizeAndPositionButton(exit, rightPane, 0.9);
+
+
+        //labels
+
+        ResizeUtil.resizeAndPositionLabel(labelNome, rightPane, 0.1);
+        ResizeUtil.resizeAndPositionLabel(labelTipo, rightPane, 0.2);
+        ResizeUtil.resizeAndPositionLabel(labelSaldo, rightPane, 0.3);
+    }
+
+
+
     @FXML
-    public void initialize() {
+    private void initialize() {
+        resizeComponents();
         setHiddenButtons();
         Pessoa pessoaA = GlobalVAR.Dados.getPessoaAtual();
         imageUser.setImage(pessoaA.getFoto());
@@ -47,12 +96,13 @@ public class FormUser {
         labelSaldo.setText("Saldo: " + pessoaA.getSaldo() + "€");
 
         switch (pessoaA) {
-            case Funcionario funcionario -> labelTipo.setText("Tipo: Funcionario");
-            case Aluno aluno -> labelTipo.setText("Tipo: Aluno");
-            case Admin admin -> labelTipo.setText("Tipo: Administrador");
+            case Funcionario ignored -> labelTipo.setText("Tipo: Funcionario");
+            case Aluno ignored -> labelTipo.setText("Tipo: Aluno");
+            case Admin ignored -> labelTipo.setText("Tipo: Administrador");
             default -> {
             }
         }
+
     }
 
     @FXML
@@ -71,7 +121,7 @@ public class FormUser {
                 btnPos.setVisible(false);
                 break;
             default:
-                break;
+                break   ;
         }
     }
 
@@ -85,4 +135,5 @@ public class FormUser {
     private void handlePosClick(ActionEvent event) throws IOException {
         setStage("/com/edcards/edcards/POS.fxml");
     }
+
 }
