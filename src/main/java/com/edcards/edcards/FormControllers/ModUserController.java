@@ -21,12 +21,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import org.apache.commons.io.filefilter.FalseFileFilter;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -39,17 +38,14 @@ public class ModUserController {
     private TextField turmaField;
     @FXML
     private TextField numUtSaudeField;
-    @FXML
-    private TextField numFieldAse;
+
     @FXML
     private ComboBox AsePicker;
     @FXML
     private Pane alunoPane;
     @FXML
     private Button backBtn;
-    String nome, morada, email, nif, num, numEE, turma, tipo, idCartao;
-    byte[] imgUserBLL;
-    List<Pessoa> users;
+
     @FXML
     private TextField nameField;
     @FXML
@@ -73,6 +69,12 @@ public class ModUserController {
     private Button modUser;
 
     private Pessoa pessoaAtual;
+
+
+    String nome, morada, email, nif, num, numEE, turma, tipo, idCartao;
+    byte[] imgUserBLL;
+    List<Pessoa> users;
+
 
     @FXML
     public void initialize() {
@@ -123,6 +125,7 @@ public class ModUserController {
         }
 
         if (pessoaAtual != null) {
+
             nameField.setText(pessoaAtual.getNome());
             dateField.setValue(pessoaAtual.getDataNasc().toLocalDate());
             ccField.setText(pessoaAtual.getCartaoC());
@@ -183,13 +186,15 @@ public class ModUserController {
     }
 
     @FXML
-    private void handleModUser(ActionEvent actionEvent) {
+    private void handleModUser(ActionEvent actionEvent) throws IOException {
         if (pessoaAtual == null) {
             FeedBackController.feedbackErro("Erro! Selecione o Usuario!");
             return;
         }
         int id = pessoaAtual.getIduser();
+        boolean alterouTipo = false;
 
+        //aluno
         if (tipoPicker.getSelectionModel().getSelectedIndex() == 0) { //caso seja ALuno OU queira inserir dados aluno
 
             if (numEEfield.getText().isEmpty() || numEEfield.getText().length() != 9) {
@@ -231,24 +236,59 @@ public class ModUserController {
                 UsersBLL.setAseAluno(id,ase);
             }
             else {
-                UsersBLL.setTipoUser(pessoaAtual.getIduser(),UsuarioEnum.ALUNO);
+                UsersBLL.setTipoUser(pessoaAtual.   getIduser(),UsuarioEnum.ALUNO);
                 UsersBLL.inserirAluno(pessoaAtual.getIduser(),numEE,email,turma,numUt,ase);
+            }
+        }
+        else {
+            var enumP = UsuarioEnum.fromDbValue((tipoPicker.getSelectionModel().getSelectedIndex()));
+            if (enumP == UsuarioEnum.FUNCIONARIO && !(pessoaAtual instanceof Funcionario)) {
+                UsersBLL.setTipoUser(id,UsuarioEnum.FUNCIONARIO);
+                alterouTipo = true;
+            }
+            if (enumP == UsuarioEnum.ADMINISTRADOR && !(pessoaAtual instanceof Admin)) {
+                UsersBLL.setTipoUser(id,UsuarioEnum.ADMINISTRADOR);
+                alterouTipo = true;
+
             }
 
 
 
-
         }
-        else {
-            UsersBLL.setTipoUser(id,UsuarioEnum.fromDbValue((tipoPicker.getSelectionModel().getSelectedIndex())));
-        }
-
-
-        if (isDiffrentFoto || !Arrays.equals(imgUserBLL, new byte[0])) {
+        if (isDiffrentFoto && !Arrays.equals(imgUserBLL, new byte[0])) {
             UsersBLL.setFotoUser(id,imgUserBLL);
         }
 
-        if
+        if (!pessoaAtual.getNome().equals(nameField.getText())) {
+            UsersBLL.setNomeUser(id,nameField.getText());
+        }
+
+        if (!pessoaAtual.getCartaoC().equals(ccField.getText())) {
+            UsersBLL.setCCUser(id,ccField.getText());
+        }
+
+        if (!pessoaAtual.getMorada().equals(moradaField.getText())) {
+            UsersBLL.setMoradaUser(id,moradaField.getText());
+        }
+
+        if (!pessoaAtual.getDataNasc().toLocalDate().equals(dateField.getValue())) {
+            UsersBLL.setDataNascUser(id, Date.valueOf(dateField.getValue()));
+        }
+
+        var adminAtual = GlobalVAR.Dados.getPessoaAtual();
+        if (pessoaAtual.getIduser() == adminAtual.getIduser()) {
+            //caso sejas TU a editar os teus dados e sejas ADMIN
+            if (alterouTipo) { //saiu de admin terá de sair do programa!!
+                GlobalVAR.Dados.setPessoaAtual(null);
+                GlobalVAR.StageController.setStage("/com/edcards/edcards/ReadCard.fxml");
+            }
+            GlobalVAR.Dados.setPessoaAtual(pessoaAtual);
+
+        }
+
+
+
+
 
 
 
