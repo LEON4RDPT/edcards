@@ -9,6 +9,22 @@ import java.util.Map;
 
 
 public class CartaoBLL {
+
+    public static void setEntrouSaiu(String nfc, boolean es) {
+        DefaultBLL bll = new DefaultBLL("cartao");
+        bll.setOne("Entrou",es,"codigo",nfc);
+    }
+
+    public static boolean getEntSaiu(String nfc) {
+        DefaultBLL bll = new DefaultBLL("cartao");
+        var e_s = bll.getOne("entrou","codigo",nfc);
+        if (e_s == null) {
+            return false;
+        }
+        return (boolean) e_s;
+    }
+
+
     public static String[] getAllCards() {
         DefaultBLL bll = new DefaultBLL("cartao");
         var x = bll.getAll("codigo", "INNER JOIN usuario ON cartao.codigo = usuario.cartao_id"); //check if exists on the 2 tables!

@@ -1,8 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.edcards.edcards.FormControllers.EntradasSaidasController" prefHeight="400.0"
-            prefWidth="600.0">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.EntradasSaidasController">
+   <children>
+      <Pane fx:id="mainPane" layoutX="34.0" layoutY="14.0" prefHeight="264.0" prefWidth="200.0">
+         <children>
+            <ImageView fx:id="userImage" fitHeight="169.0" fitWidth="147.0" layoutX="27.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/UserPicture.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="nome" alignment="CENTER" layoutY="164.0" prefHeight="30.0" prefWidth="200.0" textAlignment="RIGHT">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="entsai" alignment="CENTER" layoutY="200.0" prefHeight="30.0" prefWidth="200.0" textAlignment="CENTER">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Button layoutX="34.0" layoutY="391.0" mnemonicParsing="false" onAction="#handleAlunoSemCartaoButton" text="Aluno sem cartão?">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+      <ScrollPane fx:id="scrollPane" layoutX="267.0" prefHeight="726.0" prefWidth="1013.0">
+          <content>
+              <Pane fx:id="paneContainer" />
+          </content>
+      </ScrollPane>
+   </children>
 </AnchorPane>

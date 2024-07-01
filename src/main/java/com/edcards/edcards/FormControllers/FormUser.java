@@ -22,6 +22,8 @@ import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController
 
 public class FormUser {
     @FXML
+    private Button btnEntradasSaidas;
+    @FXML
     private Button btnChangePin;
     @FXML
     private AnchorPane leftPane;
@@ -140,4 +142,8 @@ public class FormUser {
         setStage("/com/edcards/edcards/POS.fxml");
     }
 
+    @FXML
+    private void handleEntradas(ActionEvent actionEvent) throws IOException {
+        setStage("/com/edcards/edcards/EntradasSaidas.fxml");
+    }
 }

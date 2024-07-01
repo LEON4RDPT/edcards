@@ -19,12 +19,12 @@
         </AnchorPane>
         <AnchorPane fx:id="rightPane" maxWidth="-Infinity" minWidth="0" prefWidth="320.0" style="-fx-background-color: #b8b8b8;" HBox.hgrow="ALWAYS">
             <children>
-                <Label fx:id="labelNome" prefWidth="200" layoutX="125.0" layoutY="102.0" text="Nome:" textAlignment="CENTER" wrapText="true">
+                <Label fx:id="labelNome" layoutX="125.0" layoutY="102.0" prefWidth="200" text="Nome:" textAlignment="CENTER" wrapText="true">
                     <font>
                         <Font size="24.0" />
                     </font>
                 </Label>
-                <Label fx:id="labelTipo" prefWidth="200" layoutX="128.0" layoutY="137.0" text="Tipo:" textAlignment="CENTER" wrapText="true">
+                <Label fx:id="labelTipo" layoutX="128.0" layoutY="137.0" prefWidth="200" text="Tipo:" textAlignment="CENTER" wrapText="true">
                     <font>
                         <Font size="24.0" />
                     </font>
@@ -42,10 +42,11 @@
                 <Button fx:id="btnMarcRef" layoutX="80.0" layoutY="521.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Marcar Refeiçoes" />
                 <Button fx:id="btnHorario" layoutX="80.0" layoutY="452.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Horario" />
                 <Button fx:id="btnRefMarc" layoutX="80.0" layoutY="555.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Ver Refeiçoes Marcadas" />
-
+                
                 <Button fx:id="btnChangePin" layoutX="80.0" layoutY="590.0" mnemonicParsing="false" prefWidth="230" styleClass="button-1" text="Mudar PIN" />
                 <Button fx:id="exit" layoutX="80.0" layoutY="626.0" mnemonicParsing="false" onAction="#handleExit" prefWidth="230" styleClass="button-1" text="Sair" />
                 <Button fx:id="btnPosAdmin" layoutX="80.0" layoutY="353.0" mnemonicParsing="false" onAction="#handlePosAdmClick" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Painel Admin" />
+            <Button fx:id="btnEntradasSaidas" layoutX="80.0" layoutY="307.0" mnemonicParsing="false" onAction="#handleEntradas" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Painel Admin" />
             </children>
         </AnchorPane>
     </children>
