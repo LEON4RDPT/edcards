@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Array;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -49,8 +50,7 @@ public class CriarUserController {
     private TextField emailField;
     @FXML
     private TextField nifField;
-    @FXML
-    private TextField numField;
+
     @FXML
     private TextField numEEfield;
     @FXML
@@ -60,7 +60,7 @@ public class CriarUserController {
     @FXML
     private ComboBox<String> tipoPicker;
     @FXML
-    private ComboBox<String> turmaPicker;
+    private TextField turmaPicker;
     @FXML
     private ComboBox<String> AsePicker;
     @FXML
@@ -74,7 +74,12 @@ public class CriarUserController {
     @FXML
     public void initialize() {
 
-
+        ObservableList<String> opcoesAse = FXCollections.observableArrayList(
+                Arrays.stream(AseEnum.values())
+                        .map(Enum::name)
+                        .collect(Collectors.toList())
+        );
+        AsePicker.setItems(opcoesAse);
         ObservableList<String> opcoes = FXCollections.observableArrayList(
                 Arrays.stream(UsuarioEnum.values())
                         .map(Enum::name)
@@ -102,17 +107,10 @@ public class CriarUserController {
     @FXML
     private void tipoAction() {
         String selectedTipo = tipoPicker.getValue();
-        alunoPane.setVisible(false);
+
 
         if (selectedTipo != null) {
-            switch (selectedTipo) {
-                case "Aluno":
-                    alunoPane.setVisible(true);
-                    break;
-                case "Funcionário", "Admin":
-                    alunoPane.setVisible(false);
-                    break;
-            }
+            alunoPane.setVisible(selectedTipo.equals("ALUNO"));
         }
     }
 
@@ -137,7 +135,6 @@ public class CriarUserController {
             tipo = UsuarioEnum.valueOf(tipoPicker.getValue());
             email = emailField.getText();
             numEE = Integer.parseInt(numEEfield.getText());
-            num = Integer.parseInt(numField.getText());
             turma = Integer.parseInt(turmaPicker.toString());
 
             idCartao = null;
@@ -146,8 +143,11 @@ public class CriarUserController {
 
             if (nome != null || idCartao != null || turma != 0 || morada != null || email != null || cc != null || numEE != 0 || num != 0 || numEEfield != null || imgUser != null || ase != null || nus != 0) {
                 FeedBackController.feedbackErro(nome + morada + email + cc + numEE + num + idCartao + imgUser + data + ase + nus);
-                UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL);
-                UsersBLL.inserirAluno(num, numEE, email, turma, nus, ase);
+                var id = UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL);
+                if (id == 0) {
+                    FeedBackController.feedbackErro("Erro Dados Incorretos!");
+                }
+                UsersBLL.inserirAluno(id, numEE, email, turma, nus, ase);
 
 
             } else {

@@ -236,11 +236,16 @@ public class ModUserController {
                 UsersBLL.setAseAluno(id,ase);
             }
             else {
-                UsersBLL.setTipoUser(pessoaAtual.   getIduser(),UsuarioEnum.ALUNO);
+                UsersBLL.setTipoUser(pessoaAtual.getIduser(),UsuarioEnum.ALUNO);
                 UsersBLL.inserirAluno(pessoaAtual.getIduser(),numEE,email,turma,numUt,ase);
             }
         }
         else {
+            if (pessoaAtual instanceof Aluno) { //caso seja aluno e QUEIRA TROCAR
+                UsersBLL.deleteAluno(id);
+            }
+
+
             var enumP = UsuarioEnum.fromDbValue((tipoPicker.getSelectionModel().getSelectedIndex()));
             if (enumP == UsuarioEnum.FUNCIONARIO && !(pessoaAtual instanceof Funcionario)) {
                 UsersBLL.setTipoUser(id,UsuarioEnum.FUNCIONARIO);

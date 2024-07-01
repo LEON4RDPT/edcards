@@ -13,7 +13,7 @@ public class MainNfc {
             try {
                 var x = lerIDCartao(null);
                 if (x != null) {
-                    FeedBackController.feedbackErro(x);
+                    System.out.println(x);
                     return;
                 }
             } catch (CardException e) {

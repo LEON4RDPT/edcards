@@ -21,7 +21,7 @@ import java.util.Map;
 
 
 public class UsersBLL {
-    private static void deleteAluno(int id) {
+    public static void deleteAluno(int id) {
         if (!isAluno(id)) {
             return;
         }
@@ -49,16 +49,16 @@ public class UsersBLL {
     }
 
 
-    public static void inserir(String nfc, String nome, Date dataNc, String morada, UsuarioEnum tipo, String cc, byte[] foto) {
+    public static int inserir(String nfc, String nome, Date dataNc, String morada, UsuarioEnum tipo, String cc, byte[] foto) {
         DefaultBLL bll = new DefaultBLL("usuario");
 
         if (nfc != null) {
             if (bll.hasRows("cartao_id", nfc)) {
-                return;
+                return 0;
             }
         }
         if (bll.hasRows("cc", cc)) {
-            return;
+            return 0;
         }
 
 
@@ -70,7 +70,7 @@ public class UsersBLL {
         columnValues.put("tipo", tipo.toDbValue());
         columnValues.put("cc", cc);
         columnValues.put("foto", foto);
-        bll.insert(columnValues);
+        return bll.insertAndGetId(columnValues);
 
 
     }

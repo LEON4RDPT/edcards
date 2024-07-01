@@ -343,7 +343,7 @@ public class DefaultBLL extends DAL {
             columns.setLength(columns.length() - 2);
             values.setLength(values.length() - 2);
 
-            String sql = "INSERT INTO " + getTableName() + " (" + columns.toString() + ") VALUES (" + values.toString() + ")";
+            String sql = "INSERT INTO " + getTableName() + " (" + columns + ") VALUES (" + values + ")";
             PreparedStatement statement = connection.prepareStatement(sql);
 
             // Set parameter values
@@ -376,7 +376,7 @@ public class DefaultBLL extends DAL {
             columns.setLength(columns.length() - 2);
             values.setLength(values.length() - 2);
 
-            String sql = "INSERT INTO " + getTableName() + " (" + columns.toString() + ") VALUES (" + values.toString() + ")";
+            String sql = "INSERT INTO " + getTableName() + " (" + columns + ") VALUES (" + values + ")";
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             // Set parameter values
