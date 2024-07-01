@@ -131,7 +131,7 @@ public class CriarUserController {
 
         tipo = UsuarioEnum.valueOf(tipoPicker.getValue());
 
-        if (tipoPicker.getValue().equals("Aluno")) {
+        if (tipoPicker.getValue().equals("ALUNO")) {
             tipo = UsuarioEnum.valueOf(tipoPicker.getValue());
             email = emailField.getText();
             numEE = Integer.parseInt(numEEfield.getText());

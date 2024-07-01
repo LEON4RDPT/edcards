@@ -5,6 +5,7 @@ import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Aluno;
 import com.edcards.edcards.Programa.Classes.Funcionario;
 import com.edcards.edcards.Programa.Classes.Pessoa;
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -127,8 +128,11 @@ public class FormUser {
 
     @FXML
     private void handleExit(ActionEvent actionEvent) throws IOException {
-        GlobalVAR.Dados.setPessoaAtual(null);
-        setStage("/com/edcards/edcards/ReadCard.fxml");
+        if (FeedBackController.feedbackYesNo("Deseja Sair?","Confirmação")) {
+            GlobalVAR.Dados.setPessoaAtual(null);
+            setStage("/com/edcards/edcards/ReadCard.fxml");
+        }
+
     }
 
     @FXML
