@@ -22,10 +22,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -123,8 +120,8 @@ public class Pos {
     private Button button24;
     private Button[] btns = new Button[23];
     private Produto[] produtos = new Produto[23];
-    private List<Produto> listaProdutosDisponiveis = new ArrayList<Produto>();
-    private final List<Produto> fatura = new ArrayList<Produto>();
+    private List<Produto> listaProdutosDisponiveis = new ArrayList<>();
+    private final List<Produto> fatura = new ArrayList<>();
     private int buttonPage = 1;
 
     private void loadbtns() {
@@ -157,11 +154,11 @@ public class Pos {
     private void loadMethods() {
         choiceBoxItem.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // Handle the new value
-            handleChoiceBoxChange((String) newValue);
+            handleChoiceBoxChangeSize();
         });
     }
 
-    private void handleChoiceBoxChange(String newValue) {
+    private void handleChoiceBoxChangeSize() {
         buttonPage = 1;
         textNum.setText("1");
     }
@@ -189,7 +186,7 @@ public class Pos {
     }
 
     public void shutdown() {
-        if (nfcExecutar != null && !nfcExecutar.isShutdown()) {
+        if (!nfcExecutar.isShutdown()) {
             isRunning = false;
             nfcExecutar.shutdown();
 
@@ -239,10 +236,10 @@ public class Pos {
         int btnPgOld = btnPg - 24;
 
         produtos = new Produto[produtos.length]; //clear
-        List<Produto> produtos1 = new ArrayList<Produto>();
+        List<Produto> produtos1 = new ArrayList<>();
 
         for (int page = btnPgOld; page < btnPg; page++) {
-            if (page >= listaProdutosDisponiveis.size()) {
+            if (page >= Objects.requireNonNull(listaProdutosDisponiveis).size()) {
                 produtos1.add(null);
                 continue;
             }
@@ -326,14 +323,14 @@ public class Pos {
 
     }
 
-    public void buttonBackClick(ActionEvent actionEvent) {
+    public void buttonBackClick() {
         if (buttonPage > 1) {
             buttonPage--;
             setProdutosButton();
         }
     }
 
-    public void buttonUpClick(ActionEvent actionEvent) {
+    public void buttonUpClick() {
         int num = buttonPage * 24;
         if (num <= listaProdutosDisponiveis.size()) {
             buttonPage++;
@@ -343,15 +340,15 @@ public class Pos {
     }
 
     //VENDER FATURA
-    public void handleButtonClickVender(ActionEvent actionEvent) {
+    public void handleButtonClickVender() {
         if (fatura.isEmpty()) {
-            feedbackErro("Nenhum Produto Selecionado!"); //feedback
+            feedbackErro("Nenhum Produto Selecionado!");
             return;
         }
 
         var cliente = getClientePOS();
         if (cliente == null) {
-            feedbackErro("Nenhum cliente Selecionado!"); //feedback
+            feedbackErro("Nenhum cliente Selecionado!");
             return;
         }
 
@@ -370,7 +367,7 @@ public class Pos {
             changeTextBox();
             aguardarCartao();
         } else {
-            feedbackErro("Usuario não tem saldo");             //feedback
+            feedbackErro("Usuario não tem saldo");
 
         }
     }
@@ -430,14 +427,14 @@ public class Pos {
         textArea.setText(textInputBuilder.toString());
     }
 
-    public void handleButtonClickRemoverAll(ActionEvent actionEvent) {
+    public void handleButtonClickRemoverAll() {
         if (feedbackYesNo("Deseja Limpar tudo?")) {
             fatura.clear();
             changeTextBox();
         }
     }
 
-    public void handleButtonClickRemoverLast(ActionEvent actionEvent) {
+    public void handleButtonClickRemoverLast() {
         if (fatura.isEmpty()) {
             return;
         }
@@ -447,11 +444,11 @@ public class Pos {
         }
     }
 
-    public void handleChoiceBoxChange(ActionEvent actionEvent) {
+    public void handleChoiceBoxChange() {
         setProdutosButton();
     }
 
-    public void handleButtonClickVoltar(ActionEvent actionEvent) throws IOException {
+    public void handleButtonClickVoltar() throws IOException {
         if (FeedBackController.feedbackYesNo("Deseja sair?", "Confirmação")) {
             GlobalVAR.Dados.setClientePOS(null);
             setStage("/com/edcards/edcards/Main.fxml");
@@ -459,7 +456,7 @@ public class Pos {
         }
     }
 
-    public void handleButtonAddSaldo(ActionEvent actionEvent) throws IOException {
+    public void handleButtonAddSaldo() throws IOException {
         if (GlobalVAR.Dados.getClientePOS() != null) {
             setStage("/com/edcards/edcards/CarregarCartao.fxml");
         } else {
