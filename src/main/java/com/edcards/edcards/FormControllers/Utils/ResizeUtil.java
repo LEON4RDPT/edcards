@@ -88,6 +88,74 @@ public class ResizeUtil {
         });
     }
 
+    public static void pinImageToCenter1(ImageView imageView, AnchorPane pane, double widthRatio, double heightRatio) {
+        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            double paneWidth = newVal.doubleValue();
+            double imageWidth = paneWidth * widthRatio;
+            imageView.setFitWidth(imageWidth);
+            AnchorPane.setLeftAnchor(imageView, (paneWidth - imageWidth) / 2);
+        });
+
+        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            double paneHeight = newVal.doubleValue();
+            double imageHeight = paneHeight * heightRatio;
+            imageView.setFitHeight(imageHeight);
+            AnchorPane.setTopAnchor(imageView, (paneHeight - imageHeight) / 2);
+        });
+
+        // Initial call to set position and size based on initial dimensions
+        double paneWidth = pane.getWidth();
+        double imageWidth = paneWidth * widthRatio;
+        imageView.setFitWidth(imageWidth);
+        AnchorPane.setLeftAnchor(imageView, (paneWidth - imageWidth) / 2);
+
+        double paneHeight = pane.getHeight();
+        double imageHeight = paneHeight * heightRatio;
+        imageView.setFitHeight(imageHeight);
+        AnchorPane.setTopAnchor(imageView, (paneHeight - imageHeight) / 2);
+    }
+
+    public static void pinImageAndLabelToCenter(ImageView imageView, Label label, AnchorPane pane, double widthRatio, double heightRatio) {
+        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            double paneWidth = newVal.doubleValue();
+            double imageWidth = paneWidth * widthRatio;
+            imageView.setFitWidth(imageWidth);
+            AnchorPane.setLeftAnchor(imageView, (paneWidth - imageWidth) / 2);
+
+            double labelWidth = label.getWidth();
+            label.setLayoutX((paneWidth - labelWidth) / 2);
+        });
+
+        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            double paneHeight = newVal.doubleValue();
+            double imageHeight = paneHeight * heightRatio;
+            imageView.setFitHeight(imageHeight);
+            AnchorPane.setTopAnchor(imageView, (paneHeight - imageHeight) / 2);
+
+            double labelHeight = label.getHeight();
+            double labelY = (paneHeight - imageHeight) / 2 - labelHeight - 10; // adjust the Y position
+            label.setLayoutY(labelY);
+        });
+
+        // Initial call to set position and size based on initial dimensions
+        double paneWidth = pane.getWidth();
+        double imageWidth = paneWidth * widthRatio;
+        imageView.setFitWidth(imageWidth);
+        AnchorPane.setLeftAnchor(imageView, (paneWidth - imageWidth) / 2);
+
+        double paneHeight = pane.getHeight();
+        double imageHeight = paneHeight * heightRatio;
+        imageView.setFitHeight(imageHeight);
+        AnchorPane.setTopAnchor(imageView, (paneHeight - imageHeight) / 2);
+
+        double labelWidth = label.getWidth();
+        label.setLayoutX((paneWidth - labelWidth) / 2);
+
+        double labelHeight = label.getHeight();
+        double labelY = (paneHeight - imageHeight) / 2 - labelHeight - 10; // adjust the Y position
+        label.setLayoutY(labelY);
+    }
+
     public static void resizeAndPositionButton(Button button, AnchorPane pane, double relativePosition) {
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
             double width = newVal.doubleValue();
