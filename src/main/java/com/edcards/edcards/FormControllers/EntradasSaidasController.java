@@ -2,21 +2,30 @@ package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
+import com.edcards.edcards.Programa.Classes.Admin;
+import com.edcards.edcards.Programa.Classes.Aluno;
+import com.edcards.edcards.Programa.Classes.Funcionario;
 import com.edcards.edcards.Programa.Classes.Pessoa;
+import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-
+import javafx.concurrent.Task;
 import javax.smartcardio.CardException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class EntradasSaidasController {
     public ImageView userImage;
@@ -24,38 +33,42 @@ public class EntradasSaidasController {
     public Label entsai;
     public Label nome;
     public Pane mainPane;
-    String nomePessoa, es;
+    String nomePessoa, es, cartao;
     Image img;
+    Character tipo;
     boolean e_s, s_e;
     private double paneWidth = 200;
     private double paneHeight = 262;
     private double hSpacing = 15;
     private double vSpacing = 15;
-    private int panesPerRow = 4;
+    private int panesPerRow = 5;
     private int currentRow = 0;
     private int currentCol = 0;
     private int paneCount = 0;
+    private Set<String> processedCards = new HashSet<>();
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
     @FXML
     private ScrollPane scrollPane;
 
     @FXML
     private Pane paneContainer;
+
     @FXML
-    public void initialize() {
+    public void initialize() throws InterruptedException {
         var x = CartaoBLL.getAllCards();
         if (x == null) {
             System.out.println("No cards available in the database.");
             return;
         }
         allNfc = List.of(x);
+        waits();
     }
-
     private void waits() throws InterruptedException {
-        cartaoLido();
-        Thread.sleep(500);
+        executor.submit(this::cartaoLido);
+        TimeUnit.SECONDS.sleep(1);
     }
-
-    private void addPane(String nomePessoa, String es, Image userImage) {
+    @FXML
+    private void addPane(String nomePessoa, String es, Image img) {
         paneCount++;
         Pane pane = new Pane();
         pane.setPrefSize(paneWidth, paneHeight);
@@ -63,11 +76,19 @@ public class EntradasSaidasController {
 
         Label nameLabel = new Label(nomePessoa);
         Label entsaiLabel = new Label(es);
-
-        ImageView userImageView = new ImageView(userImage);
-        userImageView.setFitWidth(50);
-        userImageView.setFitHeight(50);
-
+        ImageView userImageView = new ImageView(img);
+        userImageView.setFitWidth(147);
+        userImageView.setFitHeight(169);
+        userImageView.setLayoutX(27);
+        userImageView.setLayoutY(0);
+        nameLabel.setLayoutX(0);
+        nameLabel.setLayoutY(164);
+        nameLabel.setPrefWidth(200);
+        nameLabel.setPrefHeight(30);
+        entsaiLabel.setPrefWidth(200);
+        entsaiLabel.setPrefHeight(30);
+        entsaiLabel.setLayoutX(0);
+        entsaiLabel.setLayoutY(200);
         pane.getChildren().addAll(nameLabel, entsaiLabel, userImageView);
 
         paneContainer.getChildren().add(0, pane);
@@ -80,53 +101,109 @@ public class EntradasSaidasController {
             p.setLayoutY(row * (paneHeight + vSpacing));
         }
     }
-
     public String cartaoLido() {
         while (true) {
             try {
-                String cartao = LerCartao.lerIDCartao();
-
+                cartao="";
+                cartao = LerCartao.lerIDCartao();
                 if (!allNfc.contains(cartao)) {
                     continue;
                 }
+                var userByNFC = CartaoBLL.getUserByNFC(cartao);
+                if (userByNFC != null) {
+                    var pessoa = UsersBLL.getUser(userByNFC.getIduser());
+                    switch (pessoa) {
+                        case Funcionario funcionario -> tipo= 'f';
+                        case Aluno aluno -> tipo ='a';
+                        case Admin admin -> tipo = 'f';
+                        default -> { }
+                    }
 
-                try {
-                    var userByNFC = CartaoBLL.getUserByNFC(cartao);
-                    if (userByNFC != null) {
-                        nomePessoa = UsersBLL.getNomeUser(userByNFC.getIduser());
-                        e_s=CartaoBLL.getEntSaiu(cartao);
-                        userImage.setImage(userByNFC.getFoto());
-                        if(!e_s){
-                            es= "Entrou";
-                            s_e=true;
-                        }else{
-                            es= "Saiu";
-                            s_e=false;
+                    if (tipo == 'a'){
+                        nomePessoa = pessoa.getNome();
+                        e_s = CartaoBLL.getEntSaiu(cartao);
+                        img = pessoa.getFoto();
+                        userImage.setImage(img);
+
+                        if (!e_s) {
+                            s_e = true;
+                            es = "Entrou";
+                            CartaoBLL.setEntrouSaiu(cartao, s_e);
+                        } else {
+                            s_e = false;
+                            es = "Saiu";
+                            CartaoBLL.setEntrouSaiu(cartao, s_e);
                         }
-                        if(nomePessoa != null){
+                        Platform.runLater(() -> {
                             nome.setText(nomePessoa);
                             entsai.setText(es);
-                            addPane(nomePessoa,es,userByNFC.getFoto());
-                            CartaoBLL.setEntrouSaiu(cartao,s_e);
-                        }
+                        });
+                        Platform.runLater(() -> addPane(nomePessoa, es, img));
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-
-                return cartao;
-            } catch (CardException e) {
+            } catch (CardException | InterruptedException e) {
                 e.printStackTrace();
-                break;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                Thread.currentThread().interrupt();
+                if (e instanceof InterruptedException) {
+                    Thread.currentThread().interrupt();
+                }
                 break;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return null;
+    }
+    @FXML
+    private void handleAlunoSemCartaoButton() {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Aluno sem Cartão");
+        dialog.setHeaderText("Insira o número do aluno:");
+
+        TextField numeroAlunoField = new TextField();
+        dialog.getDialogPane().setContent(numeroAlunoField);
+
+        ButtonType buttonTypeOk = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk, ButtonType.CANCEL);
+
+        dialog.showAndWait().ifPresent(result -> {
+            if (result == buttonTypeOk) {
+                try {
+                    int id = Integer.parseInt(numeroAlunoField.getText());
+                    cartao = UsersBLL.getNFCUser(id);
+
+                    if (!allNfc.contains(cartao)) {
+                        return;
+                    }
+
+                    var userByNFC = CartaoBLL.getUserByNFC(cartao);
+                    if (userByNFC != null) {
+                        var pessoa = UsersBLL.getUser(userByNFC.getIduser());
+                        UsuarioEnum tipoU = UsersBLL.getTipoUser(id);
+                        switch (tipoU) {
+                            case tipoU.ALUNO -> tipo ='a';
+                            default -> tipo='e';
+                        };
+
+                        if (tipo == 'a') {
+                            nomePessoa = pessoa.getNome();
+                            e_s = CartaoBLL.getEntSaiu(cartao);
+                            img = pessoa.getFoto();
+
+                            s_e = !e_s;
+                            es = s_e ? "Entrou" : "Saiu";
+
+                            CartaoBLL.setEntrouSaiu(cartao, s_e);
+                            userImage.setImage(img);
+                            nome.setText(nomePessoa);
+                            entsai.setText(es);
+                            addPane(nomePessoa, es, img);
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
 
