@@ -207,30 +207,25 @@ public class UsersBLL {
         return (Date) new DefaultBLL("usuario").getOne("data","id",id);
     }
     public static String getNFCUser(int id) {
-        if (!isAluno(id)) {
+        if (!existe(id)) {
             return null;
         }
         return (String) new DefaultBLL("usuario").getOne("cartao_id","id",id);
     }
 
     public static String getNomeUser(int id) {
-        if (!isAluno(id)) {
+        if (!existe(id)) {
             return null;
         }
         return (String) new DefaultBLL("usuario").getOne("nome","id",id);
     }
     public static String getMoradaUser(int id) {
-        if (!isAluno(id)) {
+        if (!existe(id)) {
             return null;
         }
         return (String) new DefaultBLL("usuario").getOne("morada","id",id);
     }
-    public static int getIdByNum(int aluno_id) {
-        if (!isAluno(aluno_id)) {
-            return 0;
-        }
-        return (int) new DefaultBLL("dados_aluno").getOne("id","aluno_id",aluno_id);
-    }
+
 
     //todo getFoto()
     public static Image getFotoUser(int id) {

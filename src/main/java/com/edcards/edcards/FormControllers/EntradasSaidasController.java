@@ -2,7 +2,11 @@ package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
+import com.edcards.edcards.Programa.Classes.Admin;
+import com.edcards.edcards.Programa.Classes.Aluno;
+import com.edcards.edcards.Programa.Classes.Funcionario;
 import com.edcards.edcards.Programa.Classes.Pessoa;
+import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.application.Platform;
@@ -31,6 +35,7 @@ public class EntradasSaidasController {
     public Pane mainPane;
     String nomePessoa, es, cartao;
     Image img;
+    Character tipo;
     boolean e_s, s_e;
     private double paneWidth = 200;
     private double paneHeight = 262;
@@ -99,17 +104,22 @@ public class EntradasSaidasController {
     public String cartaoLido() {
         while (true) {
             try {
+                cartao="";
                 cartao = LerCartao.lerIDCartao();
-                System.err.println(cartao);
-
                 if (!allNfc.contains(cartao)) {
                     continue;
                 }
-
                 var userByNFC = CartaoBLL.getUserByNFC(cartao);
-                System.err.println(userByNFC);
                 if (userByNFC != null) {
                     var pessoa = UsersBLL.getUser(userByNFC.getIduser());
+                    switch (pessoa) {
+                        case Funcionario funcionario -> tipo= 'f';
+                        case Aluno aluno -> tipo ='a';
+                        case Admin admin -> tipo = 'f';
+                        default -> { }
+                    }
+
+                    if (tipo == 'a'){
                     nomePessoa = pessoa.getNome();
                     e_s = CartaoBLL.getEntSaiu(cartao);
                     img = pessoa.getFoto();
@@ -130,6 +140,7 @@ public class EntradasSaidasController {
                     });
                     Platform.runLater(() -> addPane(nomePessoa, es, img));
                 }
+                    }
             } catch (CardException | InterruptedException e) {
                 e.printStackTrace();
                 if (e instanceof InterruptedException) {
@@ -148,20 +159,49 @@ public class EntradasSaidasController {
         dialog.setTitle("Aluno sem Cartão");
         dialog.setHeaderText("Insira o número do aluno:");
 
-        DialogPane dialogPane = dialog.getDialogPane();
         TextField numeroAlunoField = new TextField();
-        dialogPane.setContent(numeroAlunoField);
-
+        dialog.getDialogPane().setContent(numeroAlunoField);
 
         ButtonType buttonTypeOk = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        dialogPane.getButtonTypes().addAll(buttonTypeOk, ButtonType.CANCEL);
+        dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk, ButtonType.CANCEL);
 
         dialog.showAndWait().ifPresent(result -> {
             if (result == buttonTypeOk) {
-                String numeroAluno = numeroAlunoField.getText();
-                int id= UsersBLL.getIdByNum(Integer.parseInt(numeroAluno));
-                cartao = UsersBLL.getNFCUser(id);
-                cartaoLido();
+                try {
+                    int id = Integer.parseInt(numeroAlunoField.getText());
+                    cartao = UsersBLL.getNFCUser(id);
+
+                    if (!allNfc.contains(cartao)) {
+                        return;
+                    }
+
+                    var userByNFC = CartaoBLL.getUserByNFC(cartao);
+                    if (userByNFC != null) {
+                        var pessoa = UsersBLL.getUser(userByNFC.getIduser());
+                        UsuarioEnum tipoU = UsersBLL.getTipoUser(id);
+                        switch (tipoU) {
+                            case tipoU.ALUNO -> tipo ='a';
+                            default -> tipo='e';
+                        };
+
+                        if (tipo == 'a') {
+                            nomePessoa = pessoa.getNome();
+                            e_s = CartaoBLL.getEntSaiu(cartao);
+                            img = pessoa.getFoto();
+
+                            s_e = !e_s;
+                            es = s_e ? "Entrou" : "Saiu";
+
+                            CartaoBLL.setEntrouSaiu(cartao, s_e);
+                            userImage.setImage(img);
+                            nome.setText(nomePessoa);
+                            entsai.setText(es);
+                            addPane(nomePessoa, es, img);
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
