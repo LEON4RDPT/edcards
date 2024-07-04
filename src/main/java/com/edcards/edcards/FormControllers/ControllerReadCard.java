@@ -66,7 +66,6 @@ public class ControllerReadCard implements Initializable {
         while (true) {
             try {
                 String cartao = LerCartao.lerIDCartao();
-
                 if (!allNfc.contains(cartao)) {
                     continue;
                 }
@@ -92,7 +91,6 @@ public class ControllerReadCard implements Initializable {
                 if (userByNFC!= null) {
                     var pessoa = UsersBLL.getUser(userByNFC.getIduser());
                     GlobalVAR.Dados.setPessoaAtual(pessoa);
-                    System.out.println("DEU"); //feedback
                     return;
                 }
             } catch (Exception e) {

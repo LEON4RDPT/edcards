@@ -5,19 +5,15 @@ import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Aluno;
 import com.edcards.edcards.Programa.Classes.Funcionario;
-import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
-import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.concurrent.Task;
+
 import javax.smartcardio.CardException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,7 +23,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class EntradasSaidasController {
+public class VerRefeiçoesController {
     public ImageView userImage;
     private List<String> allNfc = new ArrayList<>();
     public Label entsai;
@@ -41,7 +37,7 @@ public class EntradasSaidasController {
     private double paneHeight = 262;
     private double hSpacing = 15;
     private double vSpacing = 15;
-    private int panesPerRow = 5;
+    private int panesPerRow = 3;
     private int currentRow = 0;
     private int currentCol = 0;
     private int paneCount = 0;
@@ -49,10 +45,8 @@ public class EntradasSaidasController {
     private ExecutorService executor = Executors.newSingleThreadExecutor();
     @FXML
     private ScrollPane scrollPane;
-
     @FXML
     private Pane paneContainer;
-
     @FXML
     public void initialize() throws InterruptedException {
         var x = CartaoBLL.getAllCards();
@@ -112,34 +106,23 @@ public class EntradasSaidasController {
                 var userByNFC = CartaoBLL.getUserByNFC(cartao);
                 if (userByNFC != null) {
                     var pessoa = UsersBLL.getUser(userByNFC.getIduser());
-                    switch (pessoa) {
-                        case Funcionario funcionario -> tipo= 'f';
-                        case Aluno aluno -> tipo ='a';
-                        case Admin admin -> tipo = 'f';
-                        default -> { }
+                    nomePessoa = pessoa.getNome();
+                    e_s = CartaoBLL.getEntSaiu(cartao);
+                    img = pessoa.getFoto();
+                    userImage.setImage(img);
+                    if (!e_s) {
+                        s_e = true;
+                        es = "Tem Refei";
+                    } else {
+                        s_e = false;
+                        es = "Saiu";;
                     }
+                    Platform.runLater(() -> {
+                        nome.setText(nomePessoa);
+                        entsai.setText(es);
+                    });
+                    Platform.runLater(() -> addPane(nomePessoa, es, img));
 
-                    if (tipo == 'a'){
-                        nomePessoa = pessoa.getNome();
-                        e_s = CartaoBLL.getEntSaiu(cartao);
-                        img = pessoa.getFoto();
-                        userImage.setImage(img);
-
-                        if (!e_s) {
-                            s_e = true;
-                            es = "Entrou";
-                            CartaoBLL.setEntrouSaiu(cartao, s_e);
-                        } else {
-                            s_e = false;
-                            es = "Saiu";
-                            CartaoBLL.setEntrouSaiu(cartao, s_e);
-                        }
-                        Platform.runLater(() -> {
-                            nome.setText(nomePessoa);
-                            entsai.setText(es);
-                        });
-                        Platform.runLater(() -> addPane(nomePessoa, es, img));
-                    }
                 }
             } catch (CardException | InterruptedException e) {
                 e.printStackTrace();

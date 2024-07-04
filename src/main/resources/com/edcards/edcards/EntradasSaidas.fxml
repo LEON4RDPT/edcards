@@ -14,32 +14,27 @@
                   <Image url="@images/UserPicture.png" />
                </image>
             </ImageView>
-            <Label fx:id="nome" alignment="CENTER" layoutX="2.0" layoutY="164.0" prefHeight="30.0" prefWidth="200.0" text="Nome" textAlignment="RIGHT">
+            <Label fx:id="nome" alignment="CENTER" layoutY="164.0" prefHeight="30.0" prefWidth="200.0" textAlignment="RIGHT">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="numero" alignment="CENTER" layoutY="194.0" prefHeight="27.0" prefWidth="200.0" text="Numero">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label fx:id="entsai" alignment="CENTER" layoutY="221.0" prefHeight="27.0" prefWidth="200.0" text="E/S" textAlignment="CENTER">
+            <Label fx:id="entsai" alignment="CENTER" layoutY="200.0" prefHeight="30.0" prefWidth="200.0" textAlignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <Button layoutX="34.0" layoutY="391.0" mnemonicParsing="false" text="Aluno sem cartão?">
+      <Button layoutX="34.0" layoutY="391.0" mnemonicParsing="false" onAction="#handleAlunoSemCartaoButton" text="Aluno sem cartão?">
          <font>
             <Font size="17.0" />
          </font>
       </Button>
       <ScrollPane fx:id="scrollPane" layoutX="267.0" prefHeight="726.0" prefWidth="1013.0">
-          <content>
-              <Pane fx:id="paneContainer" />
-          </content>
+         <content>
+            <Pane fx:id="paneContainer" />
+         </content>
       </ScrollPane>
    </children>
 </AnchorPane>

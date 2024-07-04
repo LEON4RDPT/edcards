@@ -1,5 +1,7 @@
 package com.edcards.edcards.Programa.Controllers;
 
+import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
+
 import javax.smartcardio.*;
 import java.util.concurrent.TimeUnit;
 
@@ -20,7 +22,7 @@ public class LerCartao {
 
                     byte[] responseData = responseAPDU.getBytes();
                     if (responseAPDU.getSW() != 0x9000) {
-                        System.out.println("Não foi possível ler o ID do cartão. Tente novamente.");
+                        System.err.println(ErrorEnum.err1);
                         card.disconnect(false);
                         TimeUnit.SECONDS.sleep(1);
                         continue;
