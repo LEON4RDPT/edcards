@@ -184,6 +184,36 @@ public class ResizeUtil {
         });
     }
 
+    public static void resizeAndPositionTextAreaStickWithPane(TextArea textArea, AnchorPane pane, double widthRatio, double heightRatio, double relativePosition) {
+        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            double paneWidth = newVal.doubleValue();
+            double textAreaWidth = paneWidth * widthRatio;
+            textArea.setPrefWidth(textAreaWidth);
+            double textAreaX = (paneWidth - textAreaWidth) / 2;
+            textArea.setLayoutX(textAreaX);
+        });
+
+        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            double paneHeight = newVal.doubleValue();
+            double textAreaHeight = paneHeight * heightRatio;
+            textArea.setPrefHeight(textAreaHeight);
+            double textAreaY = paneHeight * relativePosition - textAreaHeight / 2;
+            textArea.setLayoutY(textAreaY);
+        });
+
+        // Initial call to set position and size based on initial dimensions
+        double paneWidth = pane.getWidth();
+        double textAreaWidth = paneWidth * widthRatio;
+        textArea.setPrefWidth(textAreaWidth);
+        textArea.setLayoutX((paneWidth - textAreaWidth) / 2);
+
+        double paneHeight = pane.getHeight();
+        double textAreaHeight = paneHeight * heightRatio;
+        textArea.setPrefHeight(textAreaHeight);
+        textArea.setLayoutY((paneHeight * relativePosition) - (textAreaHeight / 2));
+    }
+
+
     public static void resizeAndPositionChoiceBox(ChoiceBox choiceBox, AnchorPane pane, double relativePosition) {
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
             double width = newVal.doubleValue();

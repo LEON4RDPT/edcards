@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -21,6 +22,9 @@ import java.io.IOException;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
 
 public class FormUser {
+
+    @FXML
+    private TextArea textBox;
     @FXML
     private Button btnEntradasSaidas;
     @FXML
@@ -47,12 +51,7 @@ public class FormUser {
     private Button btnMarcRef;
     @FXML
     private Button btnRefMarc;
-    @FXML
-    private Label labelNome;
-    @FXML
-    private Label labelSaldo;
-    @FXML
-    private Label labelTipo;
+
 
 
 
@@ -62,29 +61,28 @@ public class FormUser {
         HBox.setHgrow(rightPane, Priority.ALWAYS);
 
         // Bind the widths of the panes to the width of the root HBox
-        leftPane.prefWidthProperty().bind(rootHBox.widthProperty().multiply(0.6)); // 60% for leftPane
-        rightPane.prefWidthProperty().bind(rootHBox.widthProperty().multiply(0.4)); // 40% for rightPane
+        leftPane.prefWidthProperty().bind(rootHBox.widthProperty().multiply(0.7)); // 60% for leftPane
+        rightPane.prefWidthProperty().bind(rootHBox.widthProperty().multiply(0.3)); // 40% for rightPane
 
         ResizeUtil.pinImageToCenter(imageUser,leftPane,0.5,0.5);
         imageUser.setPreserveRatio(false);
 
         //buttons
+        ResizeUtil.resizeAndPositionButton(btnEntradasSaidas, rightPane, 0.32);
+        ResizeUtil.resizeAndPositionButton(btnPosAdmin, rightPane, 0.39);
+        ResizeUtil.resizeAndPositionButton(btnPos, rightPane, 0.46);
+        ResizeUtil.resizeAndPositionButton(btnMarcRef, rightPane, 0.53);
+        ResizeUtil.resizeAndPositionButton(btnHorario, rightPane, 0.60);
+        ResizeUtil.resizeAndPositionButton(btnRefMarc, rightPane, 0.67);
+        ResizeUtil.resizeAndPositionButton(btnHistComp, rightPane, 0.74);
+        ResizeUtil.resizeAndPositionButton(btnChangePin, rightPane, 0.81);
+        ResizeUtil.resizeAndPositionButton(exit, rightPane, 0.88);
 
-        ResizeUtil.resizeAndPositionButton(btnHistComp, rightPane, 0.34);
-        ResizeUtil.resizeAndPositionButton(btnPos, rightPane, 0.42);
-        ResizeUtil.resizeAndPositionButton(btnMarcRef, rightPane, 0.50);
-        ResizeUtil.resizeAndPositionButton(btnHorario, rightPane, 0.58);
-        ResizeUtil.resizeAndPositionButton(btnRefMarc, rightPane, 0.66);
-        ResizeUtil.resizeAndPositionButton(btnPosAdmin, rightPane, 0.74);
-        ResizeUtil.resizeAndPositionButton(btnChangePin, rightPane, 0.82);
-        ResizeUtil.resizeAndPositionButton(exit, rightPane, 0.9);
 
 
         //labels
 
-        ResizeUtil.resizeAndPositionLabel(labelNome, rightPane, 0.1);
-        ResizeUtil.resizeAndPositionLabel(labelTipo, rightPane, 0.2);
-        ResizeUtil.resizeAndPositionLabel(labelSaldo, rightPane, 0.3);
+        ResizeUtil.resizeAndPositionTextAreaStickWithPane(textBox, rightPane, 0.8,0.26,0.18);
     }
 
 
@@ -95,16 +93,20 @@ public class FormUser {
         setHiddenButtons();
         Pessoa pessoaA = GlobalVAR.Dados.getPessoaAtual();
         imageUser.setImage(pessoaA.getFoto());
-        labelNome.setText("Nome: " + pessoaA.getNome());
-        labelSaldo.setText("Saldo: " + pessoaA.getSaldo() + "€");
 
+        StringBuilder str = new StringBuilder();
+        str.append("Nome: ").append(pessoaA.getNome());
+        str.append("\n");
+        str.append("Saldo: ").append(pessoaA.getSaldo()).append("€");
+        str.append("\n");
         switch (pessoaA) {
-            case Funcionario ignored -> labelTipo.setText("Tipo: Funcionario");
-            case Aluno ignored -> labelTipo.setText("Tipo: Aluno");
-            case Admin ignored -> labelTipo.setText("Tipo: Administrador");
+            case Funcionario ignored -> str.append("Tipo: Funcionario");
+            case Aluno ignored -> str.append("Tipo: Aluno");
+            case Admin ignored -> str.append("Tipo: Administrador");
             default -> {
             }
         }
+        textBox.setText(str.toString());
 
     }
 
