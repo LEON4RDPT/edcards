@@ -1,6 +1,4 @@
-package com.edcards.edcards;
-
-import com.edcards.edcards.Programa.Controllers.FeedBackController;
+package com.edcards.edcards.tests;
 
 import javax.smartcardio.CardException;
 

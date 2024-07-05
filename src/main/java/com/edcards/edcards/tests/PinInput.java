@@ -1,5 +1,6 @@
-package com.edcards.edcards;
+package com.edcards.edcards.tests;
 
+import com.edcards.edcards.MainExe;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;

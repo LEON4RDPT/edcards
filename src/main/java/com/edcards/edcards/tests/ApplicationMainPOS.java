@@ -1,4 +1,4 @@
-package com.edcards.edcards;
+package com.edcards.edcards.tests;
 
 import com.edcards.edcards.FormControllers.Pos;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
