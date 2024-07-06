@@ -14,9 +14,7 @@ public class MainNfc {
                     System.out.println(x);
                     return;
                 }
-            } catch (CardException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
+            } catch (CardException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }

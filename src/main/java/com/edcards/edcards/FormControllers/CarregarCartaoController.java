@@ -1,14 +1,22 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.DataTable.CartaoBLL;
+import com.edcards.edcards.DataTable.UsersBLL;
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 public class CarregarCartaoController {
-    double money, saldoAAdicionar;
+    @FXML
+    private Button buttonBack;
+    double saldoAAdicionar;
     DecimalFormat fd = new DecimalFormat("#.##");
     @FXML
     private ImageView nota5, nota10, nota20, nota50, m1cent, m2cent, m5cent, m10cent, m20cent, m50cent, m1e, m2e;
@@ -18,69 +26,80 @@ public class CarregarCartaoController {
     @FXML
     public void initialize() {
         nota5.setOnMouseClicked((event -> {
-            money = 5.00;
-            saldoAAdicionar += money;
+            saldoAAdicionar +=  5.00;
             refreshSaldo();
         }));
         nota10.setOnMouseClicked((event -> {
-            money = 10.00;
-            saldoAAdicionar += money;
+            saldoAAdicionar += 10.0;
             refreshSaldo();
         }));
         nota20.setOnMouseClicked((event -> {
-            money = 20.00;
-            saldoAAdicionar += money;
+
+            saldoAAdicionar += 20.0;
             refreshSaldo();
         }));
         nota50.setOnMouseClicked((event -> {
-            money = 50.00;
-            saldoAAdicionar += money;
+            saldoAAdicionar += 50.0;
             refreshSaldo();
         }));
         m1cent.setOnMouseClicked((event -> {
-            money = 0.01;
-            saldoAAdicionar += money;
+            saldoAAdicionar += 0.01;
             refreshSaldo();
         }));
         m2cent.setOnMouseClicked((event -> {
-            money = 0.02;
-            saldoAAdicionar += money;
+            saldoAAdicionar += 0.02;
             refreshSaldo();
         }));
         m5cent.setOnMouseClicked((event -> {
-            money = 0.05;
-            saldoAAdicionar += money;
+            saldoAAdicionar += 0.05;
             refreshSaldo();
         }));
         m10cent.setOnMouseClicked((event -> {
-            money = 0.10;
-            saldoAAdicionar += money;
+            saldoAAdicionar += 0.10;
             refreshSaldo();
         }));
         m20cent.setOnMouseClicked((event -> {
-            money = 0.20;
-            saldoAAdicionar += money;
+            saldoAAdicionar += 0.20;
             refreshSaldo();
         }));
         m50cent.setOnMouseClicked((event -> {
-            money = 0.50;
-            saldoAAdicionar += money;
+            saldoAAdicionar += 0.50;
             refreshSaldo();
         }));
         m1e.setOnMouseClicked((event -> {
-            money = 1.00;
-            saldoAAdicionar += money;
+            saldoAAdicionar += 1.00;
             refreshSaldo();
         }));
         m2e.setOnMouseClicked((event -> {
-            money = 2.00;
-            saldoAAdicionar += money;
+            saldoAAdicionar += 2.00;
             refreshSaldo();
         }));
     }
 
     @FXML
-    public void addSaldo(ActionEvent actionEvent) {
+    public void addSaldo() {
+
+        var nfc = UsersBLL.getNFCUser(GlobalVAR.Dados.getClientePOS().getIduser());
+        var saldoAntigo = CartaoBLL.getSaldo(nfc);
+        if (nfc == null){
+            FeedBackController.feedbackErro("Nenhum cliente Selecionado!");
+            return;
+        }
+
+        if (saldoAAdicionar == 0) {
+            FeedBackController.feedbackErro("Impossivel adicionar saldo 0!");
+            //feedback
+            return;
+        }
+        if (FeedBackController.feedbackYesNo("Deseja adicionar " + saldoAAdicionar + " €", "Confirmação")) {
+            CartaoBLL.setSaldo(nfc, saldoAntigo + saldoAAdicionar);
+            FeedBackController.feedbackErro("Saldo adicionado");
+        }
+
+
+
+
+
 
     }
 
@@ -93,8 +112,15 @@ public class CarregarCartaoController {
 
     }
 
-    public void limpar(ActionEvent event) {
+    public void limpar() {
         saldoAadicionar.setText(0.00 + "€");
         saldoAAdicionar = 0.00;
+    }
+
+    @FXML
+    private void handleButtonBack() throws IOException {
+        if (FeedBackController.feedbackYesNo("Deseja sair?", "Confirmação")) {
+            GlobalVAR.StageController.setStage("/com/edcards/edcards/POSAdmin.fxml");
+        }
     }
 }

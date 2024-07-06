@@ -4,12 +4,14 @@ import com.edcards.edcards.DataTable.ProdutoBLL;
 import com.edcards.edcards.Programa.Classes.Produto;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ModProdutoController {
@@ -88,6 +90,10 @@ public class ModProdutoController {
     public void loadProduto(ActionEvent actionEvent) {
         String produto = cBoxName.getSelectionModel().getSelectedItem();
         prodt = ProdutoBLL.getProduto(produto);
+        if (prodt == null) {
+            //feedback
+            return;
+        }
         nameField.setText(prodt.getNome());
         cBoxChangeCategory.setValue(prodt.getTipo().name());
         priceValue.getValueFactory().setValue(prodt.getPreco());
@@ -95,5 +101,10 @@ public class ModProdutoController {
 
     }
 
-
+    @FXML
+    private void handleButtonBack(ActionEvent actionEvent) throws IOException {
+        if (FeedBackController.feedbackYesNo("Deseja sair?", "Confirmação")) {
+            GlobalVAR.StageController.setStage("/com/edcards/edcards/POSAdmin.fxml");
+        }
+    }
 }

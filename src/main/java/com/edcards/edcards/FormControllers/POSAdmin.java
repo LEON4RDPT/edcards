@@ -34,8 +34,6 @@ public class POSAdmin {
     @FXML
     private Button modPrdt;
     @FXML
-    private Button remPrdt;
-    @FXML
     private Button viewTransacs;
 
     @FXML
@@ -91,11 +89,6 @@ public class POSAdmin {
     @FXML
     private void modPrdtClick(ActionEvent event) throws IOException {
         setStage("/com/edcards/edcards/ModProduto.fxml");
-    }
-
-    @FXML
-    private void remPrdtClick(ActionEvent event) throws IOException {
-        setStage("/com/edcards/edcards/DelProduto.fxml");
     }
 
     @FXML

@@ -26,7 +26,7 @@ public class ControllerPIN {
     @FXML
     private Button btn01;
 
-    private final int time = 30;
+    private int time = 30;
 
     private int valorAtual;
 
@@ -54,7 +54,6 @@ public class ControllerPIN {
         btn8.setOnAction(event -> ifButtonPressed(btn8));
         btn9.setOnAction(event -> ifButtonPressed(btn9));
 
-        startTimer();
     }
 
     private void ifButtonPressed(Button button) {
@@ -79,6 +78,7 @@ public class ControllerPIN {
                 int pinDaPessoa = pessoaAtual.getPin();
                 if (pin == pinDaPessoa) {
                     try {
+                        timer.stop();
                         setStage("/com/edcards/edcards/Main.fxml");
                     } catch (IOException e) {
                         e.printStackTrace();

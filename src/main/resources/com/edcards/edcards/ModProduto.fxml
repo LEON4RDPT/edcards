@@ -1,66 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
-            prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.edcards.edcards.FormControllers.ModProdutoController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.ModProdutoController">
     <children>
         <Label layoutX="372.0" layoutY="232.0" text="Nome">
             <font>
-                <Font size="36.0"/>
+                <Font size="36.0" />
             </font>
         </Label>
         <Label layoutX="372.0" layoutY="336.0" text="Categoria">
             <font>
-                <Font size="36.0"/>
+                <Font size="36.0" />
             </font>
         </Label>
         <Label layoutX="372.0" layoutY="440.0" text="Preço">
             <font>
-                <Font size="36.0"/>
+                <Font size="36.0" />
             </font>
         </Label>
         <TextField fx:id="nameField" layoutX="486.0" layoutY="226.0">
             <font>
-                <Font size="30.0"/>
+                <Font size="30.0" />
             </font>
         </TextField>
-        <Spinner fx:id="priceValue" editable="true" layoutX="486.0" layoutY="440.0" prefHeight="53.0"
-                 prefWidth="373.0"/>
-        <ComboBox fx:id="cBoxChangeCategory" layoutX="536.0" layoutY="330.0" prefHeight="65.0" prefWidth="323.0"
-                  promptText="Escolha uma Categoria"/>
-        <Button fx:id="modPrdt" layoutX="991.0" layoutY="606.0" mnemonicParsing="false" onAction="#modPrdtClick"
-                prefHeight="100.0" prefWidth="275.0" text="Modificar Produto">
+        <Spinner fx:id="priceValue" editable="true" layoutX="486.0" layoutY="440.0" prefHeight="53.0" prefWidth="373.0" />
+        <ComboBox fx:id="cBoxChangeCategory" layoutX="536.0" layoutY="330.0" prefHeight="65.0" prefWidth="323.0" promptText="Escolha uma Categoria" />
+        <Button fx:id="modPrdt" layoutX="991.0" layoutY="606.0" mnemonicParsing="false" onAction="#modPrdtClick" prefHeight="100.0" prefWidth="275.0" text="Modificar Produto">
             <font>
-                <Font size="18.0"/>
+                <Font size="18.0" />
             </font>
         </Button>
-        <Button fx:id="backBtn" layoutX="14.0" layoutY="606.0" mnemonicParsing="false" prefHeight="100.0"
-                prefWidth="275.0" text="Voltar">
+        <Button fx:id="backBtn" layoutX="14.0" layoutY="606.0" mnemonicParsing="false" onAction="#handleButtonBack" prefHeight="100.0" prefWidth="275.0" text="Voltar">
             <font>
-                <Font size="18.0"/>
+                <Font size="18.0" />
             </font>
         </Button>
         <Label layoutX="31.0" layoutY="44.0" text="Categoria">
             <font>
-                <Font size="30.0"/>
+                <Font size="30.0" />
             </font>
         </Label>
-        <ComboBox fx:id="cBoxCategory" layoutX="172.0" layoutY="44.0" onAction="#loadNomes" prefHeight="45.0"
-                  prefWidth="323.0" promptText="Escolha uma Categoria"/>
+        <ComboBox fx:id="cBoxCategory" layoutX="172.0" layoutY="44.0" onAction="#loadNomes" prefHeight="45.0" prefWidth="323.0" promptText="Escolha uma Categoria" />
         <Label layoutX="31.0" layoutY="120.0" text="Nome">
             <font>
-                <Font size="30.0"/>
+                <Font size="30.0" />
             </font>
         </Label>
-        <ComboBox fx:id="cBoxName" layoutX="128.0" layoutY="120.0" onAction="#loadProduto" prefHeight="45.0"
-                  prefWidth="323.0" promptText="Escolha o produto"/>
-        <CheckBox fx:id="disp" layoutX="373.0" layoutY="524.0" mnemonicParsing="false" prefHeight="54.0"
-                  prefWidth="242.0" text="Disponivel">
+        <ComboBox fx:id="cBoxName" layoutX="128.0" layoutY="120.0" onAction="#loadProduto" prefHeight="45.0" prefWidth="323.0" promptText="Escolha o produto" />
+        <CheckBox fx:id="disp" layoutX="373.0" layoutY="524.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="242.0" text="Disponivel">
             <font>
-                <Font size="36.0"/>
+                <Font size="36.0" />
             </font>
         </CheckBox>
     </children>

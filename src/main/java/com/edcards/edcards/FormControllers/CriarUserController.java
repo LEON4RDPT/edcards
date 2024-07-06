@@ -16,24 +16,25 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+
+
 import java.io.IOException;
-import java.sql.Array;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.ImageController.imageToByteArray;
 
 public class CriarUserController {
-    public Button backBtn;
+    @FXML
+    private Button backBtn;
+
     String nome, morada, email, cc, idCartao, nfc;
     Image imgUser;
     int nus, num, turma, numEE;
@@ -73,21 +74,12 @@ public class CriarUserController {
 
     @FXML
     public void initialize() {
+        AsePicker.getItems().addAll(Arrays.stream(AseEnum.values()).map(Enum::name).toList());
+        tipoPicker.getItems().addAll(Arrays.stream(UsuarioEnum.values()).map(Enum::name).toList());
+        setImageController();
+    }
 
-        ObservableList<String> opcoesAse = FXCollections.observableArrayList(
-                Arrays.stream(AseEnum.values())
-                        .map(Enum::name)
-                        .collect(Collectors.toList())
-        );
-        AsePicker.setItems(opcoesAse);
-        ObservableList<String> opcoes = FXCollections.observableArrayList(
-                Arrays.stream(UsuarioEnum.values())
-                        .map(Enum::name)
-                        .collect(Collectors.toList())
-        );
-
-        tipoPicker.setItems(opcoes);
-        tipoAction();
+    private void setImageController() {
         imageUser.setOnMouseClicked(event -> {
             FileChooser selFoto = new FileChooser();
             selFoto.setTitle("Escolha uma Foto...");
@@ -124,6 +116,11 @@ public class CriarUserController {
         imgUser = imageUser.getImage();
         data = dateField.getValue();
 
+        if (imgUser == null) {
+            FeedBackController.feedbackErro("Erro! Insira uma foto!");
+            return;
+        }
+
         if (nome == null || nome.isEmpty() || morada == null || morada.isEmpty() || cc == null || cc.isEmpty() || data == null) {
             FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err5));
             return;
@@ -131,37 +128,45 @@ public class CriarUserController {
 
         tipo = UsuarioEnum.valueOf(tipoPicker.getValue());
 
+
         if (tipoPicker.getValue().equals("ALUNO")) {
-            tipo = UsuarioEnum.valueOf(tipoPicker.getValue());
-            email = emailField.getText();
-            numEE = Integer.parseInt(numEEfield.getText());
-            turma = Integer.parseInt(turmaPicker.toString());
-
-            idCartao = null;
-            ase = AseEnum.valueOf(AsePicker.getValue());
-            nus = Integer.parseInt(numUtSaudeField.getText());
-
-            if (nome != null || idCartao != null || turma != 0 || morada != null || email != null || cc != null || numEE != 0 || num != 0 || numEEfield != null || imgUser != null || ase != null || nus != 0) {
-                FeedBackController.feedbackErro(nome + morada + email + cc + numEE + num + idCartao + imgUser + data + ase + nus);
-                var id = UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL);
-                if (id == 0) {
-                    FeedBackController.feedbackErro("Erro Dados Incorretos!");
-                }
-                UsersBLL.inserirAluno(id, numEE, email, turma, nus, ase);
-
-
-            } else {
-                FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err5));
-            }
-        } else {
-
-            UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL);
-
-
+            inserirAluno();
+        } else if (tipoPicker.getValue().equals("ADMIN") || tipoPicker.getValue().equals("FUNCIONARIO")) {
+            inserirAdminOrFuncionario();
         }
     }
 
-    public void handleButtonBack(ActionEvent actionEvent) throws IOException {
+    private void inserirAluno() {
+        email = emailField.getText();
+        numEE = Integer.parseInt(numEEfield.getText());
+        turma = Integer.parseInt(turmaPicker.toString());
+
+        idCartao = null;
+        ase = AseEnum.valueOf(AsePicker.getValue());
+        nus = Integer.parseInt(numUtSaudeField.getText());
+
+        if (nome!= null || idCartao!= null || turma!= 0 || morada!= null || email!= null || cc!= null || numEE!= 0 || num!= 0 || numEEfield!= null || imgUser!= null || ase!= null || nus!= 0) {
+            FeedBackController.feedbackErro(nome + morada + email + cc + numEE + num + idCartao + imgUser + data + ase + nus);
+            var id = UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL);
+            if (id == 0) {
+                FeedBackController.feedbackErro("Erro Não foi possivel inserir os Dados!");
+            }
+            UsersBLL.inserirAluno(id, numEE, email, turma, nus, ase);
+        } else {
+            FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err5));
+        }
+    }
+
+    private void inserirAdminOrFuncionario() {
+        var id = UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL);
+        if (id == 0) {
+            FeedBackController.feedbackErro("Erro Dados duplicados!");
+        } else {
+            FeedBackController.feedbackErro("Usuario Registado com sucesso! Nome: " + nome);
+        }
+    }
+
+    public void handleButtonBack() throws IOException {
         if (FeedBackController.feedbackYesNo("Deseja sair?", "Confirmação")) {
             GlobalVAR.StageController.setStage("/com/edcards/edcards/POSAdmin.fxml");
         }
