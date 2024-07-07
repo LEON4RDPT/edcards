@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<HBox fx:id="rootHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.Pos">
+<HBox fx:id="rootHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.Pos">
     <children>
         <AnchorPane fx:id="leftPane" prefHeight="720.0" prefWidth="320.0" stylesheets="@CSS/styles.css">
             <children>
@@ -53,7 +45,7 @@
                                 <Button fx:id="button4" onAction="#handleButtonClickPos" styleClass="button-red" text="B4" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
                                 <Button fx:id="button5" onAction="#handleButtonClickPos" styleClass="button-red" text="B5" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
                                 <Button fx:id="button6" onAction="#handleButtonClickPos" styleClass="button-red" text="B6" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
-                                <Button fx:id="button7" onAction="#handleButtonClickPos" styleClass="button-red" text="B7" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                <Button fx:id="button7" onAction="#handleButtonClickPos" prefHeight="150.0" prefWidth="208.0" styleClass="button-red" text="B7" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                                 <Button fx:id="button8" onAction="#handleButtonClickPos" styleClass="button-red" text="B8" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                                 <Button fx:id="button9" onAction="#handleButtonClickPos" styleClass="button-red" text="B9" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                                 <Button fx:id="button10" onAction="#handleButtonClickPos" styleClass="button-red" text="B10" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />

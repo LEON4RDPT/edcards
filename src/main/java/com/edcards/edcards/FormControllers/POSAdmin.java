@@ -5,10 +5,7 @@ import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 
 import java.io.IOException;
 
@@ -59,6 +56,9 @@ public class POSAdmin {
         anchorPaneLeft.prefWidthProperty().bind(rootHBox.widthProperty().multiply(0.3)); // 60% for leftPane
         anchorPaneRight.prefWidthProperty().bind(rootHBox.widthProperty().multiply(0.7)); // 40% for rightPane
 
+
+
+        ResizeUtil.resizeAndPositionButton(exit,anchorPaneLeft,0.9);
     }
 
 

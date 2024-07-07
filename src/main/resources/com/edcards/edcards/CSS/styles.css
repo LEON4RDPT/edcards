@@ -17,6 +17,7 @@
 }
 
 .button-1 {
+
     -fx-appearance: none;
     -fx-background-color: #818589;
     -fx-border-color: #1A1A1A;
@@ -32,7 +33,7 @@
     -fx-text-alignment: center;
     -fx-min-height: 40;
     -fx-min-width: 0;
-    -fx-max-width: infinity;
+    /* -fx-max-width: infinity; */
 }
 
 .button-3 {
