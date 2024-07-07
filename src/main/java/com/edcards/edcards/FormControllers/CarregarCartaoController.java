@@ -7,6 +7,7 @@ import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
@@ -14,6 +15,10 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 
 public class CarregarCartaoController {
+    @FXML
+    private Label labelnome;
+    @FXML
+    private Label labelSaldo;
     @FXML
     private Button buttonBack;
     double saldoAAdicionar;
@@ -25,6 +30,12 @@ public class CarregarCartaoController {
 
     @FXML
     public void initialize() {
+
+        labelnome.setText(GlobalVAR.Dados.getClientePOS().getNome());
+        labelSaldo.setText(GlobalVAR.Dados.getClientePOS().getSaldo().toString());
+
+
+
         nota5.setOnMouseClicked((event -> {
             saldoAAdicionar +=  5.00;
             refreshSaldo();
@@ -88,7 +99,6 @@ public class CarregarCartaoController {
 
         if (saldoAAdicionar == 0) {
             FeedBackController.feedbackErro("Impossivel adicionar saldo 0!");
-            //feedback
             return;
         }
         if (FeedBackController.feedbackYesNo("Deseja adicionar " + saldoAAdicionar + " €", "Confirmação")) {
@@ -120,7 +130,8 @@ public class CarregarCartaoController {
     @FXML
     private void handleButtonBack() throws IOException {
         if (FeedBackController.feedbackYesNo("Deseja sair?", "Confirmação")) {
-            GlobalVAR.StageController.setStage("/com/edcards/edcards/POSAdmin.fxml");
+            GlobalVAR.Dados.setClientePOS(UsersBLL.getUser(GlobalVAR.Dados.getClientePOS().getIduser()));
+            GlobalVAR.StageController.setStage("/com/edcards/edcards/Pos.fxml");
         }
     }
 }

@@ -3,8 +3,23 @@ package com.edcards.edcards.FormControllers.Utils;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 public class ResizeUtil {
+
+    public static void resizeGridPane(GridPane gridPane, AnchorPane anchorPane) {
+        gridPane.prefWidthProperty().bind(anchorPane.widthProperty());
+        gridPane.prefHeightProperty().bind(anchorPane.heightProperty());
+        gridPane.maxWidthProperty().bind(anchorPane.widthProperty());
+        gridPane.maxHeightProperty().bind(anchorPane.heightProperty());
+
+
+        AnchorPane.setTopAnchor(gridPane, 0.0);
+        AnchorPane.setBottomAnchor(gridPane, 0.0);
+        AnchorPane.setLeftAnchor(gridPane, 0.0);
+        AnchorPane.setRightAnchor(gridPane, 0.0);
+    }
+
     public static void resizeAndCenterText(TextField textField, AnchorPane pane) {
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
             double width = newVal.doubleValue();

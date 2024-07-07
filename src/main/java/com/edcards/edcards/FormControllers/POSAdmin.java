@@ -1,15 +1,28 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 import java.io.IOException;
 
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
 
 public class POSAdmin {
+    @FXML
+    private GridPane gridPane;
+    @FXML
+    private AnchorPane anchorPaneLeft;
+    @FXML
+    private AnchorPane anchorPaneRight;
+    @FXML
+    private HBox rootHBox;
     @FXML
     private Button exit;
     @FXML
@@ -27,8 +40,7 @@ public class POSAdmin {
     private Button addHorario;
     @FXML
     private Button modHorario;
-    @FXML
-    private Button remHorario;
+
     @FXML
     private Button addPrdt;
     @FXML
@@ -36,9 +48,25 @@ public class POSAdmin {
     @FXML
     private Button viewTransacs;
 
-    @FXML
-    public void initialize() {
+    private void resize() {
 
+        ResizeUtil.resizeGridPane(gridPane, anchorPaneRight);
+
+
+        HBox.setHgrow(anchorPaneLeft, Priority.ALWAYS);
+        HBox.setHgrow(anchorPaneRight, Priority.ALWAYS);
+
+        anchorPaneLeft.prefWidthProperty().bind(rootHBox.widthProperty().multiply(0.3)); // 60% for leftPane
+        anchorPaneRight.prefWidthProperty().bind(rootHBox.widthProperty().multiply(0.7)); // 40% for rightPane
+
+    }
+
+
+
+
+    @FXML
+    private void initialize() {
+        resize();
     }
 
     @FXML

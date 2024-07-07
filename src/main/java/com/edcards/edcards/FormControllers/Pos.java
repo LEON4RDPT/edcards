@@ -123,6 +123,8 @@ public class Pos {
     private List<Produto> listaProdutosDisponiveis = new ArrayList<>();
     private final List<Produto> fatura = new ArrayList<>();
     private int buttonPage = 1;
+    private boolean isProcessingCartao = false;
+
 
     private void loadbtns() {
         btns = new Button[]{
@@ -170,15 +172,20 @@ public class Pos {
                 try {
                     String idCartao = LerCartao.lerIDCartao("/com/edcards/edcards/Main.fxml");
                     if (idCartao == null) {
-                        return;
+                        continue;
                     }
 
 
-                    //caso nao seja o funcionario.
+                    //caso nao seja o mesmo funcionario.
                     if (!idCartao.equals(getPessoaAtual().getNumCartao())) {
-                        Platform.runLater(() -> cartaoAluno(idCartao));
+                        if (!isProcessingCartao) {
+                            isProcessingCartao = true;
+                            cartaoCliente(idCartao);
+                        }
+                    } else {
+                        FeedBackController.feedbackErro("Erro! Funcionario não pode ser cliente ao mesmo tempo!");
+                        continue;
                     }
-                    return;
                 } catch (Exception ignored) {
                 }
             }
@@ -193,10 +200,17 @@ public class Pos {
         }
     }
 
-    private void cartaoAluno(String idCartao) {
+    private void cartaoCliente(String idCartao) {
         Platform.runLater(() -> {
-            GlobalVAR.Dados.setClientePOS(CartaoBLL.getUserByNFC(idCartao));
-            changeTextBox();
+            try {
+                var pess = CartaoBLL.getUserByNFC(idCartao);
+                assert pess != null;
+                FeedBackController.feedbackErro("Pessoa: " + pess.getNome() + " Carregada!");
+                GlobalVAR.Dados.setClientePOS(pess);
+                changeTextBox();
+            } finally {
+                isProcessingCartao = false;
+            }
         });
     }
 
@@ -204,13 +218,7 @@ public class Pos {
 
         var items = choiceBoxItem.getItems();
         items.add("TUDO");
-        //items.addAll(ProdutoEnum.getStringValues());
-        var categorias = ProdutoEnum.getStringValues();
-        for (var cat : categorias) {
-            if (!cat.equals("REFEICOES")) {
-                items.add(cat);
-            }
-        }
+        items.addAll(ProdutoEnum.getStringValues());
         choiceBoxItem.getSelectionModel().select(0);
 
     }
@@ -322,15 +330,15 @@ public class Pos {
         ResizeUtil.resizeAndPositionTextArea(textArea, leftPane, 0.15);
 
     }
-
-    public void buttonBackClick() {
+    @FXML
+    private void buttonBackClick() {
         if (buttonPage > 1) {
             buttonPage--;
             setProdutosButton();
         }
     }
-
-    public void buttonUpClick() {
+    @FXML
+    private void buttonUpClick() {
         int num = buttonPage * 24;
         if (num <= listaProdutosDisponiveis.size()) {
             buttonPage++;
@@ -339,8 +347,8 @@ public class Pos {
         }
     }
 
-    //VENDER FATURA
-    public void handleButtonClickVender() {
+    @FXML
+    private void handleButtonClickVender() {
         if (fatura.isEmpty()) {
             feedbackErro("Nenhum Produto Selecionado!");
             return;
@@ -426,15 +434,18 @@ public class Pos {
         }
         textArea.setText(textInputBuilder.toString());
     }
-
-    public void handleButtonClickRemoverAll() {
+    @FXML
+    private void handleButtonClickRemoverAll() {
         if (feedbackYesNo("Deseja Limpar tudo?")) {
             fatura.clear();
+            GlobalVAR.Dados.setClientePOS(null);
             changeTextBox();
+            aguardarCartao();
+
         }
     }
-
-    public void handleButtonClickRemoverLast() {
+    @FXML
+    private void handleButtonClickRemoverLast() {
         if (fatura.isEmpty()) {
             return;
         }
@@ -443,26 +454,30 @@ public class Pos {
             changeTextBox();
         }
     }
-
-    public void handleChoiceBoxChange() {
+    @FXML
+    private void handleChoiceBoxChange() {
         setProdutosButton();
     }
-
-    public void handleButtonClickVoltar() throws IOException {
+    @FXML
+    private void handleButtonClickVoltar() throws IOException {
         if (FeedBackController.feedbackYesNo("Deseja sair?", "Confirmação")) {
             GlobalVAR.Dados.setClientePOS(null);
             setStage("/com/edcards/edcards/Main.fxml");
 
         }
     }
-
-    public void handleButtonAddSaldo() throws IOException {
+    @FXML
+    private void handleButtonAddSaldo() throws IOException {
         if (GlobalVAR.Dados.getClientePOS() != null) {
             setStage("/com/edcards/edcards/CarregarCartao.fxml");
         } else {
             FeedBackController.feedbackErro("Nenhum Cliente Selecionado");
 
         }
+
+    }
+    @FXML
+    private void handleRefeicao() {
 
     }
 }
