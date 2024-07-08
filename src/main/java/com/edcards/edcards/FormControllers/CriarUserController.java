@@ -17,7 +17,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -32,6 +35,10 @@ import java.util.Arrays;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.ImageController.imageToByteArray;
 
 public class CriarUserController {
+    public AnchorPane leftPane;
+    public AnchorPane rightPane;
+    @FXML
+    private HBox mainPane;
     @FXML
     private Button backBtn;
 
@@ -74,9 +81,19 @@ public class CriarUserController {
 
     @FXML
     public void initialize() {
+        resize();
+
         AsePicker.getItems().addAll(Arrays.stream(AseEnum.values()).map(Enum::name).toList());
         tipoPicker.getItems().addAll(Arrays.stream(UsuarioEnum.values()).map(Enum::name).toList());
         setImageController();
+    }
+
+    private void resize() {
+        HBox.setHgrow(leftPane, Priority.ALWAYS);
+        HBox.setHgrow(rightPane, Priority.ALWAYS);
+
+        leftPane.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.5)); // 60% for leftPane
+        rightPane.prefWidthProperty().bind(mainPane.widthProperty().multiply(0.5)); // 40% for rightPane
     }
 
     private void setImageController() {
