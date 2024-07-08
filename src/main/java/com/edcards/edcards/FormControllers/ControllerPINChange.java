@@ -99,47 +99,6 @@ public class ControllerPINChange {
             handleFullPIN();
         }
     }
-//        valorAtual = Integer.parseInt(button.getText());
-//        if (field1.getText().isEmpty()) {
-//            field1.setText(String.valueOf(valorAtual));
-//        } else if (field2.getText().isEmpty()) {
-//            field2.setText(String.valueOf(valorAtual));
-//        } else if (field3.getText().isEmpty()) {
-//            field3.setText(String.valueOf(valorAtual));
-//        } else if (field4.getText().isEmpty()) {
-//            field4.setText(String.valueOf(valorAtual));
-//        } else if (field5.getText().isEmpty()) {
-//            field5.setText(String.valueOf(valorAtual));
-//        } else if (field6.getText().isEmpty()) {
-//            field6.setText(String.valueOf(valorAtual));
-//            int pin = Integer.parseInt(field1.getText() + field2.getText() + field3.getText() + field4.getText() + field5.getText() + field6.getText());
-//
-//            if (isSamePIN) {
-//                if (pin == GlobalVAR.Dados.getPessoaAtual().getPin()) {
-//                    insertNewPin = true;
-//                    isSamePIN = false;
-//                    textLabel.setText("Insira o novo PIN");
-//                    pin = 0;
-//                    clean();
-//                    ifButtonPressed(null);
-//                } else {
-//                    FeedBackController.feedbackErro("PIN não coincide!");
-//                    clean();
-//                }
-//            }
-//            if (insertNewPin) {
-//                if (pin != GlobalVAR.Dados.getPessoaAtual().getPin()) {
-//                   if (FeedBackController.feedbackYesNo("Deseja alterar o pin para: " + pin)) {
-//                       var card = UsersBLL.getNFCUser(GlobalVAR.Dados.getPessoaAtual().getIduser());
-//                       CartaoBLL.setPin(card,pin);
-//                       try {
-//                           handleExit();
-//                       } catch (IOException e) {
-//                           throw new RuntimeException(e);
-//                       }
-//                   }
-//                }
-//            }
 
     private void handleFullPIN() {
         String pin = field1.getText() + field2.getText() + field3.getText() + field4.getText() + field5.getText() + field6.getText();
@@ -159,6 +118,7 @@ public class ControllerPINChange {
                 if (FeedBackController.feedbackYesNo("Deseja alterar o pin para: " + pin)) {
                     var card = UsersBLL.getNFCUser(GlobalVAR.Dados.getPessoaAtual().getIduser());
                     CartaoBLL.setPin(card, Integer.parseInt(pin));
+                    GlobalVAR.Dados.getPessoaAtual().setPin(Integer.parseInt(pin));
                     try {
                         setStage("/com/edcards/edcards/Main.fxml");
                     } catch (IOException e) {
