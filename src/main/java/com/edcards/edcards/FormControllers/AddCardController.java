@@ -32,8 +32,6 @@ public class AddCardController {
                     if (idCartao == null) {
                         return;
                     }
-
-
                     if (!CartaoBLL.existenteNFC(idCartao)) {
                         CartaoBLL.getIdUserByNFC(idCartao);
                         cardNumber.setText(idCartao);

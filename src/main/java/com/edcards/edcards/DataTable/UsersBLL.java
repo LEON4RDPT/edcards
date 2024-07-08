@@ -136,7 +136,10 @@ public class UsersBLL {
         }
         new DefaultBLL("usuario").setOne("cc", cc, "id", id);
     }
-
+    public static void setCodigoUser(int id, String novoNfc) {
+        DefaultBLL bll = new DefaultBLL("usuario");
+        bll.setOne("cartao_id", novoNfc, "id", id);
+    }
     public static void setDataNascUser(int id, Date data) {
         if (data == null) {
             return;
@@ -332,7 +335,7 @@ public class UsersBLL {
                 }
                 Aluno aluno = (Aluno) pessoa;
                 aluno.setNumTurma(getTurmaAluno(pessoa.getIduser()));
-                aluno.setNumEE(getTurmaAluno(pessoa.getIduser()));
+                aluno.setNumEE(getNumEEAluno(pessoa.getIduser()));
                 aluno.setAse(getAseAluno(pessoa.getIduser()));
                 aluno.setNumUtente(getUtenteAluno(pessoa.getIduser()));
                 aluno.setEmailEE(getEmailAluno(pessoa.getIduser()));

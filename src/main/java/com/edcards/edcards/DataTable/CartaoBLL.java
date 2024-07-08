@@ -160,6 +160,7 @@ public class CartaoBLL {
         bll.setOne("codigo", novoNfc, "codigo", nfc);
     }
 
+
     //todo entradas e saidas
 
 
