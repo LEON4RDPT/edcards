@@ -36,7 +36,7 @@ public class AddCardController {
                         CartaoBLL.getIdUserByNFC(idCartao);
                         cardNumber.setText(idCartao);
                     } else {
-                        FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err13));
+                        FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err8));
                         isRunning = true;
                     }
                 } catch (Exception ignored) {

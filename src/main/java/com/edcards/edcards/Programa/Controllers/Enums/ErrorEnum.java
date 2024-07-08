@@ -68,7 +68,7 @@ public enum ErrorEnum {
     },
     err13 {
         public String toString() {
-            return "Cartão já existe na BLL";
+            return "Cartão não existe na Base de Dados";
         }
     },
     err14 {
