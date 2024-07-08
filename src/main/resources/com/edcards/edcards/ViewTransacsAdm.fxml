@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox fx:id="hboxRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.ViewTransacsAll">
+    <children>
+      <AnchorPane fx:id="leftPane" prefHeight="720.0" prefWidth="267.0">
+         <children>
+              <Button fx:id="backBtn" layoutX="14.0" layoutY="122.0" mnemonicParsing="false" onAction="#handleButtonBack" prefHeight="63.0" prefWidth="154.0" styleClass="button-1" text="Voltar" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="rightPane" prefHeight="720.0" prefWidth="1178.0">
+         <children>
+              <SplitPane fx:id="splitPane" dividerPositions="0.5" prefHeight="720.0" prefWidth="1280.0">
+                  <items>
+                        <TableView fx:id="transactionsTable" prefHeight="614.0" prefWidth="617.0">
+                            <columns>
+                                <TableColumn fx:id="dataTransacaoColumn" prefWidth="100.0" text="Data Transacao" />
+                                <TableColumn fx:id="valorPagoColumn" prefWidth="100.0" text="Valor Pago" />
+                                <TableColumn fx:id="idColumn" prefWidth="100.0" text="ID" />
+                                <TableColumn fx:id="clientNameColumn" prefWidth="100.0" text="Cliente" />
+                                <TableColumn fx:id="workerNameColumn" prefWidth="100.0" text="Funcionario" />
+                            </columns>
+                        </TableView>
+                        <TableView fx:id="productsTable" prefHeight="627.0" prefWidth="640.0">
+                            <columns>
+                                <TableColumn fx:id="nomeColumn" prefWidth="100.0" text="Nome" />
+                                <TableColumn fx:id="precoColumn" prefWidth="100.0" text="Preço" />
+                                <TableColumn fx:id="tipoColumn" prefWidth="100.0" text="Tipo" />
+                            </columns>
+                        </TableView>
+                  </items>
+              </SplitPane>
+         </children>
+      </AnchorPane>
+    </children>
+</HBox>
