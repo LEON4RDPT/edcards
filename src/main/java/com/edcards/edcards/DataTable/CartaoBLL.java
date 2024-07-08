@@ -2,6 +2,7 @@ package com.edcards.edcards.DataTable;
 
 import com.edcards.edcards.DataTable.Settings.DefaultBLL;
 import com.edcards.edcards.Programa.Classes.Pessoa;
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -115,6 +116,25 @@ public class CartaoBLL {
             return 0;
         }
         return (int) ob;
+    }
+
+    public static void setPin(String nfc, int pin) {
+        if (!existenteNFC(nfc)) {
+            //feedback
+            return;
+        }
+
+        if (String.valueOf(pin).length() == 6) {
+            DefaultBLL bll = new DefaultBLL("cartao");
+            bll.setOne("pin", pin, "codigo", nfc);
+            FeedBackController.feedbackErro("Pin alterado com sucesso!");
+
+        } else {
+            //feedback
+        }
+
+
+
     }
 
     public static void setLastTimePassed(String nfc) {

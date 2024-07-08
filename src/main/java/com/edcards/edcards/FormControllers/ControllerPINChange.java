@@ -1,5 +1,8 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.DataTable.CartaoBLL;
+import com.edcards.edcards.DataTable.UsersBLL;
+import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
@@ -9,6 +12,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -27,12 +31,15 @@ public class ControllerPINChange {
     public HBox HboxRoot;
     public AnchorPane leftPane;
     public AnchorPane rightPane;
+    public Button buttonClean;
+    @FXML
+    private Button buttonBack;
+    public Label textLabel;
     @FXML
     private HBox myHBox;
-    @FXML
-    private Button btn01;
 
     private int valorAtual;
+
 
     @FXML
     private TextField field1, field2, field3, field4, field5, field6;
@@ -40,7 +47,9 @@ public class ControllerPINChange {
     @FXML
     private Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
 
+    private boolean isSamePIN = true;
 
+    private boolean insertNewPin = false;
 
 
     @FXML
@@ -59,6 +68,8 @@ public class ControllerPINChange {
         btn8.setOnAction(event -> ifButtonPressed(btn8));
         btn9.setOnAction(event -> ifButtonPressed(btn9));
 
+        textLabel.setText("Insira o seu Pin atual");
+
     }
 
     private void resize() {
@@ -67,46 +78,100 @@ public class ControllerPINChange {
 
         leftPane.prefWidthProperty().bind(HboxRoot.widthProperty().multiply(0.3)); // 60% for leftPane
         rightPane.prefWidthProperty().bind(HboxRoot.widthProperty().multiply(0.7)); // 40% for rightPane
+
+        ResizeUtil.resizeAndPositionButton(buttonBack,leftPane,0.9);
+        ResizeUtil.resizeAndPositionLabel(textLabel,leftPane,0.2);
     }
 
     private void ifButtonPressed(Button button) {
-        valorAtual = Integer.parseInt(button.getText());
         if (field1.getText().isEmpty()) {
-            field1.setText(String.valueOf(valorAtual));
+            field1.setText(button.getText());
         } else if (field2.getText().isEmpty()) {
-            field2.setText(String.valueOf(valorAtual));
+            field2.setText(button.getText());
         } else if (field3.getText().isEmpty()) {
-            field3.setText(String.valueOf(valorAtual));
+            field3.setText(button.getText());
         } else if (field4.getText().isEmpty()) {
-            field4.setText(String.valueOf(valorAtual));
+            field4.setText(button.getText());
         } else if (field5.getText().isEmpty()) {
-            field5.setText(String.valueOf(valorAtual));
+            field5.setText(button.getText());
         } else if (field6.getText().isEmpty()) {
-            field6.setText(String.valueOf(valorAtual));
-            int pin = Integer.parseInt(field1.getText() + field2.getText() + field3.getText() + field4.getText() + field5.getText() + field6.getText());
-
-            Pessoa pessoaAtual = GlobalVAR.Dados.getPessoaAtual();
-            if (pessoaAtual != null) {
-//                int pinDaPessoa = pessoaAtual.getPin();
-//                if (pin == pinDaPessoa) {
-//                    try {
-//                        timer.stop();
-//                        setStage("/com/edcards/edcards/Main.fxml");
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
+            field6.setText(button.getText());
+            handleFullPIN();
+        }
+    }
+//        valorAtual = Integer.parseInt(button.getText());
+//        if (field1.getText().isEmpty()) {
+//            field1.setText(String.valueOf(valorAtual));
+//        } else if (field2.getText().isEmpty()) {
+//            field2.setText(String.valueOf(valorAtual));
+//        } else if (field3.getText().isEmpty()) {
+//            field3.setText(String.valueOf(valorAtual));
+//        } else if (field4.getText().isEmpty()) {
+//            field4.setText(String.valueOf(valorAtual));
+//        } else if (field5.getText().isEmpty()) {
+//            field5.setText(String.valueOf(valorAtual));
+//        } else if (field6.getText().isEmpty()) {
+//            field6.setText(String.valueOf(valorAtual));
+//            int pin = Integer.parseInt(field1.getText() + field2.getText() + field3.getText() + field4.getText() + field5.getText() + field6.getText());
+//
+//            if (isSamePIN) {
+//                if (pin == GlobalVAR.Dados.getPessoaAtual().getPin()) {
+//                    insertNewPin = true;
+//                    isSamePIN = false;
+//                    textLabel.setText("Insira o novo PIN");
+//                    pin = 0;
+//                    clean();
+//                    ifButtonPressed(null);
 //                } else {
-//                    FeedBackController.feedbackErro("Pin Incorreto!");
-//                    tents++;
+//                    FeedBackController.feedbackErro("PIN não coincide!");
 //                    clean();
 //                }
+//            }
+//            if (insertNewPin) {
+//                if (pin != GlobalVAR.Dados.getPessoaAtual().getPin()) {
+//                   if (FeedBackController.feedbackYesNo("Deseja alterar o pin para: " + pin)) {
+//                       var card = UsersBLL.getNFCUser(GlobalVAR.Dados.getPessoaAtual().getIduser());
+//                       CartaoBLL.setPin(card,pin);
+//                       try {
+//                           handleExit();
+//                       } catch (IOException e) {
+//                           throw new RuntimeException(e);
+//                       }
+//                   }
+//                }
+//            }
+
+    private void handleFullPIN() {
+        String pin = field1.getText() + field2.getText() + field3.getText() + field4.getText() + field5.getText() + field6.getText();
+
+        if (isSamePIN) {
+            if (Integer.parseInt(pin) == GlobalVAR.Dados.getPessoaAtual().getPin()) {
+                isSamePIN = false;
+                insertNewPin = true;
+                textLabel.setText("Insira o novo PIN");
+                clean();
             } else {
-                FeedBackController.feedbackErro("Nenhum Usuario encontrado!");
+                FeedBackController.feedbackErro("PIN não coincide!");
+                clean();
+            }
+        } else if (insertNewPin) {
+            if (Integer.parseInt(pin) != GlobalVAR.Dados.getPessoaAtual().getPin()) {
+                if (FeedBackController.feedbackYesNo("Deseja alterar o pin para: " + pin)) {
+                    var card = UsersBLL.getNFCUser(GlobalVAR.Dados.getPessoaAtual().getIduser());
+                    CartaoBLL.setPin(card, Integer.parseInt(pin));
+                    try {
+                        setStage("/com/edcards/edcards/Main.fxml");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            } else {
+                FeedBackController.feedbackErro("Novo PIN não pode ser igual ao PIN atual!");
                 clean();
             }
         }
-
     }
+
 
 
     private void clean(){
@@ -125,8 +190,9 @@ public class ControllerPINChange {
     }
 
 
+    
 
-    public void handleButtonBack(ActionEvent actionEvent) throws IOException {
+    public void handleExit() throws IOException {
         if (FeedBackController.feedbackYesNo("Deseja Sair?", "Confirmação")) {
             setStage("/com/edcards/edcards/Main.fxml");
         }

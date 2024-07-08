@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<HBox fx:id="HboxRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.ControllerPINChange">
+<HBox fx:id="HboxRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.ControllerPINChange">
     <children>
       <AnchorPane fx:id="leftPane" prefHeight="720.0" prefWidth="530.0" style="-fx-background-color: gray;">
          <children>
-            <Button fx:id="buttonBack" layoutX="101.0" layoutY="628.0" mnemonicParsing="false" onAction="#handleButtonBack" prefHeight="52.0" prefWidth="159.0" text="Voltar" />
+            <Button fx:id="buttonBack" layoutX="101.0" layoutY="628.0" mnemonicParsing="false" onAction="#handleExit" prefHeight="52.0" prefWidth="159.0" text="Voltar" />
+            <Label fx:id="textLabel" layoutX="105.0" layoutY="41.0" text="TextLabel" textAlignment="CENTER">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="rightPane" prefHeight="667.0" prefWidth="1087.0">
@@ -51,7 +51,7 @@
                           <TextField fx:id="field3" alignment="CENTER" layoutX="198.0" layoutY="65.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
                           <TextField fx:id="field4" alignment="CENTER" layoutX="282.0" layoutY="65.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
                           <TextField fx:id="field5" alignment="CENTER" layoutX="361.0" layoutY="65.0" prefHeight="70.0" prefWidth="70.0" styleClass="button-3-big" />
-                          <Button fx:id="btn01" layoutX="152.0" layoutY="498.0" mnemonicParsing="false" onAction="#buttonLimpar" prefHeight="75.0" prefWidth="245.0" styleClass="button-3-big" text="Limpar" />
+                          <Button fx:id="buttonClean" layoutX="152.0" layoutY="498.0" mnemonicParsing="false" onAction="#buttonLimpar" prefHeight="75.0" prefWidth="245.0" styleClass="button-3-big" text="Limpar" />
                       </Pane>
                   </children>
               </HBox>

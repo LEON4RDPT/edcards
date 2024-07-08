@@ -73,7 +73,7 @@ public class ModPinController {
                 clean();
                 scnd = true;
             }
-        } else if (scnd) {
+        } else {
             if (field1.getText().isEmpty()) {
                 field1.setText(String.valueOf(valorAtual));
             } else if (field2.getText().isEmpty()) {
