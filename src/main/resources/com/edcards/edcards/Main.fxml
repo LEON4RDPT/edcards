@@ -24,7 +24,7 @@
                 <Button fx:id="btnHistComp" layoutX="80.0" layoutY="481.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Historico de Compras" />
                 <Button fx:id="btnPos" layoutX="80.0" layoutY="401.0" mnemonicParsing="false" onAction="#handlePosClick" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="POS" />
                 <Button fx:id="btnMarcRef" layoutX="80.0" layoutY="521.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Marcar Refeiçoes" />
-                <Button fx:id="btnHorario" layoutX="80.0" layoutY="441.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Horario" />
+                <Button fx:id="btnHorario" onAction="#handleSeeHorario" layoutX="80.0" layoutY="441.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Horario" />
                 <Button fx:id="btnRefMarc" layoutX="80.0" layoutY="555.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Ver Refeiçoes Marcadas" />
 
                 <Button fx:id="btnChangePin" layoutX="80.0" layoutY="590.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Mudar PIN" />

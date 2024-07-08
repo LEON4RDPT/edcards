@@ -148,4 +148,14 @@ public class FormUser {
     private void handleEntradas(ActionEvent actionEvent) throws IOException {
         setStage("/com/edcards/edcards/EntradasSaidas.fxml");
     }
+
+    @FXML
+    private void handleSeeHorario()  throws IOException {
+
+        if (GlobalVAR.Dados.getPessoaAtual().getHorario() != null) {
+            setStage("/com/edcards/edcards/SeeHorario.fxml");
+        } else {
+            FeedBackController.feedbackErro("Usuario não possui horario!");
+        }
+    }
 }
