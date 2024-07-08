@@ -65,6 +65,17 @@ public class FeedBackController {
         alert.showAndWait();
 
     }
+    public static void feedbackConf(String message) {
+        currentStage = GlobalVAR.Dados.getCurrentStage();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Sucesso");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.initOwner(currentStage);
+        alert.showAndWait();
+
+    }
 
     public static boolean feedbackYesNo(String message) {
         currentStage = GlobalVAR.Dados.getCurrentStage();

@@ -31,11 +31,6 @@ public enum ConfEnum {
             return "Horario alterado com Sucesso";
         }
     },
-    conf6 {
-        public String toString() {
-            return "Horario removido com Sucesso";
-        }
-    },
     conf7 {
         public String toString() {
             return "Cartão Adicionado com Sucesso";

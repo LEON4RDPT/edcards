@@ -80,6 +80,11 @@ public enum ErrorEnum {
         public String toString() {
             return "PIN's não Iguais!!!";
         }
+    },
+    err16 {
+        public String toString() {
+            return "Utilizador já tem hórario";
+        }
     };
 
     public int toDbValue() {
