@@ -68,8 +68,8 @@ public class FormUser {
         imageUser.setPreserveRatio(false);
 
         //buttons
-        ResizeUtil.resizeAndPositionButton(btnEntradasSaidas, rightPane, 0.32);
-        ResizeUtil.resizeAndPositionButton(btnPosAdmin, rightPane, 0.39);
+        ResizeUtil.resizeAndPositionButton(btnPosAdmin, rightPane, 0.32);
+        ResizeUtil.resizeAndPositionButton(btnEntradasSaidas, rightPane, 0.39);
         ResizeUtil.resizeAndPositionButton(btnPos, rightPane, 0.46);
         ResizeUtil.resizeAndPositionButton(btnMarcRef, rightPane, 0.53);
         ResizeUtil.resizeAndPositionButton(btnHorario, rightPane, 0.60);
