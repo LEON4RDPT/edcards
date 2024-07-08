@@ -5,11 +5,13 @@ import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.text.Text;
 
@@ -22,6 +24,8 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class ModCardUserController {
+    public Button backBtn;
+    public Button addCard;
     List<Pessoa> users;
     String user;
     String idCartao;
@@ -72,10 +76,15 @@ public class ModCardUserController {
                 try {
                     String idCartao = LerCartao.lerIDCartao("/com/edcards/edcards/POSAdmin.fxml");
                     if (idCartao == null) {
+                        //feedback
                         return;
                     }
-                        CartaoBLL.getIdUserByNFC(idCartao);
+                    if (CartaoBLL.existenteNFC(idCartao)) {
                         cardNumber.setText(idCartao);
+                    } else {
+                        FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err13));
+                        isRunning = true;
+                    }
 
                 } catch (Exception e) {
                     System.err.println("Error reading NFC card: " + e.getMessage());
@@ -84,11 +93,18 @@ public class ModCardUserController {
             }
         });
     }
-    public void insertCardClick(ActionEvent event) throws IOException {
+    @FXML
+    public void modCardClick(ActionEvent event) throws IOException {
         idCartao = cardNumber.getText();
         if (idCartao != null) {
             UsersBLL.setCodigoUser(id,idCartao);
         }
 
+    }
+    @FXML
+    private void handleButtonBack() throws IOException {
+        if (FeedBackController.feedbackYesNo("Deseja sair?", "Confirmação")) {
+            GlobalVAR.StageController.setStage("/com/edcards/edcards/POSAdmin.fxml");
+        }
     }
 }

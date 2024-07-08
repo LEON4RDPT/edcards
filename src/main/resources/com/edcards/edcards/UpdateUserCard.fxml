@@ -27,8 +27,8 @@
                 <Font size="40.0" />
             </font>
         </Text>
-        <Button fx:id="addCard" layoutX="1022.0" layoutY="594.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="244.0" text="Modificar Cartão" />
-        <Button fx:id="backBtn" layoutX="14.0" layoutY="594.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="244.0" text="Voltar">
+        <Button onAction="#modCardClick" fx:id="addCard" layoutX="1022.0" layoutY="594.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="244.0" text="Modificar Cartão" />
+        <Button onAction="#handleButtonBack" fx:id="backBtn" layoutX="14.0" layoutY="594.0" mnemonicParsing="false" prefHeight="122.0" prefWidth="244.0" text="Voltar">
             <font>
                 <Font size="18.0" />
             </font>
