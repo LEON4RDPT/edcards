@@ -11,7 +11,11 @@
 
 <HBox fx:id="HboxRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.ControllerPINChange">
     <children>
-      <AnchorPane fx:id="leftPane" prefHeight="720.0" prefWidth="530.0" style="-fx-background-color: gray;" />
+      <AnchorPane fx:id="leftPane" prefHeight="720.0" prefWidth="530.0" style="-fx-background-color: gray;">
+         <children>
+            <Button fx:id="buttonBack" layoutX="101.0" layoutY="628.0" mnemonicParsing="false" onAction="#handleButtonBack" prefHeight="52.0" prefWidth="159.0" text="Voltar" />
+         </children>
+      </AnchorPane>
       <AnchorPane fx:id="rightPane" prefHeight="667.0" prefWidth="1087.0">
          <children>
               <HBox fx:id="myHBox" alignment="CENTER" prefHeight="720.0" prefWidth="720.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

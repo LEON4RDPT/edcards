@@ -20,6 +20,7 @@ import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController
 
 
 public class ControllerPIN {
+    public Button btnSair;
     @FXML
     private GridPane gridbuttons;
     @FXML
@@ -137,10 +138,16 @@ public class ControllerPIN {
 
     private void goBack() {
         try {
+            GlobalVAR.Dados.setPessoaAtual(null);
             setStage("/com/edcards/edcards/ReadCard.fxml");
         } catch (IOException ignored) {
         }
     }
 
 
+    public void buttonSair(ActionEvent actionEvent) {
+        timer.stop();
+        goBack();
+
+    }
 }

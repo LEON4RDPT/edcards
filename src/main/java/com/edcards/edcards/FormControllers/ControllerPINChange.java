@@ -65,8 +65,8 @@ public class ControllerPINChange {
         HBox.setHgrow(leftPane, Priority.ALWAYS);
         HBox.setHgrow(rightPane, Priority.ALWAYS);
 
-        leftPane.prefWidthProperty().bind(HboxRoot.widthProperty().multiply(0.7)); // 60% for leftPane
-        rightPane.prefWidthProperty().bind(HboxRoot.widthProperty().multiply(0.3)); // 40% for rightPane
+        leftPane.prefWidthProperty().bind(HboxRoot.widthProperty().multiply(0.3)); // 60% for leftPane
+        rightPane.prefWidthProperty().bind(HboxRoot.widthProperty().multiply(0.7)); // 40% for rightPane
     }
 
     private void ifButtonPressed(Button button) {
@@ -126,4 +126,9 @@ public class ControllerPINChange {
 
 
 
+    public void handleButtonBack(ActionEvent actionEvent) throws IOException {
+        if (FeedBackController.feedbackYesNo("Deseja Sair?", "Confirmação")) {
+            setStage("/com/edcards/edcards/Main.fxml");
+        }
+    }
 }
