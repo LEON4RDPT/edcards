@@ -2,6 +2,7 @@ package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.ProdutoBLL;
 import com.edcards.edcards.Programa.Classes.Produto;
+import com.edcards.edcards.Programa.Controllers.Enums.ConfEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
@@ -57,22 +58,15 @@ public class ModProdutoController {
     @FXML
     private void modPrdtClick(ActionEvent event) {
         categoria = ProdutoEnum.valueOf(cBoxCategory.getSelectionModel().getSelectedItem());
-        FeedBackController.feedbackErro(String.valueOf(categoria));
         nome = nameField.getText();
-        FeedBackController.feedbackErro(nome);
-
         preco = priceValue.getValue();
-        FeedBackController.feedbackErro(String.valueOf(preco));
-
         disponivel = disp.isSelected();
         var id = prodt.getIdProduto();
-
-        FeedBackController.feedbackErro(String.valueOf(id));
-
         ProdutoBLL.setNome(id, nome);
         ProdutoBLL.setTipo(id, categoria);
         ProdutoBLL.setPreco(id, preco);
         ProdutoBLL.setDisp(id, disponivel);
+        FeedBackController.feedbackConf(String.valueOf(ConfEnum.conf10));
     }
 
     public void loadNomes(ActionEvent event) {

@@ -68,7 +68,7 @@ public class FeedBackController {
     public static void feedbackConf(String message) {
         currentStage = GlobalVAR.Dados.getCurrentStage();
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Sucesso");
         alert.setHeaderText(null);
         alert.setContentText(message);

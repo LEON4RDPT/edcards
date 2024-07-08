@@ -49,7 +49,7 @@ public class AddProdutoController  {
         nome = nameField.getText(); //todo check
         preco = priceValue.getValue(); //todo check
         ProdutoBLL.inserirProduto(nome, categoria, preco, true);
-        FeedBackController.feedbackErro("Produto Registado com sucesso!");
+        FeedBackController.feedbackConf("Produto Registado com sucesso!");
     }
 
     @FXML

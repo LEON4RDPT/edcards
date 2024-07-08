@@ -70,7 +70,6 @@ public class AddHorarioController {
                 Arrays.stream(Objects.requireNonNull(userLoad).toArray(new Pessoa[0]))
                         .map(Pessoa::getNome)
                         .collect(Collectors.toList())
-
         );
         userPicker.setItems(usersLoad);
         users = userLoad;
@@ -88,15 +87,7 @@ public class AddHorarioController {
             id= (pessoa.getIduser());
             nomeText.setText(pessoa.getNome());
             imgh = pessoa.getHorario();
-            if (imgh != null) {
-                FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err16));
-                id= -1;
-                nomeText.setText("");
-                imgh = null;
-                HorarioUser.setImage(null);
-                Image defaultt = new Image(getClass().getResourceAsStream("src/main/resources/com/edcards/edcards/images/calndario.png"));
-                HorarioUser.setImage(defaultt);
-            }
+            HorarioUser.setImage(imgh);
         }
     }
 
