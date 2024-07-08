@@ -1,7 +1,11 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="ExecuteNonCard" type="Application" factoryName="Application">
+    <envs>
+      <env name="VARID" value="2" />
+    </envs>
     <option name="MAIN_CLASS_NAME" value="com.edcards.edcards.MainExeNoCard" />
     <module name="edcards" />
+    <option name="PROGRAM_PARAMETERS" value="id=2" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
