@@ -20,6 +20,18 @@ public class ResizeUtil {
         AnchorPane.setRightAnchor(gridPane, 0.0);
     }
 
+    public static void resizeSplitPane(SplitPane splitPane, AnchorPane anchorPane) {
+        splitPane.prefWidthProperty().bind(anchorPane.widthProperty());
+        splitPane.prefHeightProperty().bind(anchorPane.heightProperty());
+        splitPane.maxWidthProperty().bind(anchorPane.widthProperty());
+        splitPane.maxHeightProperty().bind(anchorPane.heightProperty());
+
+        AnchorPane.setTopAnchor(splitPane, 0.0);
+        AnchorPane.setBottomAnchor(splitPane, 0.0);
+        AnchorPane.setLeftAnchor(splitPane, 0.0);
+        AnchorPane.setRightAnchor(splitPane, 0.0);
+    }
+
     public static void resizeAndCenterText(TextField textField, AnchorPane pane) {
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
             double width = newVal.doubleValue();
