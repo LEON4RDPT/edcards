@@ -8,6 +8,7 @@ import com.edcards.edcards.Programa.Classes.Transacao;
 import com.edcards.edcards.Programa.Controllers.ArredondarController;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -223,6 +224,7 @@ public class TransacaoBLL {
         if (x == null) {
             return null;
         }
+
         ArrayList<Transacao> transacoes = new ArrayList<>();
         for (var transac : x) {
             transacoes.add(transfromTrasacao(transac));
@@ -238,6 +240,7 @@ public class TransacaoBLL {
         Transacao transacao = new Transacao(0);
         for (Map.Entry<String, Object> entry : row.entrySet()) {
             switch (entry.getKey()) {
+                case "id" -> transacao.setIdTransacao((int)entry.getValue());
                 case "cliente_id" -> transacao.setCliente(UsersBLL.getUser((int)entry.getValue()));
                 case "funcionario_id" -> transacao.setFuncionario(UsersBLL.getUser((int)entry.getValue()));
                 case "valor_total" -> transacao.setValorpago((double)entry.getValue());

@@ -1,5 +1,7 @@
 package com.edcards.edcards.Programa.Classes;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Transacao {
@@ -25,14 +27,14 @@ public class Transacao {
         this.idTransacao = idTransacao;
         this.cliente = cliente;
         this.funcionario = funcionario;
-        this.produtos = null;
+        this.produtos = new ArrayList<Produto>();
         this.valorpago = 0;
     }
     public Transacao(int idTransacao) {
         this.idTransacao = idTransacao;
         this.cliente = null;
         this.funcionario = null;
-        this.produtos = null;
+        this.produtos = new ArrayList<Produto>();
         this.valorpago = 0;
     }
 
@@ -74,22 +76,13 @@ public class Transacao {
 
     public void addProduct(Produto produto) {
         this.produtos.add(produto);
-        valorpago += produto.getPreco();
     }
 
     public void addProduct(Produto[] produtoArr) {
-        for (Produto produto : produtoArr) {
-            produtos.add(produto);
-            valorpago += produto.getPreco();
-        }
+        Collections.addAll(produtos, produtoArr);
     }
 
     public void removeProduct(Produto produto) {
-        for (Produto prod : produtos) {
-            if (prod.getIdProduto() == produto.getIdProduto()) {
-                produtos.remove(prod);
-                valorpago -= prod.getPreco();
-            }
-        }
+        produtos.removeIf(prod -> prod.getIdProduto() == produto.getIdProduto());
     }
 }

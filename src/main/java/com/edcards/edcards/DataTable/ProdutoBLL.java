@@ -147,8 +147,8 @@ public class ProdutoBLL extends DAL {
             return null;
         }
 
-        transformProduto(row);
-        return null;
+        var prod = transformProduto(row);
+        return prod;
     }
 
     public static Produto transformProduto(Map<String, Object> ob) {
