@@ -194,6 +194,26 @@ public class ProdutoBLL extends DAL {
         return produtos;
     }
 
+    public static List<Produto> getALl(ProdutoEnum tipo) {
+
+        DefaultBLL bll = new DefaultBLL("produto");
+        List<Map<String, Object>> rows = bll.getAll("tipo", tipo.toDbValue());
+        List<Produto> produtos = new ArrayList<Produto>();
+
+        if (rows == null) {
+            return null;
+        }
+
+        for (Map<String, Object> row : rows) {
+            Produto produto = transformProduto(row);
+            produtos.add(produto);
+
+        }
+
+        return produtos;
+    }
+
+
     public static List<Produto> getALlByEnum(ProdutoEnum produtoEnum) {
 
         DefaultBLL bll = new DefaultBLL("produto");

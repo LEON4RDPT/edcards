@@ -50,9 +50,9 @@ public class ViewTransacs  {
     @FXML
     private TableColumn<Transacao, Double> valorPagoColumn;
 
-    private ObservableList<Transacao> transactions = FXCollections.observableArrayList();
+    private final ObservableList<Transacao> transactions = FXCollections.observableArrayList();
 
-    private ObservableList<Produto> produtos = FXCollections.observableArrayList();
+    private final ObservableList<Produto> produtos = FXCollections.observableArrayList();
 
 
     @FXML

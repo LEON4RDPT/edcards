@@ -6,15 +6,17 @@ import com.edcards.edcards.Programa.Classes.Produto;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class AddRef {
     public AnchorPane leftPane;
@@ -25,33 +27,60 @@ public class AddRef {
     public TextField textBoxNomeRefeicao;
     public AnchorPane leftPane1;
     public AnchorPane leftPane2;
+    public Label labelForPicker;
+    public DatePicker timePickerRefeicao;
+    public Button buttonSetHoje;
 
-    private Produto produtoAtual;
+    @FXML
+    private TableColumn<Produto, String> nomeProduto;
+
+    @FXML
+    private TableView<Produto> tabelaRefeicoes;
+
+    private Produto produtoAtual = null;
+
+    private final ObservableList<Produto> produtos = FXCollections.observableArrayList();
+
 
     @FXML
     public void initialize() {
         resize();
 
+        setRefeicoes();
+    }
+
+    private void setRefeicoes() {
+        var prods = ProdutoBLL.getALl(ProdutoEnum.REFEICOES);
+        if (prods != null) {
+            produtos.addAll(prods);
+        } else {
+            FeedBackController.feedbackErro("Nenhuma Refeição registada no programa");
+        }
 
     }
 
     private void resize() {
 
 
-        //buttons
-        ResizeUtil.resizeAndPositionButton(exit,rightPane,0.9);
-        ResizeUtil.resizeAndPositionTextbox(textBoxNomeRefeicao,rightPane,0.1);
-        ResizeUtil.resizeAndPositionButton(buttonPesq,rightPane,0.2);
+        //resize
+        ResizeUtil.resizeAndPosition(exit,rightPane,0.9);
+        ResizeUtil.resizeAndPosition(textBoxNomeRefeicao,rightPane,0.1);
+        ResizeUtil.resizeAndPosition(buttonPesq,rightPane,0.2);
+        ResizeUtil.resizeAndPosition(labelForPicker,leftPane2,0.1);
+        ResizeUtil.resizeAndPosition(timePickerRefeicao,leftPane2,0.2);
+        ResizeUtil.resizeAndPosition(buttonSetHoje,leftPane2,0.28);
 
 
         //Set percentage
         HBox.setHgrow(leftPane, Priority.ALWAYS);
         HBox.setHgrow(rightPane, Priority.ALWAYS);
-        leftPane.prefWidthProperty().bind(rootHBox.widthProperty().multiply(0.7)); // 60% for leftPane
-        rightPane.prefWidthProperty().bind(rootHBox.widthProperty().multiply(0.3)); // 40% for rightPane
 
+        //panes
+        leftPane.prefWidthProperty().bind(rootHBox.widthProperty().multiply(0.7));
+        rightPane.prefWidthProperty().bind(rootHBox.widthProperty().multiply(0.3));
         leftPane1.prefWidthProperty().bind(leftPane.widthProperty().multiply(0.5));
         leftPane2.prefWidthProperty().bind(leftPane.widthProperty().multiply(0.5));
+
     }
 
     public void handleExit() throws IOException {
@@ -60,7 +89,7 @@ public class AddRef {
         }
     }
 
-    public void handlePesquisa(ActionEvent actionEvent) {
+    public void handlePesquisa() {
         var str = textBoxNomeRefeicao.getText();
         if (str.isEmpty()) {
             FeedBackController.feedbackErro("Nada foi escrito!");
@@ -77,5 +106,9 @@ public class AddRef {
             produtoAtual = prod;
         }
 
+    }
+
+    public void handleSetdiaHoje() {
+        timePickerRefeicao.setValue(LocalDate.now());
     }
 }

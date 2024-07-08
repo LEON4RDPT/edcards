@@ -1,5 +1,6 @@
 package com.edcards.edcards.FormControllers.Utils;
 
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -81,6 +82,22 @@ public class ResizeUtil {
 
         // Add a listener for height changes if necessary
     }
+
+    public static void resizeAndPosition(Node node, AnchorPane pane, double relativePosition) {
+        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            double width = newVal.doubleValue();
+            double labelWidth = node.getBoundsInParent().getWidth();
+            node.setLayoutX((width - labelWidth) / 2); // Center horizontally
+        });
+
+        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            double height = newVal.doubleValue();
+            double labelHeight = node.getBoundsInParent().getHeight();
+            double positionY = height * relativePosition - labelHeight / 2; // Center vertically
+            node.setLayoutY(positionY);
+        });
+    }
+
 
     public static void resizeAndPositionLabel(Label label, AnchorPane pane, double relativePosition) {
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
