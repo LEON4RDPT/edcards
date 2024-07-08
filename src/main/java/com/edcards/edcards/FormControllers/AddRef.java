@@ -6,6 +6,7 @@ import com.edcards.edcards.Programa.Classes.Produto;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,9 +51,12 @@ public class AddRef {
     }
 
     private void setRefeicoes() {
+        tabelaRefeicoes.setItems(produtos);
         var prods = ProdutoBLL.getALl(ProdutoEnum.REFEICOES);
         if (prods != null) {
+            System.out.println("HYDIPGIYDTYAGYDg");
             produtos.addAll(prods);
+            nomeProduto.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getNome()));
         } else {
             FeedBackController.feedbackErro("Nenhuma Refeição registada no programa");
         }
@@ -66,9 +70,10 @@ public class AddRef {
         ResizeUtil.resizeAndPosition(exit,rightPane,0.9);
         ResizeUtil.resizeAndPosition(textBoxNomeRefeicao,rightPane,0.1);
         ResizeUtil.resizeAndPosition(buttonPesq,rightPane,0.2);
-        ResizeUtil.resizeAndPosition(labelForPicker,leftPane2,0.1);
-        ResizeUtil.resizeAndPosition(timePickerRefeicao,leftPane2,0.2);
-        ResizeUtil.resizeAndPosition(buttonSetHoje,leftPane2,0.28);
+        ResizeUtil.resizeAndPosition(labelForPicker,leftPane1,0.1);
+        ResizeUtil.resizeAndPosition(timePickerRefeicao,leftPane1,0.2);
+        ResizeUtil.resizeAndPosition(buttonSetHoje,leftPane1,0.26);
+        ResizeUtil.resizeAndPosition(tabelaRefeicoes,leftPane1,0.60);
 
 
         //Set percentage
