@@ -164,4 +164,9 @@ public class FormUser {
         setStage("/com/edcards/edcards/ViewTransacs.fxml");
 
     }
+
+    @FXML
+    private void handlePinChange() throws IOException {
+        setStage("/com/edcards/edcards/ModPinUser.fxml");
+    }
 }

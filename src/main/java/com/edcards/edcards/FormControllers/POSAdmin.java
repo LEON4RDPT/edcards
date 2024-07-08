@@ -91,7 +91,7 @@ public class POSAdmin {
 
     @FXML
     private void modPinUsrClick(ActionEvent event) throws IOException {
-        setStage("/com/edcards/edcards/ChangePIN.fxml");
+        setStage("/com/edcards/edcards/ModPinUser.fxml");
     }
 
     @FXML

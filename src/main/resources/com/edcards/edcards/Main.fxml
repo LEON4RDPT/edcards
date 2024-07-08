@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<HBox fx:id="rootHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.FormUser">
+<HBox fx:id="rootHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.FormUser">
     <children>
         <AnchorPane fx:id="leftPane" maxWidth="1.7976931348623157E308" prefWidth="960.0" HBox.hgrow="ALWAYS">
             <ImageView fx:id="imageUser" fitHeight="439.0" fitWidth="446.0" layoutX="220.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
@@ -21,13 +18,13 @@
 
 
 
-                <Button fx:id="btnHistComp" onAction="#handleSeeHistComp" layoutX="80.0" layoutY="481.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Historico de Compras" />
+                <Button fx:id="btnHistComp" layoutX="80.0" layoutY="481.0" mnemonicParsing="false" onAction="#handleSeeHistComp" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Historico de Compras" />
                 <Button fx:id="btnPos" layoutX="80.0" layoutY="401.0" mnemonicParsing="false" onAction="#handlePosClick" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="POS" />
                 <Button fx:id="btnMarcRef" layoutX="80.0" layoutY="521.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Marcar Refeiçoes" />
-                <Button fx:id="btnHorario" onAction="#handleSeeHorario" layoutX="80.0" layoutY="441.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Horario" />
+                <Button fx:id="btnHorario" layoutX="80.0" layoutY="441.0" mnemonicParsing="false" onAction="#handleSeeHorario" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Horario" />
                 <Button fx:id="btnRefMarc" layoutX="80.0" layoutY="555.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Ver Refeiçoes Marcadas" />
 
-                <Button fx:id="btnChangePin" layoutX="80.0" layoutY="590.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Mudar PIN" />
+                <Button fx:id="btnChangePin" layoutX="80.0" layoutY="590.0" mnemonicParsing="false" onAction="#handlePinChange" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Mudar PIN" />
                 <Button fx:id="exit" layoutX="80.0" layoutY="626.0" mnemonicParsing="false" onAction="#handleExit" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Sair" />
                 <Button fx:id="btnPosAdmin" layoutX="80.0" layoutY="361.0" mnemonicParsing="false" onAction="#handlePosAdmClick" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Painel Admin" />
                 <Button fx:id="btnEntradasSaidas" layoutX="80.0" layoutY="321.0" mnemonicParsing="false" onAction="#handleEntradas" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Entradas e Saidas" />

@@ -10,8 +10,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -19,31 +21,33 @@ import java.io.IOException;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
 
 
-public class ControllerPIN {
-    @FXML
-    private GridPane gridbuttons;
+public class ControllerPINChange {
+
+    public GridPane gridbuttons;
+    public HBox HboxRoot;
+    public AnchorPane leftPane;
+    public AnchorPane rightPane;
     @FXML
     private HBox myHBox;
     @FXML
     private Button btn01;
 
-    private int time = 30;
-
     private int valorAtual;
 
-    private Timeline timer;
     @FXML
     private TextField field1, field2, field3, field4, field5, field6;
 
     @FXML
     private Button btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
 
-    private int tents= 0;
+
+
 
     @FXML
     public void initialize() {
+
+        resize();
         valorAtual = 0;
-        startTimer();
         btn0.setOnAction(event -> ifButtonPressed(btn0));
         btn1.setOnAction(event -> ifButtonPressed(btn1));
         btn2.setOnAction(event -> ifButtonPressed(btn2));
@@ -57,8 +61,15 @@ public class ControllerPIN {
 
     }
 
+    private void resize() {
+        HBox.setHgrow(leftPane, Priority.ALWAYS);
+        HBox.setHgrow(rightPane, Priority.ALWAYS);
+
+        leftPane.prefWidthProperty().bind(HboxRoot.widthProperty().multiply(0.7)); // 60% for leftPane
+        rightPane.prefWidthProperty().bind(HboxRoot.widthProperty().multiply(0.3)); // 40% for rightPane
+    }
+
     private void ifButtonPressed(Button button) {
-        restartTimer();
         valorAtual = Integer.parseInt(button.getText());
         if (field1.getText().isEmpty()) {
             field1.setText(String.valueOf(valorAtual));
@@ -76,19 +87,19 @@ public class ControllerPIN {
 
             Pessoa pessoaAtual = GlobalVAR.Dados.getPessoaAtual();
             if (pessoaAtual != null) {
-                int pinDaPessoa = pessoaAtual.getPin();
-                if (pin == pinDaPessoa) {
-                    try {
-                        timer.stop();
-                        setStage("/com/edcards/edcards/Main.fxml");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    FeedBackController.feedbackErro("Pin Incorreto!");
-                    tents++;
-                    clean();
-                }
+//                int pinDaPessoa = pessoaAtual.getPin();
+//                if (pin == pinDaPessoa) {
+//                    try {
+//                        timer.stop();
+//                        setStage("/com/edcards/edcards/Main.fxml");
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                } else {
+//                    FeedBackController.feedbackErro("Pin Incorreto!");
+//                    tents++;
+//                    clean();
+//                }
             } else {
                 FeedBackController.feedbackErro("Nenhum Usuario encontrado!");
                 clean();
@@ -106,41 +117,13 @@ public class ControllerPIN {
         field5.clear();
         field6.clear();
 
-        if (tents >= 3) {
-            GlobalVAR.Dados.setPessoaAtual(null);
-            timer.stop();
-            goBack();
-        }
     }
 
     @FXML
-    private void buttonLimpar(ActionEvent actionEvent) {
+    private void buttonLimpar() {
         clean();
     }
 
-
-    private void startTimer() {
-        timer = new Timeline(new KeyFrame(Duration.seconds(time), event -> Platform.runLater(() -> {
-            GlobalVAR.Dados.setPessoaAtual(null);
-            goBack();
-        })));
-        timer.setCycleCount(1); // Make sure the timer runs only once
-        timer.play();
-    }
-
-    private void restartTimer() {
-        if (timer != null) {
-            timer.stop();
-            timer.playFromStart();
-        }
-    }
-
-    private void goBack() {
-        try {
-            setStage("/com/edcards/edcards/ReadCard.fxml");
-        } catch (IOException ignored) {
-        }
-    }
 
 
 }
