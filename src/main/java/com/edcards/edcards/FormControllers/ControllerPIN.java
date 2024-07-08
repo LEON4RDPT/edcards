@@ -107,6 +107,7 @@ public class ControllerPIN {
 
         if (tents >= 3) {
             GlobalVAR.Dados.setPessoaAtual(null);
+            timer.stop();
             goBack();
         }
     }

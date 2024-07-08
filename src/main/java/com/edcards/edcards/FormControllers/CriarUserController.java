@@ -6,17 +6,14 @@ import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -82,10 +79,64 @@ public class CriarUserController {
     @FXML
     public void initialize() {
         resize();
+        setVerificationControllers();
+
+
 
         AsePicker.getItems().addAll(Arrays.stream(AseEnum.values()).map(Enum::name).toList());
         tipoPicker.getItems().addAll(Arrays.stream(UsuarioEnum.values()).map(Enum::name).toList());
         setImageController();
+    }
+
+    private void setVerificationControllers() {
+        nameField.addEventFilter(KeyEvent.KEY_TYPED, e -> {
+            if (e.getCharacter().matches("[0-9]")) {
+                e.consume();
+            }
+        });
+
+        turmaPicker.addEventFilter(KeyEvent.KEY_TYPED, e -> {
+            if (!e.getCharacter().matches("[0-9]")) {
+                e.consume();
+            }
+        });
+
+        numEEfield.addEventFilter(KeyEvent.KEY_TYPED, e -> {
+            if (!e.getCharacter().matches("[0-9]")) {
+                e.consume();
+            }
+        });
+
+        numUtSaudeField.addEventFilter(KeyEvent.KEY_TYPED, e -> {
+            if (!e.getCharacter().matches("[0-9]")) {
+                e.consume();
+            }
+        });
+
+
+        numEEfield.lengthProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue() > oldValue.intValue()) {
+                if (numEEfield.getText().length() > 9) {
+                    numEEfield.setText(numEEfield.getText().substring(0, 9));
+                }
+            }
+        });
+
+        turmaPicker.lengthProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue() > oldValue.intValue()) {
+                if (turmaPicker.getText().length() > 6) {
+                    turmaPicker.setText(turmaPicker.getText().substring(0, 6));
+                }
+            }
+        });
+
+        numUtSaudeField.lengthProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue() > oldValue.intValue()) {
+                if (numUtSaudeField.getText().length() > 9) {
+                    numUtSaudeField.setText(numUtSaudeField.getText().substring(0, 9));
+                }
+            }
+        });
     }
 
     private void resize() {
@@ -156,7 +207,7 @@ public class CriarUserController {
     private void inserirAluno() {
         email = emailField.getText();
         numEE = Integer.parseInt(numEEfield.getText());
-        turma = Integer.parseInt(turmaPicker.toString());
+        turma = Integer.parseInt(turmaPicker.getText());
 
         idCartao = null;
         ase = AseEnum.valueOf(AsePicker.getValue());
