@@ -477,7 +477,7 @@ public class Pos {
 
     }
     @FXML
-    private void handleRefeicao() {
-
+    private void handleRefeicao() throws IOException {
+        setStage("/com/edcards/edcards/AddRef.fxml");
     }
 }

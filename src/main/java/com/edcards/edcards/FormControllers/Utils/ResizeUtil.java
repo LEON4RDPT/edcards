@@ -211,6 +211,20 @@ public class ResizeUtil {
         });
     }
 
+    public static void resizeAndPositionTextbox(TextField textField, AnchorPane pane, double relativePosition) {
+        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            double width = newVal.doubleValue();
+            textField.setLayoutX((width - textField.getPrefWidth()) / 2);
+        });
+
+        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            double height = newVal.doubleValue();
+            double buttonHeight = textField.getPrefHeight();
+            double positionY = height * relativePosition - buttonHeight / 2;
+            textField.setLayoutY(positionY);
+        });
+    }
+
     public static void resizeAndPositionTextAreaStickWithPane(TextArea textArea, AnchorPane pane, double widthRatio, double heightRatio, double relativePosition) {
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
             double paneWidth = newVal.doubleValue();
