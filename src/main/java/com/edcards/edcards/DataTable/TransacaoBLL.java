@@ -4,7 +4,9 @@ import com.edcards.edcards.DataTable.Settings.DefaultBLL;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Classes.Produto;
 import com.edcards.edcards.Programa.Classes.Refeicao;
+import com.edcards.edcards.Programa.Classes.Transacao;
 import com.edcards.edcards.Programa.Controllers.ArredondarController;
+import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 
 import java.sql.Timestamp;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.edcards.edcards.Programa.Controllers.FeedBackController.feedbackErro;
 
@@ -196,4 +199,64 @@ public class TransacaoBLL {
     }
 
 
+
+
+    public static Transacao getTransacao(int idTransacao) {
+        if (!existe(idTransacao)) {
+            //feedback
+            return null;
+        }
+        DefaultBLL bll = new DefaultBLL("transacao");
+        var x = bll.getAllinOne("id", idTransacao);
+        return transfromTrasacao(x);
+
+    }
+
+    public static List<Transacao> getAllTransacoes(int idUser) {
+        if (!UsersBLL.existe(idUser)) {
+            //feedback
+            return null;
+        }
+
+        DefaultBLL bll = new DefaultBLL("transacao");
+        var x = bll.getAll("cliente_id",idUser);
+        if (x == null) {
+            return null;
+        }
+        ArrayList<Transacao> transacoes = new ArrayList<>();
+        for (var transac : x) {
+            transacoes.add(transfromTrasacao(transac));
+        }
+
+        return transacoes;
+    }
+
+
+
+    private static Transacao transfromTrasacao(Map<String, Object> row) {
+
+        Transacao transacao = new Transacao(0);
+        for (Map.Entry<String, Object> entry : row.entrySet()) {
+            switch (entry.getKey()) {
+                case "cliente_id" -> transacao.setCliente(UsersBLL.getUser((int)entry.getValue()));
+                case "funcionario_id" -> transacao.setFuncionario(UsersBLL.getUser((int)entry.getValue()));
+                case "valor_total" -> transacao.setValorpago((double)entry.getValue());
+                default -> { }
+            }
+        }
+
+        DefaultBLL bll = new DefaultBLL("transacao_detalhe");
+        var x = bll.getList("produto_id","transacao_id",transacao.getIdTransacao());
+        //returns a list of ids of produtos
+        assert x != null;
+
+        List<Integer> produtoIds = x.stream()
+                .map(obj -> (int) obj)
+                .toList();
+
+        for (var prod : produtoIds) {
+            transacao.addProduct(ProdutoBLL.getProduto(prod));
+        }
+        return transacao;
+    }
 }

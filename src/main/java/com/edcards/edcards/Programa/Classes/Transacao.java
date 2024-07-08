@@ -5,24 +5,33 @@ import java.util.List;
 public class Transacao {
     private int idTransacao;
     private Pessoa cliente;
-    private Funcionario funcionario;
+    private Pessoa funcionario;
     private List<Produto> produtos;
     private double valorpago;
 
-    public Transacao(int idTransacao, Pessoa cliente, Funcionario funcionario, List<Produto> produtos) {
+    public Transacao(int idTransacao, Pessoa cliente, Pessoa funcionario, List<Produto> produtos) {
         this.idTransacao = idTransacao;
         this.cliente = cliente;
         this.funcionario = funcionario;
         this.produtos = produtos;
-        for (Produto produto : produtos) {
-            valorpago += produto.getPreco();
-        }
+        produtos.forEach(produto -> valorpago += produto.getPreco());
     }
 
-    public Transacao(int idTransacao, Pessoa cliente, Funcionario funcionario) {
+    public void setValorpago(double valorpago) {
+        this.valorpago = valorpago;
+    }
+
+    public Transacao(int idTransacao, Pessoa cliente, Pessoa funcionario) {
         this.idTransacao = idTransacao;
         this.cliente = cliente;
         this.funcionario = funcionario;
+        this.produtos = null;
+        this.valorpago = 0;
+    }
+    public Transacao(int idTransacao) {
+        this.idTransacao = idTransacao;
+        this.cliente = null;
+        this.funcionario = null;
         this.produtos = null;
         this.valorpago = 0;
     }
@@ -43,11 +52,11 @@ public class Transacao {
         this.cliente = cliente;
     }
 
-    public Funcionario getFuncionario() {
+    public Pessoa getFuncionario() {
         return funcionario;
     }
 
-    public void setFuncionario(Funcionario funcionario) {
+    public void setFuncionario(Pessoa funcionario) {
         this.funcionario = funcionario;
     }
 

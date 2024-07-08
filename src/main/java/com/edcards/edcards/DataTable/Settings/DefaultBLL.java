@@ -23,6 +23,25 @@ public class DefaultBLL extends DAL {
         }
     }
 
+    public List<Object> getList(String column, String identity, Object identityOb) {
+        Connection connection = getConnection();
+        if (connection == null) {
+            return null;
+        }
+        try {
+            String query = "SELECT " + column + " FROM " + getTableName() + formatCondition(identity, identityOb);
+            var statement = connection.createStatement();
+            var reader = statement.executeQuery(query);
+            List<Object> results = new ArrayList<>();
+            while (reader.next()) {
+                results.add(reader.getObject(column));
+            }
+            return results;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public Object getOne(String column, String identity, Object identityOb) {
         Connection connection = getConnection();

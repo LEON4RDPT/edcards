@@ -121,7 +121,7 @@ public class POSAdmin {
 
     @FXML
     private void viewTransacsClick(ActionEvent event) throws IOException {
-        setStage("/com/edcards/edcards/ViewTransacs.fxml");
+        //todo setStage("/com/edcards/edcards/ViewTransacs.fxml");
     }
 
     @FXML
