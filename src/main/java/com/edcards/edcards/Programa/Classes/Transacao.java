@@ -1,5 +1,6 @@
 package com.edcards.edcards.Programa.Classes;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -10,6 +11,7 @@ public class Transacao {
     private Pessoa funcionario;
     private List<Produto> produtos;
     private double valorpago;
+    private Timestamp dataTransacao;
 
     public Transacao(int idTransacao, Pessoa cliente, Pessoa funcionario, List<Produto> produtos) {
         this.idTransacao = idTransacao;
@@ -84,5 +86,13 @@ public class Transacao {
 
     public void removeProduct(Produto produto) {
         produtos.removeIf(prod -> prod.getIdProduto() == produto.getIdProduto());
+    }
+
+    public Timestamp getDataTransacao() {
+        return dataTransacao;
+    }
+
+    public void setDataTransacao(Timestamp dataTransacao) {
+        this.dataTransacao = dataTransacao;
     }
 }

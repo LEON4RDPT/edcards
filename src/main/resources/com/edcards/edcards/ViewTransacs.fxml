@@ -5,7 +5,32 @@
 
 <AnchorPane fx:controller="com.edcards.edcards.FormControllers.ViewTransacs" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <TableView fx:id="vendasGrid" layoutX="189.0" prefHeight="720.0" prefWidth="1097.0" />
+        <SplitPane dividerPositions="0.5" prefHeight="720.0" prefWidth="1280.0">
+            <items>
+                <AnchorPane>
+                    <children>
+                        <TableView fx:id="transactionsTable" layoutX="14.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
+                            <columns>
+                                <TableColumn fx:id="dataTransacaoColumn" prefWidth="100.0" text="Data Transacao" />
+                                <TableColumn fx:id="valorPagoColumn" prefWidth="100.0" text="Valor Pago" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </AnchorPane>
+                <AnchorPane>
+                    <children>
+                        <TableView fx:id="productsTable" prefHeight="720.0" prefWidth="640.0">
+                            <columns>
+                                <TableColumn fx:id="nomeColumn" prefWidth="100.0" text="Nome" />
+                                <TableColumn fx:id="precoColumn" prefWidth="100.0" text="Preço" />
+                                <TableColumn fx:id="tipoColumn" prefWidth="100.0" text="Tipo" />
+                            </columns>
+                        </TableView>
+
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
         <Button fx:id="backBtn" layoutX="20.0" layoutY="639.0" mnemonicParsing="false" onAction="#handleButtonBack" prefHeight="63.0" prefWidth="154.0" text="Voltar" />
     </children>
 </AnchorPane>

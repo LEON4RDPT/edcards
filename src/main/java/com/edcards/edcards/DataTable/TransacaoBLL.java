@@ -244,6 +244,7 @@ public class TransacaoBLL {
                 case "cliente_id" -> transacao.setCliente(UsersBLL.getUser((int)entry.getValue()));
                 case "funcionario_id" -> transacao.setFuncionario(UsersBLL.getUser((int)entry.getValue()));
                 case "valor_total" -> transacao.setValorpago((double)entry.getValue());
+                case "created_at" -> transacao.setDataTransacao((Timestamp)entry.getValue());
                 default -> { }
             }
         }
@@ -261,5 +262,22 @@ public class TransacaoBLL {
             transacao.addProduct(ProdutoBLL.getProduto(prod));
         }
         return transacao;
+    }
+
+
+    public static List<Transacao> getAllTransacoes() {
+
+        DefaultBLL bll = new DefaultBLL("transacao");
+        var x = bll.getAll();
+        if (x == null) {
+            return null;
+        }
+
+        ArrayList<Transacao> transacoes = new ArrayList<>();
+        for (var transac : x) {
+            transacoes.add(transfromTrasacao(transac));
+        }
+
+        return transacoes;
     }
 }

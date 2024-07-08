@@ -158,4 +158,10 @@ public class FormUser {
             FeedBackController.feedbackErro("Usuario não possui horario!");
         }
     }
+
+    @FXML
+    private void handleSeeHistComp() throws IOException {
+        setStage("/com/edcards/edcards/ViewTransacs.fxml");
+
+    }
 }
