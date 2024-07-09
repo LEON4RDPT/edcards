@@ -169,4 +169,9 @@ public class FormUser {
     private void handlePinChange() throws IOException {
         setStage("/com/edcards/edcards/ModPinUser.fxml");
     }
+
+    public void handleButtonVerRef(ActionEvent actionEvent) throws IOException {
+        setStage("/com/edcards/edcards/VerRefeicoes.fxml");
+
+    }
 }

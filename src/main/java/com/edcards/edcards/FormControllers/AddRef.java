@@ -152,7 +152,7 @@ public class AddRef {
         StringBuilder str = new StringBuilder();
 
         if (textBoxSopa.getText() == null ) {
-            //feedback
+            //feedbackN
             return;
         } else {
             str.append(textBoxSopa.getText()).append("\n");

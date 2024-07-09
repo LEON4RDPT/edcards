@@ -163,15 +163,7 @@ public class TransacaoBLL {
         return 0;
     }
 
-    public static void insertRefeicaoTrasacao(Refeicao refeicao, int idUser, int idFunc) {
 
-        Produto[] produtos = refeicao.getProdutos();
-        if (produtos == null) {
-            return;
-        }
-        insertTransacao(produtos, idUser, idFunc);
-
-    }
 
     public static boolean isRefeicaoUm(int idTransacaoDetalhe) {
         if (!existeDetalhe(idTransacaoDetalhe)) {

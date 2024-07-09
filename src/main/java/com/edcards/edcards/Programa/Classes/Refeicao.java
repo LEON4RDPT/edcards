@@ -1,78 +1,37 @@
 package com.edcards.edcards.Programa.Classes;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Refeicao {
-    private Produto pratoPrincipal;
-    private Produto sopa;
-    private Produto sobremesa;
+    private Produto produto;
+    private Date dataRefeicao;
 
 
-    public Refeicao(Produto pratoPrincipal, Produto sopa, Produto sobremesa) {
-
-        if (!pratoPrincipal.isRefeicao()) {
-            this.pratoPrincipal = null;
-        } else {
-            this.pratoPrincipal = pratoPrincipal;
-        }
-
-        if (!sopa.isRefeicao()) {
-            this.sopa = null;
-        } else {
-            this.sopa = sopa;
-        }
-
-        if (this.sobremesa.isRefeicao()) {
-            this.sobremesa = null;
-        } else {
-            this.sobremesa = sobremesa;
-        }
+    public Refeicao(Produto produto, Date dataRefeicao) {
+        this.produto = produto;
+        this.dataRefeicao = dataRefeicao;
     }
 
-
-    public Produto getPratoPrincipal() {
-        return pratoPrincipal;
+    public Produto getProduto() {
+        return produto;
     }
 
-    public Produto getSopa() {
-        return sopa;
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
-    public Produto getSobremesa() {
-        return sobremesa;
+    public Date getDataRefeicao() {
+        return dataRefeicao;
     }
 
-    public void setPratoPrincipal(Produto pratoPrincipal) {
-        this.pratoPrincipal = pratoPrincipal;
+    public void setDataRefeicao(Date dataRefeicao) {
+        this.dataRefeicao = dataRefeicao;
     }
 
-    public void setSopa(Produto sopa) {
-        this.sopa = sopa;
-    }
-
-    public void setSobremesa(Produto sobremesa) {
-        this.sobremesa = sobremesa;
-    }
-
-    public Produto[] getProdutos() {
-
-        List<Produto> produtos = new ArrayList<Produto>();
-
-        if (pratoPrincipal != null) {
-            produtos.add(pratoPrincipal);
-        }
-        if (sopa != null) {
-            produtos.add(sopa);
-        }
-        if (sobremesa != null) {
-            produtos.add(sobremesa);
-        }
-
-        if (produtos.isEmpty()) {
-            return null;
-        }
-
-        return produtos.toArray(new Produto[0]);
+    public Refeicao() {
+        produto = null;
+        dataRefeicao = null;
     }
 }

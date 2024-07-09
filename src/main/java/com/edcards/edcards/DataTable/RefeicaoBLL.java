@@ -2,9 +2,14 @@ package com.edcards.edcards.DataTable;
 
 import com.edcards.edcards.DataTable.Settings.DAL;
 import com.edcards.edcards.DataTable.Settings.DefaultBLL;
+import com.edcards.edcards.Programa.Classes.Refeicao;
+import com.edcards.edcards.Programa.Classes.Transacao;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RefeicaoBLL extends DAL {
@@ -16,6 +21,29 @@ public class RefeicaoBLL extends DAL {
 
     public static boolean existeRefeicao(Date data) {
         return new DefaultBLL("refeicao").hasRows("data", data);
+    }
+
+
+
+    public static List<Refeicao> getRefeicao(Date data) {
+        if (!existeRefeicao(data)) {
+            return null;
+        }
+        DefaultBLL bll = new DefaultBLL("refeicao");
+        var x = bll.getAll("data",data);
+        List<Refeicao> refeicoes = new ArrayList<>();
+        for (var row : x) {
+            for (Map.Entry<String, Object> entry : row.entrySet()) {
+                Refeicao refeicao = new Refeicao();
+                switch (entry.getKey()) {
+                    case "produto_id" -> refeicao.setProduto(ProdutoBLL.getProduto((int)entry.getValue()));
+                    case "data" -> refeicao.setDataRefeicao((Date)entry.getValue());
+                    default -> { }
+                }
+                refeicoes.add(refeicao);
+            }
+        }
+        return refeicoes;
     }
 
     //id_marc != id_ref //IMPORTANT!
