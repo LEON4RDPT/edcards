@@ -5,9 +5,13 @@ import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Aluno;
 import com.edcards.edcards.Programa.Classes.Funcionario;
+import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,10 +19,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import javax.smartcardio.CardException;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
 
 public class EntradasSaidasController {
     public ImageView userImage;
@@ -52,7 +59,7 @@ public class EntradasSaidasController {
         waits();
     }
     private void waits() throws InterruptedException {
-        executor.submit(this::cartaoLido);
+        //executor.submit(this::cartaoLido);
         TimeUnit.SECONDS.sleep(1);
     }
     @FXML
@@ -165,7 +172,7 @@ public class EntradasSaidasController {
                     cartao = UsersBLL.getNFCUser(id);
 
                     if (cartao == null) {
-                        //feedback
+                        FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err2));
                         return;
                     }
                     if (!allNfc.contains(cartao)) {
@@ -201,6 +208,13 @@ public class EntradasSaidasController {
                 }
             }
         });
+    }
+
+    @FXML
+    private void handleExit(ActionEvent actionEvent) throws IOException {
+        if (FeedBackController.feedbackYesNo("Deseja sair?", "Confirmação")) {
+            setStage("/com/edcards/edcards/Main.fxml");
+        }
     }
 }
 
