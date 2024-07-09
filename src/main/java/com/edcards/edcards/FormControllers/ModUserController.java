@@ -117,6 +117,7 @@ public class ModUserController {
                 isDiffrentFoto = true;
             }
         });
+        aguardarCartao();
     }
     private void aguardarCartao() {
         nfcExecutar.submit(() -> {

@@ -93,7 +93,7 @@ public class CriarUserController {
         AsePicker.getItems().addAll(Arrays.stream(AseEnum.values()).map(Enum::name).toList());
         tipoPicker.getItems().addAll(Arrays.stream(UsuarioEnum.values()).map(Enum::name).toList());
         setImageController();
-        //aguardarCartao();
+        aguardarCartao();
     }
     private void aguardarCartao() {
         nfcExecutar.submit(() -> {
