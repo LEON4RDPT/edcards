@@ -7,6 +7,7 @@ import java.util.List;
 public class Refeicao {
     private Produto produto;
     private Date dataRefeicao;
+    private int idRefeicao;
 
 
     public Refeicao(Produto produto, Date dataRefeicao) {
@@ -33,5 +34,14 @@ public class Refeicao {
     public Refeicao() {
         produto = null;
         dataRefeicao = null;
+        idRefeicao = 0;
+    }
+
+    public int getIdRefeicao() {
+        return idRefeicao;
+    }
+
+    public void setIdRefeicao(int idRefeicao) {
+        this.idRefeicao = idRefeicao;
     }
 }

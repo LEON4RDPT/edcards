@@ -3,10 +3,9 @@ package com.edcards.edcards.DataTable;
 import com.edcards.edcards.DataTable.Settings.DAL;
 import com.edcards.edcards.DataTable.Settings.DefaultBLL;
 import com.edcards.edcards.Programa.Classes.Refeicao;
-import com.edcards.edcards.Programa.Classes.Transacao;
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,27 +22,53 @@ public class RefeicaoBLL extends DAL {
         return new DefaultBLL("refeicao").hasRows("data", data);
     }
 
-
+//2024-07-10
 
     public static List<Refeicao> getRefeicao(Date data) {
-        if (!existeRefeicao(data)) {
-            return null;
-        }
-        DefaultBLL bll = new DefaultBLL("refeicao");
-        var x = bll.getAll("data",data);
-        List<Refeicao> refeicoes = new ArrayList<>();
-        for (var row : x) {
-            for (Map.Entry<String, Object> entry : row.entrySet()) {
+        if (existeRefeicao(data)) {
+            DefaultBLL bll = new DefaultBLL("refeicao");
+            var x = bll.getAll("data", data);
+            List<Refeicao> refeicoes = new ArrayList<>();
+            for (var row : x) {
                 Refeicao refeicao = new Refeicao();
-                switch (entry.getKey()) {
-                    case "produto_id" -> refeicao.setProduto(ProdutoBLL.getProduto((int)entry.getValue()));
-                    case "data" -> refeicao.setDataRefeicao((Date)entry.getValue());
-                    default -> { }
+                for (Map.Entry<String, Object> entry : row.entrySet()) {
+                    switch (entry.getKey()) {
+                        case "produto_id" -> refeicao.setProduto(ProdutoBLL.getProduto((int) entry.getValue()));
+                        case "data" -> refeicao.setDataRefeicao((Date) entry.getValue());
+                        case "id_ref" -> refeicao.setIdRefeicao((int) entry.getValue());
+                        default -> {
+                        }
+                    }
                 }
                 refeicoes.add(refeicao);
             }
+            return refeicoes;
+        } else {
+            return null;
+        }
+
+    }
+
+    public static List<Refeicao> getRefeicao() {
+        DefaultBLL bll = new DefaultBLL("refeicao");
+        var x = bll.getAll();
+        List<Refeicao> refeicoes = new ArrayList<>();
+        for (var row : x) {
+            Refeicao refeicao = new Refeicao();
+            for (Map.Entry<String, Object> entry : row.entrySet()) {
+                switch (entry.getKey()) {
+                    case "produto_id" -> refeicao.setProduto(ProdutoBLL.getProduto((int) entry.getValue()));
+                    case "data" -> refeicao.setDataRefeicao((Date) entry.getValue());
+                    case "id_ref" -> refeicao.setIdRefeicao((int) entry.getValue());
+                    default -> {
+                    }
+                }
+            }
+            refeicoes.add(refeicao);
         }
         return refeicoes;
+
+
     }
 
     //id_marc != id_ref //IMPORTANT!
@@ -61,18 +86,37 @@ public class RefeicaoBLL extends DAL {
         bll.insert(params);
     }
 
+    public static boolean marcou(int idRef, int idUsuario) {
+        return new DefaultBLL("refeicao_marcada").hasObject("usuario_id",idUsuario,"refeicao_id",idRef);
+    }
 
-    public static void marcarRefeicao(int idRefeicao, int idUsuario) {
+
+
+    public static int marcarRefeicao(int idRefeicao, int idUsuario) {
         if (!existeRefeicao(idRefeicao)) {
             //feedback
-            return;
+            return 0;
         }
 
+        if (!UsersBLL.existe(idUsuario)) {
+            //feedback
+            return 0;
+        }
+
+        var pessoa = UsersBLL.getUser(idUsuario);
+
+        if (pessoa.getSaldo() < 1.46) {
+            //feedback
+            FeedBackController.feedbackErro("Não tem saldo sufeciente!");
+            return 0;
+        }
+
+        pessoa.setSaldo(pessoa.getSaldo()-1.46);
         DefaultBLL bll = new DefaultBLL("refeicao_marcada");
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("refeicao_id", idRefeicao);
         params.put("usuario_id", idUsuario);
-        bll.insert(params);
+        return bll.insertAndGetId(params);
     }
 
 }
