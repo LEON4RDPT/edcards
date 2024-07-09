@@ -12,6 +12,7 @@ import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -102,14 +103,14 @@ public class ModUserController {
 
         tipoPicker.setItems(opcoes);
 
-        imageUser.setOnMouseClicked(event -> {
-            FileChooser selFoto = new FileChooser();
-            selFoto.setTitle("Escolha uma Foto...");
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Imagens (*.png, *.jpg)", "*.png", "*.jpg");
-            selFoto.getExtensionFilters().add(extFilter);
+            imageUser.setOnMouseClicked(event -> {
+                FileChooser selFoto = new FileChooser();
+                selFoto.setTitle("Escolha uma Foto...");
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Imagens (*.png, *.jpg)", "*.png", "*.jpg");
+                selFoto.getExtensionFilters().add(extFilter);
 
-            File foto = selFoto.showOpenDialog(null);
-            var img = imageToByteArray(foto);
+                File foto = selFoto.showOpenDialog(null);
+                var img = imageToByteArray(foto);
             imgUserBLL = !Arrays.equals(img, new byte[0]) ? img : null;
             if (foto != null) {
                 Image image = new Image(foto.toURI().toString());
@@ -117,7 +118,7 @@ public class ModUserController {
                 isDiffrentFoto = true;
             }
         });
-        aguardarCartao();
+//        aguardarCartao();
     }
     private void aguardarCartao() {
         nfcExecutar.submit(() -> {
@@ -130,7 +131,7 @@ public class ModUserController {
                     }
                     if (CartaoBLL.existenteNFC(idCartao)) {
                         cardNumber.setText(idCartao);
-                        pin.setText(String.valueOf(CartaoBLL.getPin(idCartao)));
+
                         int idUser = CartaoBLL.getIdUserByNFC(idCartao);
                         Pessoa user = UsersBLL.getUser(idUser);
                         String userNome = user.getNome();
@@ -366,7 +367,7 @@ public class ModUserController {
     }
 
     public void handleLerCard(ActionEvent actionEvent) {
-        cardNumber.setText("Passe o cartão...");
+        //cardNumber.setText("Passe o cartão...");
         nfcExecutar.submit(() -> {
             while (isRunning) {
                 try {
@@ -375,11 +376,14 @@ public class ModUserController {
                         return;
                     }
                     if (CartaoBLL.existenteNFC(idCartao)) {
-                        cardNumber.setText(idCartao);
-                        saldo = CartaoBLL.getSaldo(idCartao);
-                        pinC = CartaoBLL.getPin(idCartao);
+                        Platform.runLater(() -> {
+                            cardNumber.setText(idCartao);
+                            saldo = CartaoBLL.getSaldo(idCartao);
+                            pinC = CartaoBLL.getPin(idCartao);
+                            isRunning = false;
+                        });
                     } else {
-                        FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err13));
+                        Platform.runLater(() -> FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err13)));
                         isRunning = true;
                     }
 

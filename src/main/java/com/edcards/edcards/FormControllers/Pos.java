@@ -461,6 +461,7 @@ public class Pos {
     @FXML
     private void handleButtonClickVoltar() throws IOException {
         if (FeedBackController.feedbackYesNo("Deseja sair?", "Confirmação")) {
+            shutdown();
             GlobalVAR.Dados.setClientePOS(null);
             setStage("/com/edcards/edcards/Main.fxml");
 

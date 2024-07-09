@@ -9,6 +9,7 @@ import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 
 import com.edcards.edcards.Programa.Controllers.LerCartao;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -95,22 +96,34 @@ public class CriarUserController {
         setImageController();
         aguardarCartao();
     }
+
+// Outros imports...
+
+    private boolean errorOccurred = false; // Add this flag to control the feedback execution
+
     private void aguardarCartao() {
         nfcExecutar.submit(() -> {
-            while (isRunning) {
+            while (isRunning && !errorOccurred) {
                 try {
                     String idCartao = LerCartao.lerIDCartao("/com/edcards/edcards/POSAdmin.fxml");
                     if (idCartao == null) {
-                        //feedback
+                        // feedback
                         return;
                     }
-                    if (CartaoBLL.existenteNFC(idCartao)) {
-                        cardNumber.setText(idCartao);
-                    } else {
-                        FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err13));
-                        isRunning = true;
-                    }
 
+                    if (CartaoBLL.existenteNFC(idCartao)) {
+                        Platform.runLater(() -> {
+                            cardNumber.setText(idCartao);
+                            nfc = idCartao;
+                        });
+                    } else {
+                        Platform.runLater(() -> {
+                            errorOccurred = true; // Set the flag to true to show feedback only once
+                            FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err13));
+                            //TODO
+                        });
+                        break; // Exit the loop
+                    }
                 } catch (Exception e) {
                     System.err.println("Error reading NFC card: " + e.getMessage());
                     e.printStackTrace();
@@ -118,6 +131,8 @@ public class CriarUserController {
             }
         });
     }
+
+
     private void setVerificationControllers() {
         nameField.addEventFilter(KeyEvent.KEY_TYPED, e -> {
             if (e.getCharacter().matches("[0-9]")) {
@@ -213,10 +228,11 @@ public class CriarUserController {
         cc = nifField.getText();
         imgUser = imageUser.getImage();
         data = dateField.getValue();
-        if(cardNumber.equals("Passe o Cartão...")){
+
+        if(cardNumber.getText().equals("Passe o Cartão...")){
             nfc=null;
         }else{
-            nfc = String.valueOf(cardNumber);
+            nfc = cardNumber.getText();
         }
 
         if (imgUser == null) {
