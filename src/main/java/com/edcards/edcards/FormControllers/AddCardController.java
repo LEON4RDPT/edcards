@@ -37,6 +37,7 @@ public class AddCardController {
                     if (!CartaoBLL.existenteNFC(idCartao)) {
                         CartaoBLL.getIdUserByNFC(idCartao);
                         cardNumber.setText(idCartao);
+                        isRunning = false;
                     } else {
                         FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err8));
                         isRunning = true;

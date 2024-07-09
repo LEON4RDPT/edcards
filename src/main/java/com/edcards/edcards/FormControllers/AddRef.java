@@ -25,8 +25,7 @@ public class AddRef {
     public AnchorPane rightPane;
     public Button exit;
     public HBox rootHBox;
-    public Button buttonPesq;
-    public TextField textBoxNomeRefeicao;
+
     public AnchorPane leftPane1;
     public AnchorPane leftPane2;
     public Label labelForPicker;
@@ -75,8 +74,6 @@ public class AddRef {
 
             //resize
             ResizeUtil.resizeAndPosition(exit,rightPane,0.9);
-            ResizeUtil.resizeAndPosition(textBoxNomeRefeicao,rightPane,0.7);
-            ResizeUtil.resizeAndPosition(buttonPesq,rightPane,0.8);
             ResizeUtil.resizeAndPositionTextAreaStickWithPane(textArea,rightPane,0.5,0.26,0.18);
 
 
@@ -111,30 +108,13 @@ public class AddRef {
         }
     }
 
-    public void handlePesquisa() {
-        var str = textBoxNomeRefeicao.getText();
-        if (str.isEmpty()) {
-            FeedBackController.feedbackErro("Nada foi escrito!");
-            return;
-        }
-        var prod = ProdutoBLL.getProduto(str);
-        if (prod == null) {
-            FeedBackController.feedbackErro("Não foi encontrado nenhuma refeição com esse nome!");
-            return;
-        }
-        if (prod.getTipo() != ProdutoEnum.REFEICOES) {
-            FeedBackController.feedbackErro("Produto selecionado não é refeição!");
-        } else {
-            produtoAtual = prod;
-        }
-
-    }
 
     public void handleSetdiaHoje() {
         timePickerRefeicao.setValue(LocalDate.now());
     }
 
     public void handleSetMarcacao(ActionEvent actionEvent) {
+
     }
 
     public void handleInserirRef(ActionEvent actionEvent) {
@@ -160,8 +140,12 @@ public class AddRef {
             str.append(textBoxSobremesa.getText());
         }
 
+        if (FeedBackController.feedbackYesNo("Deseja adicionar essa Refeição? \n" + str.toString(),"Confirmação")) {
+            var prodid = ProdutoBLL.inserirProduto(str.toString(),ProdutoEnum.REFEICOES,1.46);
+            if (prodid != 0) {
+                produtos.add(ProdutoBLL.getProduto(prodid));
 
-
-
+            }
+        }
     }
 }

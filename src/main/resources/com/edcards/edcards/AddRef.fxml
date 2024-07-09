@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<HBox fx:id="rootHBox" prefHeight="720" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.AddRef">
+<HBox fx:id="rootHBox" prefHeight="720" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.AddRef">
     <children>
         <HBox fx:id="leftPane" maxWidth="-Infinity" prefWidth="960.0">
             <HBox.hgrow>ALWAYS</HBox.hgrow>
@@ -34,9 +27,9 @@
             <AnchorPane fx:id="leftPane2" prefWidth="480.0" style="-fx-background-color: #b8b8b8;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="480.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                <TextField fx:id="textBoxPrato" layoutX="129.0" layoutY="205.0" prefHeight="38.0" prefWidth="223.0" promptText="Prato" />
-               <Label fx:id="labelForCriarRef" alignment="CENTER" layoutX="104.0" layoutY="51.0" text="Selecione a data da refeição" textAlignment="CENTER">
+               <Label fx:id="labelForCriarRef" alignment="CENTER" layoutX="83.0" layoutY="62.0" text="Selecione a data da refeição 1.46€" textAlignment="CENTER" wrapText="true">
                   <font>
-                     <Font size="22.0" />
+                     <Font size="21.0" />
                   </font>
                </Label>
                <TextField fx:id="textBoxSopa" layoutX="129.0" layoutY="127.0" prefHeight="38.0" prefWidth="223.0" promptText="Sopa" />
@@ -48,9 +41,7 @@
 
             <children>
                 <Button fx:id="exit" layoutX="45.0" layoutY="632.0" mnemonicParsing="false" onAction="#handleExit" prefHeight="60.0" prefWidth="230" styleClass="button-1" text="Sair" />
-            <Button fx:id="buttonPesq" layoutX="42.0" layoutY="554.0" mnemonicParsing="false" onAction="#handlePesquisa" prefHeight="52.0" prefWidth="230.0" styleClass="button-1" text="Pesquisar" />
-            <TextField fx:id="textBoxNomeRefeicao" layoutX="45.0" layoutY="491.0" prefHeight="38.0" prefWidth="230.0" promptText="Nome da Refeição" />
-            <TextArea fx:id="textArea" layoutX="11.0" layoutY="14.0" prefHeight="211.0" prefWidth="300.0" />
+                <TextArea fx:id="textArea" layoutX="11.0" layoutY="14.0" prefHeight="211.0" prefWidth="300.0" />
          </children></AnchorPane>
     </children>
 

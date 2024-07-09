@@ -15,17 +15,17 @@ public class ProdutoBLL extends DAL {
         super("produto");
     }
 
-    public static void inserirProduto(String Nome, ProdutoEnum tipo, double preco) {
+    public static int inserirProduto(String Nome, ProdutoEnum tipo, double preco) {
         DefaultBLL bll = new DefaultBLL("produto");
         if (existenteNome(Nome)) {
-            return;
+            return 0;
         }
         Map<String, Object> columnValues = new HashMap<>();
         columnValues.put("nome", Nome);
         columnValues.put("disponivel", 1);
         columnValues.put("tipo", tipo.toDbValue());
         columnValues.put("preco", preco);
-        bll.insert(columnValues);
+        return bll.insertAndGetId(columnValues);
 
     }
 
