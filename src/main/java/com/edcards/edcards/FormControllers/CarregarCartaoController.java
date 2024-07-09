@@ -6,8 +6,7 @@ import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
@@ -28,6 +27,7 @@ public class CarregarCartaoController {
     @FXML
     private Text saldoAadicionar;
 
+    int pinDb;
     @FXML
     public void initialize() {
 
@@ -89,28 +89,43 @@ public class CarregarCartaoController {
 
     @FXML
     public void addSaldo() {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Confirmar Carregamento");
+        dialog.setHeaderText("Insira o seu PIN:");
 
-        var nfc = UsersBLL.getNFCUser(GlobalVAR.Dados.getClientePOS().getIduser());
-        var saldoAntigo = CartaoBLL.getSaldo(nfc);
-        if (nfc == null){
-            FeedBackController.feedbackErro("Nenhum cliente Selecionado!");
-            return;
-        }
+        TextField pinField = new TextField();
+        dialog.getDialogPane().setContent(pinField);
 
-        if (saldoAAdicionar == 0) {
-            FeedBackController.feedbackErro("Impossivel adicionar saldo 0!");
-            return;
-        }
-        if (FeedBackController.feedbackYesNo("Deseja adicionar " + saldoAAdicionar + " €", "Confirmação")) {
-            CartaoBLL.setSaldo(nfc, saldoAntigo + saldoAAdicionar);
-            FeedBackController.feedbackErro("Saldo adicionado");
-        }
+        ButtonType buttonTypeOk = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(buttonTypeOk, ButtonType.CANCEL);
 
+        dialog.showAndWait().ifPresent(result -> {
+            if (result == buttonTypeOk) {
+                try {
+                    int pin = Integer.parseInt(pinField.getText());
+                    pinDb = GlobalVAR.Dados.getClientePOS().getPin();
+                    if (pinDb == pin) {
+                        var nfc = UsersBLL.getNFCUser(GlobalVAR.Dados.getClientePOS().getIduser());
+                        var saldoAntigo = CartaoBLL.getSaldo(nfc);
+                        if (nfc == null){
+                            FeedBackController.feedbackErro("Nenhum cliente Selecionado!");
+                            return;
+                        }
 
-
-
-
-
+                        if (saldoAAdicionar == 0) {
+                            FeedBackController.feedbackErro("Impossivel adicionar saldo 0!");
+                            return;
+                        }
+                        if (FeedBackController.feedbackYesNo("Deseja adicionar " + saldoAAdicionar + " €", "Confirmação")) {
+                            CartaoBLL.setSaldo(nfc, saldoAntigo + saldoAAdicionar);
+                            FeedBackController.feedbackErro("Saldo adicionado");
+                        }
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     public void refreshSaldo() {

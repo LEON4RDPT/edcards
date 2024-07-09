@@ -82,7 +82,7 @@ public class ModUserController {
     byte[] imgUserBLL;
     List<Pessoa> users;
     int pinC;
-
+    int num_aluno;
     @FXML
     public void initialize() {
 
@@ -307,7 +307,8 @@ public class ModUserController {
             }
             else {
                 UsersBLL.setTipoUser(pessoaAtual.getIduser(),UsuarioEnum.ALUNO);
-                UsersBLL.inserirAluno(pessoaAtual.getIduser(),numEE,email,turma,numUt,ase);
+
+                UsersBLL.inserirAluno(pessoaAtual.getIduser(),numEE,email,turma,numUt,ase,num_aluno);
             }
         }
         else {

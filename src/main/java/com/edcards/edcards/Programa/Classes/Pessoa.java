@@ -18,8 +18,9 @@ public abstract class Pessoa {
     private Date dataNasc;
     private String cartaoC;
     private Image horario;
+    private int num_func;
 
-    public Pessoa(int iduser, String numCartao, String nome, Double saldo, Image foto, LocalDateTime ultimaVezEntrado, String morada, int pin, Date dataNasc, String cartaoC, Image horario) {
+    public Pessoa(int iduser, String numCartao, String nome, Double saldo, Image foto, LocalDateTime ultimaVezEntrado, String morada, int pin, Date dataNasc, String cartaoC, Image horario, int numFunc) {
         this.iduser = iduser;
         this.numCartao = numCartao;
         this.nome = nome;
@@ -31,10 +32,12 @@ public abstract class Pessoa {
         this.dataNasc = dataNasc;
         this.cartaoC = cartaoC;
         this.horario = horario;
+        num_func = numFunc;
     }
 
     public Pessoa(int iduser) {
         this.iduser = iduser;
+        this.num_func = 0;
         this.numCartao = "";
         this.nome = "";
         this.saldo = 0.0;
@@ -133,4 +136,11 @@ public abstract class Pessoa {
     }
 
 
+    public int getNum_func() {
+        return num_func;
+    }
+
+    public void setNum_func(int num_func) {
+        this.num_func = num_func;
+    }
 }

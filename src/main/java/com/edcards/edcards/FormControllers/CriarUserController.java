@@ -40,6 +40,9 @@ import static com.edcards.edcards.Programa.Controllers.GlobalVAR.ImageController
 public class CriarUserController {
     public AnchorPane leftPane;
     public AnchorPane rightPane;
+    public TextField numAlu;
+    public TextField numInterno;
+    public Label nf;
     @FXML
     private HBox mainPane;
     @FXML
@@ -53,6 +56,8 @@ public class CriarUserController {
     UsuarioEnum tipo;
     AseEnum ase;
     byte[] fotoBLL;
+    int num_aluno;
+    int num_func;
     @FXML
     private Label cardNumber;
     @FXML
@@ -145,6 +150,11 @@ public class CriarUserController {
                 e.consume();
             }
         });
+        numAlu.addEventFilter(KeyEvent.KEY_TYPED, e -> {
+            if (!e.getCharacter().matches("[0-9]")) {
+                e.consume();
+            }
+        });
 
         numEEfield.addEventFilter(KeyEvent.KEY_TYPED, e -> {
             if (!e.getCharacter().matches("[0-9]")) {
@@ -212,10 +222,18 @@ public class CriarUserController {
     @FXML
     private void tipoAction() {
         String selectedTipo = tipoPicker.getValue();
-
-
         if (selectedTipo != null) {
-            alunoPane.setVisible(selectedTipo.equals("ALUNO"));
+            if (selectedTipo.equals("Aluno")) {
+                alunoPane.setVisible(true);
+                numInterno.setVisible(false);
+                nf.setVisible(true);
+                num_func = 0;
+            } else {
+                alunoPane.setVisible(false);
+                numInterno.setVisible(true);
+                nf.setVisible(true);
+            }
+
         }
     }
 
@@ -228,7 +246,6 @@ public class CriarUserController {
         cc = nifField.getText();
         imgUser = imageUser.getImage();
         data = dateField.getValue();
-
         if(cardNumber.getText().equals("Passe o Cartão...")){
             nfc=null;
         }else{
@@ -263,20 +280,21 @@ public class CriarUserController {
         ase = AseEnum.valueOf(AsePicker.getValue());
         nus = Integer.parseInt(numUtSaudeField.getText());
 
-        if (nome!= null || idCartao!= null || turma!= 0 || morada!= null || email!= null || cc!= null || numEE!= 0 || num!= 0 || numEEfield!= null || imgUser!= null || ase!= null || nus!= 0) {
-            FeedBackController.feedbackErro(nome + morada + email + cc + numEE + num + idCartao + imgUser + data + ase + nus);
-            var id = UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL);
+
+        if (nome!= null || idCartao!= null || turma!= 0 || morada!= null || email!= null || cc!= null || numEE!= 0 || num!= 0 || numEEfield!= null || imgUser!= null || ase!= null || nus!= 0 || num_aluno!=0) {
+            FeedBackController.feedbackConf(nome + morada + email + cc + numEE + num + idCartao + imgUser + data + ase + nus + num_aluno);
+            var id = UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL,num_func);
             if (id == 0) {
                 FeedBackController.feedbackErro("Erro Não foi possivel inserir os Dados!");
             }
-            UsersBLL.inserirAluno(id, numEE, email, turma, nus, ase);
+            UsersBLL.inserirAluno(id, numEE, email, turma, nus, ase, num_aluno);
         } else {
             FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err5));
         }
     }
 
     private void inserirAdminOrFuncionario() {
-        var id = UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL);
+        var id = UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL,num_func);
         if (id == 0) {
             FeedBackController.feedbackErro("Erro Dados duplicados!");
         } else {

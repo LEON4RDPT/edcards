@@ -49,7 +49,7 @@ public class UsersBLL {
     }
 
 
-    public static int inserir(String nfc, String nome, Date dataNc, String morada, UsuarioEnum tipo, String cc, byte[] foto) {
+    public static int inserir(String nfc, String nome, Date dataNc, String morada, UsuarioEnum tipo, String cc, byte[] foto, int num_func) {
         DefaultBLL bll = new DefaultBLL("usuario");
 
         if (nfc != null) {
@@ -70,12 +70,13 @@ public class UsersBLL {
         columnValues.put("tipo", tipo.toDbValue());
         columnValues.put("cc", cc);
         columnValues.put("foto", foto);
+        columnValues.put("num_func", num_func);
         return bll.insertAndGetId(columnValues);
 
 
     }
 
-    public static void inserirAluno(int idAluno, int num_ee, String email, int numTurma, int numUtente, AseEnum ase) {
+    public static void inserirAluno(int idAluno, int num_ee, String email, int numTurma, int numUtente, AseEnum ase, int num_aluno) {
         if (getTipoUser(idAluno) != UsuarioEnum.ALUNO) {
             return;
         }
@@ -86,7 +87,7 @@ public class UsersBLL {
         dic.put("email", email);
         dic.put("turma_num", numTurma);
         dic.put("utente_num", numUtente);
-
+        dic.put("num_aluno", num_aluno);
         new DefaultBLL("dados_aluno").insert(dic);
     }
 
@@ -179,6 +180,12 @@ public class UsersBLL {
         }
         new DefaultBLL("dados_aluno").setOne("ase", ase.toDbValue(), "aluno_id", id);
     }
+    public static void setNumAluno(int id, int num_aluno) {
+        if (!isAluno(id)) {
+            return;
+        }
+        new DefaultBLL("dados_aluno").setOne("num_aluno", num_aluno, "aluno_id", id);
+    }
 
     public static void setNumUtenteAluno(int id, int num) {
         if (!isAluno(id)) {
@@ -251,6 +258,12 @@ public class UsersBLL {
             return null;
         }
         return (String) new DefaultBLL("dados_aluno").getOne("email", "aluno_id", id);
+    }
+    public static int getNumAluno(int id) {
+        if (!isAluno(id)) {
+            return -1;
+        }
+        return (int) new DefaultBLL("dados_aluno").getOne("num_aluno", "aluno_id", id);
     }
 
     public static AseEnum getAseAluno(int id) {
@@ -339,6 +352,7 @@ public class UsersBLL {
                 aluno.setAse(getAseAluno(pessoa.getIduser()));
                 aluno.setNumUtente(getUtenteAluno(pessoa.getIduser()));
                 aluno.setEmailEE(getEmailAluno(pessoa.getIduser()));
+                aluno.setNum_aluno(getNumAluno(pessoa.getIduser()));
                 return aluno;
 
             case FUNCIONARIO, ADMINISTRADOR:

@@ -24,8 +24,6 @@
                         <Button fx:id="addPrdt" mnemonicParsing="false" onAction="#addPrdtClick" prefHeight="60.0" prefWidth="270.0" style="-fx-background-color: Blue;" styleClass="button-1" text="Adicionar Produtos" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                         <Button fx:id="modPrdt" mnemonicParsing="false" onAction="#modPrdtClick" prefHeight="60.0" prefWidth="270.0" style="-fx-background-color: blue;" styleClass="button-1" text="Modificar Produtos" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                         <Button fx:id="addCard" mnemonicParsing="false" onAction="#addCardClick" prefHeight="60.0" prefWidth="270.0" style="-fx-background-color: Red;" styleClass="button-1" text="Adicionar Cartão" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                        <Button fx:id="modCard" mnemonicParsing="false" onAction="#modCardClick" prefHeight="60.0" prefWidth="270.0" style="-fx-background-color: Red;" styleClass="button-1" text="Atualizar Cartão User" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                        <Button fx:id="modPinUsr" mnemonicParsing="false" onAction="#modPinUsrClick" prefHeight="60.0" prefWidth="270.0" style="-fx-background-color: red;" styleClass="button-1" text="Modificar Dados Cartão" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                         <Button fx:id="viewTransacs" mnemonicParsing="false" onAction="#viewTransacsClick" prefHeight="60.0" prefWidth="270.0" style="-fx-background-color: Black;" styleClass="button-1" text="Ver todas as transações" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                     </children>
                     <columnConstraints>
@@ -35,7 +33,6 @@
 
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints maxHeight="Infinity" minHeight="0.0" prefHeight="30.0" vgrow="ALWAYS" />
                         <RowConstraints maxHeight="Infinity" minHeight="0.0" prefHeight="30.0" vgrow="ALWAYS" />
                         <RowConstraints maxHeight="Infinity" minHeight="0.0" prefHeight="30.0" vgrow="ALWAYS" />
                         <RowConstraints maxHeight="Infinity" minHeight="0.0" prefHeight="30.0" vgrow="ALWAYS" />

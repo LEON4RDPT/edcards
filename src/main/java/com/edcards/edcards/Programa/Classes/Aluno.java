@@ -14,10 +14,12 @@ public class Aluno extends Pessoa {
     private int numEE;
     private int numUtente;
     private int numTurma;
+    private int num_aluno;
 
-    public Aluno(int id, String numCartao, String nome, Double saldo, Image foto, LocalDateTime ultimaVezEntrado, String morada, int pin, Date dataNasc, String cartaoC, Image horario, int numTurma, AseEnum ase, String emailEE, int numEE, int numUtente) {
-        super(id, numCartao, nome, saldo, foto, ultimaVezEntrado, morada, pin, dataNasc, cartaoC, horario);
+    public Aluno(int id, String numCartao, String nome,int num_func ,Double saldo, Image foto, LocalDateTime ultimaVezEntrado, String morada, int pin, Date dataNasc, String cartaoC, Image horario, int numTurma, AseEnum ase, String emailEE, int numEE, int numUtente, int num_aluno) {
+        super(id, numCartao, nome, saldo, foto, ultimaVezEntrado, morada, pin, dataNasc, cartaoC, horario, num_func);
         this.ase = ase;
+        this.num_aluno = num_aluno;
         this.emailEE = emailEE;
         this.numEE = numEE;
         this.numUtente = numUtente;
@@ -31,6 +33,7 @@ public class Aluno extends Pessoa {
         this.numEE = 0;
         this.numUtente = 0;
         this.numTurma = 0;
+        this.num_aluno = 0;
     }
 
     public AseEnum getAse() {
@@ -71,5 +74,13 @@ public class Aluno extends Pessoa {
 
     public void setNumTurma(int numTurma) {
         this.numTurma = numTurma;
+    }
+
+    public int getNum_aluno() {
+        return num_aluno;
+    }
+
+    public void setNum_aluno(int num_aluno) {
+        this.num_aluno = num_aluno;
     }
 }

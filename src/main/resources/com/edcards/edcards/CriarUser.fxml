@@ -26,7 +26,7 @@
                         <Font size="18.0" />
                     </font>
                 </Button>
-                <Pane fx:id="alunoPane" layoutY="428.0" prefHeight="207.0" prefWidth="637.0" visible="false">
+                <Pane fx:id="alunoPane" layoutY="428.0" prefHeight="207.0" prefWidth="637.0">
                     <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="417.0" layoutY="6.0" text="Nº Telefone EE:">
                             <font>
@@ -51,13 +51,19 @@
                             </font>
                         </Label>
                         <TextField fx:id="numUtSaudeField" layoutX="7.0" layoutY="104.0" prefHeight="25.0" prefWidth="188.0" />
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="415.0" layoutY="66.0" prefHeight="35.0" prefWidth="81.0" text="(ASE)">
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="136.0" prefHeight="35.0" prefWidth="81.0" text="(ASE)">
                             <font>
                                 <Font size="24.0" />
                             </font>
                         </Label>
-                        <ComboBox fx:id="AsePicker" layoutX="415.0" layoutY="104.0" prefHeight="25.0" prefWidth="202.0" />
+                        <ComboBox fx:id="AsePicker" layoutX="8.0" layoutY="174.0" prefHeight="25.0" prefWidth="202.0" />
                         <TextField fx:id="turmaPicker" layoutX="226.0" layoutY="104.0" prefHeight="25.0" prefWidth="166.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="416.0" layoutY="74.0" text="Numero Aluno">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="numAlu" layoutX="416.0" layoutY="104.0" prefHeight="25.0" prefWidth="156.0" />
                     </children>
                 </Pane>
             </children>
@@ -105,6 +111,12 @@
                         <Font size="24.0" />
                     </font>
                 </Label>
+            <Label fx:id="nf" alignment="CENTER" contentDisplay="CENTER" layoutX="216.0" layoutY="234.0" text="Numero Funcionário">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="numInterno" layoutX="216.0" layoutY="274.0" prefHeight="25.0" prefWidth="218.0" />
             </children>
         </AnchorPane>
     </children>
