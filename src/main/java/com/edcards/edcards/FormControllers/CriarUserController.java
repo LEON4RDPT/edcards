@@ -1,5 +1,6 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.Programa.Controllers.Enums.AseEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
@@ -7,6 +8,7 @@ import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 
+import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -18,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -28,6 +31,8 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.ImageController.imageToByteArray;
 
@@ -38,7 +43,8 @@ public class CriarUserController {
     private HBox mainPane;
     @FXML
     private Button backBtn;
-
+    private volatile boolean isRunning = true;
+    private ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
     String nome, morada, email, cc, idCartao, nfc;
     Image imgUser;
     int nus, num, turma, numEE;
@@ -46,7 +52,8 @@ public class CriarUserController {
     UsuarioEnum tipo;
     AseEnum ase;
     byte[] fotoBLL;
-
+    @FXML
+    private Label cardNumber;
     @FXML
     private TextField nameField;
     @FXML
@@ -86,8 +93,31 @@ public class CriarUserController {
         AsePicker.getItems().addAll(Arrays.stream(AseEnum.values()).map(Enum::name).toList());
         tipoPicker.getItems().addAll(Arrays.stream(UsuarioEnum.values()).map(Enum::name).toList());
         setImageController();
+        //aguardarCartao();
     }
+    private void aguardarCartao() {
+        nfcExecutar.submit(() -> {
+            while (isRunning) {
+                try {
+                    String idCartao = LerCartao.lerIDCartao("/com/edcards/edcards/POSAdmin.fxml");
+                    if (idCartao == null) {
+                        //feedback
+                        return;
+                    }
+                    if (CartaoBLL.existenteNFC(idCartao)) {
+                        cardNumber.setText(idCartao);
+                    } else {
+                        FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err13));
+                        isRunning = true;
+                    }
 
+                } catch (Exception e) {
+                    System.err.println("Error reading NFC card: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
     private void setVerificationControllers() {
         nameField.addEventFilter(KeyEvent.KEY_TYPED, e -> {
             if (e.getCharacter().matches("[0-9]")) {
@@ -183,13 +213,18 @@ public class CriarUserController {
         cc = nifField.getText();
         imgUser = imageUser.getImage();
         data = dateField.getValue();
+        if(cardNumber.equals("Passe o Cartão...")){
+            nfc=null;
+        }else{
+            nfc = String.valueOf(cardNumber);
+        }
 
         if (imgUser == null) {
             FeedBackController.feedbackErro("Erro! Insira uma foto!");
             return;
         }
 
-        if (nome == null || nome.isEmpty() || morada == null || morada.isEmpty() || cc == null || cc.isEmpty() || data == null) {
+        if (nome == null || nome.isEmpty() || morada == null || morada.isEmpty() || cc == null || cc.isEmpty() || data == null || nfc == null) {
             FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err5));
             return;
         }
@@ -208,8 +243,7 @@ public class CriarUserController {
         email = emailField.getText();
         numEE = Integer.parseInt(numEEfield.getText());
         turma = Integer.parseInt(turmaPicker.getText());
-
-        idCartao = null;
+        idCartao = nfc;
         ase = AseEnum.valueOf(AsePicker.getValue());
         nus = Integer.parseInt(numUtSaudeField.getText());
 

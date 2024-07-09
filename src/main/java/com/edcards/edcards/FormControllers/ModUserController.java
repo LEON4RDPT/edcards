@@ -1,5 +1,6 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Aluno;
@@ -10,14 +11,12 @@ import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
+import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -29,11 +28,17 @@ import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.ImageController.imageToByteArray;
 
 public class ModUserController {
+    public Label cardNumber;
+    public Button readCard;
+    public TextField confPin;
+    public TextField pin;
     @FXML
     private TextField turmaField;
     @FXML
@@ -67,14 +72,15 @@ public class ModUserController {
     private boolean isDiffrentFoto = false;
     @FXML
     private Button modUser;
-
+    double saldo;
     private Pessoa pessoaAtual;
 
-
+    private volatile boolean isRunning = true;
+    private ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
     String nome, morada, email, nif, num, numEE, turma, tipo, idCartao;
     byte[] imgUserBLL;
     List<Pessoa> users;
-
+    int pinC;
 
     @FXML
     public void initialize() {
@@ -112,7 +118,70 @@ public class ModUserController {
             }
         });
     }
+    private void aguardarCartao() {
+        nfcExecutar.submit(() -> {
+            while (isRunning) {
+                try {
+                    String idCartao = LerCartao.lerIDCartao("/com/edcards/edcards/POSAdmin.fxml");
+                    if (idCartao == null) {
+                        //feedback
+                        return;
+                    }
+                    if (CartaoBLL.existenteNFC(idCartao)) {
+                        cardNumber.setText(idCartao);
+                        pin.setText(String.valueOf(CartaoBLL.getPin(idCartao)));
+                        int idUser = CartaoBLL.getIdUserByNFC(idCartao);
+                        Pessoa user = UsersBLL.getUser(idUser);
+                        String userNome = user.getNome();
+                        userPicker.setValue(userNome);
+                        selectUserFromName(userNome);
+                    } else {
+                        FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err13));
+                        isRunning = true;
+                    }
 
+                } catch (Exception e) {
+                    System.err.println("Error reading NFC card: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void selectUserFromName(String nomeUser){
+        isDiffrentFoto = false;
+        for (Pessoa p : users) {
+            if (p.getNome().equals(nomeUser)) {
+                pessoaAtual = p;
+            }
+        }
+
+        if (pessoaAtual != null) {
+
+            nameField.setText(pessoaAtual.getNome());
+            dateField.setValue(pessoaAtual.getDataNasc().toLocalDate());
+            ccField.setText(pessoaAtual.getCartaoC());
+            moradaField.setText(pessoaAtual.getMorada());
+
+            switch (pessoaAtual) {
+                case Aluno ignored -> tipoPicker.getSelectionModel().select(0);
+                case Funcionario ignored -> tipoPicker.getSelectionModel().select(1);
+                case Admin ignored -> tipoPicker.getSelectionModel().select(2);
+                case null, default -> { }
+            }
+            try {
+                if (alunoPane.isVisible() && pessoaAtual instanceof Aluno) {
+                    numEEfield.setText(String.valueOf(((Aluno) pessoaAtual).getNumEE()));
+                    emailField.setText(((Aluno) pessoaAtual).getEmailEE());
+                    turmaField.setText(String.valueOf(((Aluno) pessoaAtual).getNumTurma()));
+                    numUtSaudeField.setText(String.valueOf(((Aluno) pessoaAtual).getNumUtente()));
+                    AsePicker.getSelectionModel().select(((Aluno) pessoaAtual).getAse().toString());
+                }
+            } catch (NullPointerException ignored) {
+            }
+            imageUser.setImage(pessoaAtual.getFoto());
+        }
+    }
     @FXML
     public void selectUser(ActionEvent event) {
         isDiffrentFoto = false;
@@ -150,12 +219,12 @@ public class ModUserController {
             }
             imageUser.setImage(pessoaAtual.getFoto());
             //data
-
-
         }
 
 
-   }
+    }
+
+
 
     private void usersLoad() {
         var userLoad = UsersBLL.getUsersAll();
@@ -256,9 +325,6 @@ public class ModUserController {
                 alterouTipo = true;
 
             }
-
-
-
         }
         if (isDiffrentFoto && !Arrays.equals(imgUserBLL, new byte[0])) {
             UsersBLL.setFotoUser(id,imgUserBLL);
@@ -280,6 +346,12 @@ public class ModUserController {
             UsersBLL.setDataNascUser(id, Date.valueOf(dateField.getValue()));
         }
 
+        if(!pessoaAtual.getNumCartao().equals(cardNumber.getText())){
+            CartaoBLL.setCodigo(pessoaAtual.getNumCartao(), cardNumber.getText());
+            UsersBLL.setCodigoUser(id, cardNumber.getText());
+
+        }
+
         var adminAtual = GlobalVAR.Dados.getPessoaAtual();
         if (pessoaAtual.getIduser() == adminAtual.getIduser()) {
             //caso sejas TU a editar os teus dados e sejas ADMIN
@@ -288,14 +360,33 @@ public class ModUserController {
                 GlobalVAR.StageController.setStage("/com/edcards/edcards/ReadCard.fxml");
             }
             GlobalVAR.Dados.setPessoaAtual(pessoaAtual);
-
         }
 
+    }
 
+    public void handleLerCard(ActionEvent actionEvent) {
+        cardNumber.setText("Passe o cartão...");
+        nfcExecutar.submit(() -> {
+            while (isRunning) {
+                try {
+                    String idCartao = LerCartao.lerIDCartao("/com/edcards/edcards/POSAdmin.fxml");
+                    if (idCartao == null) {
+                        return;
+                    }
+                    if (CartaoBLL.existenteNFC(idCartao)) {
+                        cardNumber.setText(idCartao);
+                        saldo = CartaoBLL.getSaldo(idCartao);
+                        pinC = CartaoBLL.getPin(idCartao);
+                    } else {
+                        FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err13));
+                        isRunning = true;
+                    }
 
-
-
-
-
+                } catch (Exception e) {
+                    System.err.println("Error reading NFC card: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
