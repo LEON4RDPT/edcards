@@ -59,7 +59,7 @@ public class EntradasSaidasController {
         waits();
     }
     private void waits() throws InterruptedException {
-        //executor.submit(this::cartaoLido);
+        executor.submit(this::cartaoLido);
         TimeUnit.SECONDS.sleep(1);
     }
     @FXML

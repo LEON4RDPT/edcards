@@ -124,6 +124,7 @@ public class FormUser {
             case Aluno ignored:
                 btnPosAdmin.setVisible(false);
                 btnPos.setVisible(false);
+                btnEntradasSaidas.setVisible(false);
                 break;
             default:
                 break   ;

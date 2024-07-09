@@ -135,7 +135,6 @@ public class ModUserController {
                         int idUser = CartaoBLL.getIdUserByNFC(idCartao);
                         Pessoa user = UsersBLL.getUser(idUser);
                         String userNome = user.getNome();
-                        userPicker.setValue(userNome);
                         selectUserFromName(userNome);
                     } else {
                         FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err13));

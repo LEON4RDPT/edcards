@@ -62,7 +62,7 @@ public class AddHorarioController {
                 HorarioUser.setImage(image);
             }
         });
-        //aguardarCartao();
+        aguardarCartao();
     }
 
     private void usersLoad() {
@@ -85,6 +85,7 @@ public class AddHorarioController {
             }
         }
         if (pessoa != null) {
+            HorarioUser.setImage(null);
             id= (pessoa.getIduser());
             nomeText.setText(pessoa.getNome());
             imgh = pessoa.getHorario();
