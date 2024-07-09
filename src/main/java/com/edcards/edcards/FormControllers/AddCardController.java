@@ -1,8 +1,10 @@
 package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.CartaoBLL;
+import com.edcards.edcards.Programa.Controllers.Enums.ConfEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,8 +51,16 @@ public class AddCardController {
         idCartao = cardNumber.getText();
         if (idCartao != null) {
             CartaoBLL.inserirCartao(idCartao);
+            FeedBackController.feedbackConf(String.valueOf(ConfEnum.conf7));
         }
 
     }
+
+    public void handleExit(ActionEvent actionEvent) throws IOException {
+        if (FeedBackController.feedbackYesNo("Deseja sair?", "Confirmação")) {
+            GlobalVAR.StageController.setStage("/com/edcards/edcards/POSAdmin.fxml");
+        }
+    }
+
 }
 
