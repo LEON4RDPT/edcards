@@ -83,6 +83,29 @@ public class ResizeUtil {
         // Add a listener for height changes if necessary
     }
 
+    public static void resizeAndPosition(Node node, AnchorPane pane, double widthRatio, double heightRatio) {
+        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            double paneWidth = newVal.doubleValue();
+            double nodeWidth = paneWidth * widthRatio;
+            node.setScaleX(nodeWidth / node.getBoundsInParent().getWidth());
+        });
+
+        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            double paneHeight = newVal.doubleValue();
+            double nodeHeight = paneHeight * heightRatio;
+            node.setScaleY(nodeHeight / node.getBoundsInParent().getHeight());
+        });
+
+        // Initial call to set size based on initial dimensions
+        double paneWidth = pane.getWidth();
+        double nodeWidth = paneWidth * widthRatio;
+        node.setScaleX(nodeWidth / node.getBoundsInParent().getWidth());
+
+        double paneHeight = pane.getHeight();
+        double nodeHeight = paneHeight * heightRatio;
+        node.setScaleY(nodeHeight / node.getBoundsInParent().getHeight());
+    }
+
     public static void resizeAndPosition(Node node, AnchorPane pane, double relativePosition) {
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
             double width = newVal.doubleValue();
