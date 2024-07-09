@@ -47,7 +47,7 @@ public class AddHorarioController {
     @FXML
     public void initialize() {
         usersLoad();
-        //aguardarCartao();
+
         HorarioUser.setOnMouseClicked(event -> {
             FileChooser selFoto = new FileChooser();
             selFoto.setTitle("Escolha uma Foto...");
@@ -62,6 +62,7 @@ public class AddHorarioController {
                 HorarioUser.setImage(image);
             }
         });
+        //aguardarCartao();
     }
 
     private void usersLoad() {
@@ -91,22 +92,22 @@ public class AddHorarioController {
         }
     }
 
-//    private void aguardarCartao() {
-//        nfcExecutar.submit(() -> {
-//            while (isRunning) {
-//                try {
-//                    String idCartao = LerCartao.lerIDCartao(null);
-//                    int user = CartaoBLL.getIdUserByNFC(idCartao);
-//                    Pessoa userr = UsersBLL.getUser(user);
-//                    nomeText.setText(userr.getNome());
-//                    id = userr.getIduser();
-//                    HorarioUser.setImage(userr.getHorario());
-//                    break;
-//                } catch (Exception ignored) {
-//                }
-//            }
-//        });
-//    }
+    private void aguardarCartao() {
+        nfcExecutar.submit(() -> {
+            while (isRunning) {
+                try {
+                    String idCartao = LerCartao.lerIDCartao(null);
+                    int user = CartaoBLL.getIdUserByNFC(idCartao);
+                    Pessoa userr = UsersBLL.getUser(user);
+                    nomeText.setText(userr.getNome());
+                    id = userr.getIduser();
+                    HorarioUser.setImage(userr.getHorario());
+                    break;
+                } catch (Exception ignored) {
+                }
+            }
+        });
+    }
     @FXML
     public void addHorarioBtn(ActionEvent event) throws IOException {
         if (image != null) {
@@ -120,5 +121,11 @@ public class AddHorarioController {
         if (FeedBackController.feedbackYesNo("Deseja sair?", "Confirmação")) {
             GlobalVAR.StageController.setStage("/com/edcards/edcards/POSAdmin.fxml");
         }
+    }
+
+    public void remHorarioBtn(ActionEvent actionEvent) {
+        UsersBLL.setHorarioUser(id, null);
+        FeedBackController.feedbackConf(String.valueOf(ConfEnum.conf7));
+        HorarioUser.setImage(null);
     }
 }
