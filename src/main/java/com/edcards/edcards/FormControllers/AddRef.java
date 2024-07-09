@@ -1,6 +1,7 @@
 package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.ProdutoBLL;
+import com.edcards.edcards.DataTable.RefeicaoBLL;
 import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
 import com.edcards.edcards.Programa.Classes.Produto;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
@@ -17,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class AddRef {
@@ -55,6 +57,15 @@ public class AddRef {
         resize();
 
         setRefeicoes();
+
+        tabelaRefeicoes.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) { // single click
+                Produto selectedProduto = tabelaRefeicoes.getSelectionModel().getSelectedItem();
+                if (selectedProduto != null) {
+                    produtoAtual = selectedProduto;
+                }
+            }
+        });
     }
 
     private void setRefeicoes() {
@@ -114,6 +125,25 @@ public class AddRef {
     }
 
     public void handleSetMarcacao(ActionEvent actionEvent) {
+        LocalDate selectedDate = timePickerRefeicao.getValue();
+        if (selectedDate == null) {
+            FeedBackController.feedbackErro("Data não foi selecionada");
+            return;
+        }
+        if ( selectedDate.isBefore(LocalDate.now())) {
+            FeedBackController.feedbackErro("Data Invalida!");
+            return;
+        }
+
+        if (produtoAtual == null) {
+            FeedBackController.feedbackErro("Refeicao não selecionada!");
+            return;
+        }
+
+        if (FeedBackController.feedbackYesNo("Deseja marcar essa Refeição? \n" + produtoAtual.getNome() + "\nPara: " + selectedDate.toString(),"Confirmação")) {
+            RefeicaoBLL.inserirRefeicao(produtoAtual.getIdProduto(), Date.valueOf(selectedDate));
+        }
+
 
     }
 
