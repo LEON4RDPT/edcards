@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class AddHorario extends Application {
+public class TestForm extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {

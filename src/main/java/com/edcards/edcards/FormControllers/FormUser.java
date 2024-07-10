@@ -82,7 +82,7 @@ public class FormUser {
 
         //labels
 
-        ResizeUtil.resizeAndPositionTextAreaStickWithPane(textBox, rightPane, 0.8,0.26,0.18);
+        ResizeUtil.resizeAndPositionTextAreaStickWithPane(textBox, rightPane, 0.8,0.23,0.17);
     }
 
 
@@ -172,7 +172,10 @@ public class FormUser {
     }
 
     public void handleButtonVerRef(ActionEvent actionEvent) throws IOException {
-        setStage("/com/edcards/edcards/VerRefeicoes.fxml");
+        setStage("/com/edcards/edcards/VerRefMarc.fxml");
+    }
 
+    public void handleButtonMarcarRef(ActionEvent actionEvent) throws IOException {
+        setStage("/com/edcards/edcards/VerRefeicoes.fxml");
     }
 }
