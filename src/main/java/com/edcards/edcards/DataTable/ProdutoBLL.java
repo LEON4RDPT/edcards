@@ -78,7 +78,7 @@ public class ProdutoBLL extends DAL {
 
     public static double getPreco(int id) {
         DefaultBLL bll = new DefaultBLL("produto");
-        var value = bll.getOne("preco", "id", id);
+        var value = bll. getOne("preco", "id", id);
         if (value == null) {
             return 0;
         }
