@@ -144,11 +144,15 @@ public class AddHorarioController {
         }
 
         if (enumU == UsuarioEnum.ALUNO){
-            List<Integer> alunoNums = UsersBLL.getAlunoNums();
+            List<Integer> alunoNums = UsersBLL.getAlunoNums(enumU.toDbValue());
             ObservableList<Integer> observableAlunoNums = FXCollections.observableArrayList(alunoNums);
             userPickerAluno.setItems(observableAlunoNums);
-        } else {
-            List<Integer> funcNums = UsersBLL.getFuncNums();
+        } else if(enumU == UsuarioEnum.ADMINISTRADOR){
+            List<Integer> funcNums = UsersBLL.getFuncNums(enumU.toDbValue());
+            ObservableList<Integer> observableFuncNums = FXCollections.observableArrayList(funcNums);
+            userPickerAluno.setItems(observableFuncNums);
+        } else{
+            List<Integer> funcNums = UsersBLL.getFuncNums(enumU.toDbValue());
             ObservableList<Integer> observableFuncNums = FXCollections.observableArrayList(funcNums);
             userPickerAluno.setItems(observableFuncNums);
         }

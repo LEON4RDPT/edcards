@@ -151,7 +151,9 @@ public class UsersBLL {
 
         new DefaultBLL("usuario").setOne("data", data, "id", id);
     }
-
+    public static void setnum(int id, int num){
+        new DefaultBLL("usuario").setOne("num", num, "id", id);
+    }
     public static void setEE_numAluno(int id, int numEE) {
         if (!isAluno(id)) {
             return;
@@ -293,22 +295,20 @@ public class UsersBLL {
         return (int) new DefaultBLL("dados_aluno").getOne("utente_num", "aluno_id", id);
     }
 
-    public static int getIdbyNumAluno(int num_aluno){
-        if (!isAluno(num_aluno)) {
+//todo
+    public static int getIdbyNum(int num, int tipo){
+        if (!isAluno(num)) {
             return -1;
         }
-        return (int) new DefaultBLL("dados_aluno").getOne("aluno_id", "num_aluno" ,num_aluno);
-    }
-    public static int getIdbyNumFunc(int num_func){
-        if (!isAluno(num_func)) {
+        if (!isAluno(tipo)) {
             return -1;
         }
-        return (int) new DefaultBLL("usuario").getOne("id", "num_func" ,num_func);
+        return (int) new DefaultBLL("usuario").getOneByCustomQuery("SELECT * from usuario WHERE num="+num+ "and tipo="+tipo);
     }
+//todo
+    public static List<Integer> getAlunoNums(int tipo) {
 
-    public static List<Integer> getAlunoNums() {
-
-        var list = new DefaultBLL("dados_aluno").getAll("num_aluno");
+        var list = new DefaultBLL("usuario").getList("id", "tipo",tipo );
 
         return list.stream()
                 .filter(obj -> obj instanceof Integer)
@@ -317,9 +317,9 @@ public class UsersBLL {
 
     }
 
-
-    public static List<Integer> getFuncNums() {
-        List<Object> list = new DefaultBLL("usuario").getAll("num_func");
+//todo
+    public static List<Integer> getFuncNums(int tipo) {
+        List<Object> list = new DefaultBLL("usuario").getListByCustomQuery("SELECT num FROM usuario where tipo = " + tipo);
 
         return (list != null) ?
                 list.stream()
@@ -363,7 +363,7 @@ public class UsersBLL {
                 case "horario" ->
                         pessoa.setHorario(GlobalVAR.ImageController.byteArrayToImage((byte[]) entry.getValue()));
                 case "foto" -> pessoa.setFoto(GlobalVAR.ImageController.byteArrayToImage((byte[]) entry.getValue()));
-
+                case "num" -> pessoa.setNum((int) entry.getValue());
             }
         }
 
@@ -404,6 +404,33 @@ public class UsersBLL {
 
         return transformUser(bll.getAllinOne("id", idUser));
     }
+    public static Pessoa getUserByNum(int numFunc) {
+        DefaultBLL bll = new DefaultBLL("usuario");
+
+        if (!existe(numFunc)) {
+            return null;
+        }
+
+        return transformUser(bll.getAllinOne("num_func", numFunc));
+    }
+    public static Aluno getUserByNumAluno(int numAlu) {
+        DefaultBLL dadosAlunosBLL = new DefaultBLL("dados_aluno");
+        DefaultBLL userBLL = new DefaultBLL("usuario");
+
+        List<Map<String, Object>> alunoData = (List<Map<String, Object>>) dadosAlunosBLL.getAllinOne("num_aluno", numAlu);
+        if (alunoData == null || alunoData.isEmpty()) {
+            return null;
+        }
+        Integer alunoId = (Integer) alunoData.get(0).get("id_aluno");
+
+
+        List<Map<String, Object>> userData = (List<Map<String, Object>>) userBLL.getAllinOne("id", alunoId);
+        if (userData == null || userData.isEmpty()) {
+            return null;
+        }
+        return (Aluno) transformUser(userData.get(0));
+    }
+
 
     public static List<Pessoa> getUsers(UsuarioEnum tipo) {
         DefaultBLL bll = new DefaultBLL("usuario");

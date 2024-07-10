@@ -95,12 +95,6 @@
                 </Label>
                 <ComboBox fx:id="AsePicker" layoutX="9.0" layoutY="402.0" prefHeight="25.0" prefWidth="81.0" />
                 <TextField fx:id="turmaField" layoutX="5.0" layoutY="275.0" prefHeight="25.0" prefWidth="166.0" />
-            <Label layoutX="7.0" layoutY="45.0" text="Numero Aluno">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <TextField fx:id="numAlu" layoutX="7.0" layoutY="80.0" prefHeight="25.0" prefWidth="166.0" />
             </children>
         </Pane>
         <Label layoutX="334.0" layoutY="392.0" text="Cartão Escolar:">
@@ -114,7 +108,7 @@
             </font>
         </Label>
         <Button fx:id="readCard" layoutX="508.0" layoutY="397.0" mnemonicParsing="false" onAction="#handleLerCard" prefHeight="25.0" prefWidth="131.0" text="Ler Cartão Novo" />
-      <Label fx:id="nf" alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="432.0" text="Numero Funcionário">
+      <Label fx:id="nf" alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="432.0" text="Numero">
          <font>
             <Font size="24.0" />
          </font>

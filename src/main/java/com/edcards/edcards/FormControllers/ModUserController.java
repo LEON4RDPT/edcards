@@ -43,7 +43,6 @@ public class ModUserController {
     public TextField pin;
     public TextField numInterno;
     public Label nf;
-    public TextField numAlu;
     @FXML
     public ComboBox tipoPickerUser;
     public ComboBox<Integer> userPickerAluno;
@@ -181,9 +180,7 @@ public class ModUserController {
                     turmaField.setText(String.valueOf(((Aluno) pessoaAtual).getNumTurma()));
                     numUtSaudeField.setText(String.valueOf(((Aluno) pessoaAtual).getNumUtente()));
                     AsePicker.getSelectionModel().select(((Aluno) pessoaAtual).getAse().toString());
-                    numAlu.setText(String.valueOf(((Aluno) pessoaAtual).getNum_aluno()));}
-                    nf.setVisible(false);
-                    numInterno.setVisible(false);
+                }
             } catch (NullPointerException ignored) {
             }
             imageUser.setImage(pessoaAtual.getFoto());
@@ -192,12 +189,10 @@ public class ModUserController {
     @FXML
     public void selectUser(ActionEvent event) {
         isDiffrentFoto = false;
-        String nomeUser = userPicker.getValue();
-
-        for (Pessoa p : users) {
-            if (p.getNome().equals(nomeUser)) {
-                pessoaAtual = p;
-            }
+        int num = userPickerAluno.getValue();
+        Pessoa pessoaAtual = UsersBLL.getUserByNum(num);
+        if (pessoaAtual == null) {
+            pessoaAtual = UsersBLL.getUserByNumAluno(num);
         }
 
         if (pessoaAtual != null) {
@@ -220,6 +215,7 @@ public class ModUserController {
                     turmaField.setText(String.valueOf(((Aluno) pessoaAtual).getNumTurma()));
                     numUtSaudeField.setText(String.valueOf(((Aluno) pessoaAtual).getNumUtente()));
                     AsePicker.getSelectionModel().select(((Aluno) pessoaAtual).getAse().toString());
+
                 }
             } catch (NullPointerException ignored) {
                 //do nothing dados do aluno nao existem.
@@ -289,7 +285,9 @@ public class ModUserController {
                 return;
             }
             var ase = AseEnum.fromDbValue(AsePicker.getSelectionModel().getSelectedIndex());
-
+            if (numInterno.getText().isEmpty()){
+                FeedBackController.feedbackErro(ErrorEnum.err5.toString());
+            }
             if (pessoaAtual instanceof Aluno) {
                 UsersBLL.setEE_numAluno(id,numEE);
                 UsersBLL.setTurmaAluno(id,turma);
@@ -299,7 +297,6 @@ public class ModUserController {
             }
             else {
                 UsersBLL.setTipoUser(pessoaAtual.getIduser(),UsuarioEnum.ALUNO);
-
                 UsersBLL.inserirAluno(pessoaAtual.getIduser(),numEE,email,turma,numUt,ase,num_aluno);
             }
         }
@@ -339,7 +336,9 @@ public class ModUserController {
         if (!pessoaAtual.getDataNasc().toLocalDate().equals(dateField.getValue())) {
             UsersBLL.setDataNascUser(id, Date.valueOf(dateField.getValue()));
         }
-
+        if(pessoaAtual.getNum() == 0){
+            UsersBLL.setnum(id, Integer.parseInt(numInterno.getText()));
+        }
         if(!pessoaAtual.getNumCartao().equals(cardNumber.getText())){
             CartaoBLL.setCodigo(pessoaAtual.getNumCartao(), cardNumber.getText());
             UsersBLL.setCodigoUser(id, cardNumber.getText());
@@ -398,11 +397,15 @@ public class ModUserController {
         }
 
         if (enumU == UsuarioEnum.ALUNO){
-            List<Integer> alunoNums = UsersBLL.getAlunoNums();
+            List<Integer> alunoNums = UsersBLL.getAlunoNums(enumU.toDbValue());
             ObservableList<Integer> observableAlunoNums = FXCollections.observableArrayList(alunoNums);
             userPickerAluno.setItems(observableAlunoNums);
-        } else {
-            List<Integer> funcNums = UsersBLL.getFuncNums();
+        } else if(enumU == UsuarioEnum.ADMINISTRADOR){
+            List<Integer> funcNums = UsersBLL.getFuncNums(enumU.toDbValue());
+            ObservableList<Integer> observableFuncNums = FXCollections.observableArrayList(funcNums);
+            userPickerAluno.setItems(observableFuncNums);
+        } else{
+            List<Integer> funcNums = UsersBLL.getFuncNums(enumU.toDbValue());
             ObservableList<Integer> observableFuncNums = FXCollections.observableArrayList(funcNums);
             userPickerAluno.setItems(observableFuncNums);
         }

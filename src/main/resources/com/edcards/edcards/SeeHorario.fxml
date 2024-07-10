@@ -9,7 +9,7 @@
         <AnchorPane fx:id="leftPane" maxWidth="1.7976931348623157E308" prefWidth="960.0" HBox.hgrow="ALWAYS">
             <ImageView fx:id="horarioUser" fitHeight="439.0" fitWidth="446.0" layoutX="220.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
                 <image>
-                    <Image url="@images/UserPicture.png" />
+                    <Image url="@images/calendario.png" />
                 </image>
             </ImageView>
         </AnchorPane>

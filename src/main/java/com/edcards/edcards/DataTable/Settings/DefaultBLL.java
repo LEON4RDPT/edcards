@@ -43,6 +43,36 @@ public class DefaultBLL extends DAL {
         }
     }
 
+    public List<Object> getListByCustomQuery(String query) {
+        Connection connection = getConnection();
+        if (connection == null) {
+            return null;
+        }
+
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            List<Object> results = new ArrayList<>();
+            while (resultSet.next()) {
+                int columnCount = resultSet.getMetaData().getColumnCount();
+                if(columnCount > 1){
+                    Map<String, Object> row = new HashMap<>();
+                    for (int i = 1; i <= columnCount; i++) {
+                        row.put(resultSet.getMetaData().getColumnName(i), resultSet.getObject(i));
+                    }
+                    results.add(row);
+                }else{
+                    results.add(resultSet.getObject(1));
+                }
+            }
+            return results;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public Object getOne(String column, String identity, Object identityOb) {
         Connection connection = getConnection();
         if (connection == null) {
@@ -60,6 +90,26 @@ public class DefaultBLL extends DAL {
             return null;
         }
     }
+    public Object getOneByCustomQuery(String query) {
+        Connection connection = getConnection();
+        if (connection == null) {
+            return null;
+        }
+
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            if (resultSet.next()) {
+                return resultSet.getObject(1);
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     public Map<String, Object> getAllinOne(String columnCondition, Object objectCondition) {
         Connection connection = getConnection();
