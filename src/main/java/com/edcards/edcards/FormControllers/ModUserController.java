@@ -26,6 +26,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -40,6 +41,12 @@ public class ModUserController {
     public Button readCard;
     public TextField confPin;
     public TextField pin;
+    public TextField numInterno;
+    public Label nf;
+    public TextField numAlu;
+    @FXML
+    public ComboBox tipoPickerUser;
+    public ComboBox<Integer> userPickerAluno;
     @FXML
     private TextField turmaField;
     @FXML
@@ -75,18 +82,16 @@ public class ModUserController {
     private Button modUser;
     double saldo;
     private Pessoa pessoaAtual;
-
+    private List<Pessoa> users = new ArrayList<>();
     private volatile boolean isRunning = true;
     private ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
     String nome, morada, email, nif, num, numEE, turma, tipo, idCartao;
     byte[] imgUserBLL;
-    List<Pessoa> users;
     int pinC;
     int num_aluno;
+
     @FXML
     public void initialize() {
-
-        usersLoad();
 
         ObservableList<String> opcoes = FXCollections.observableArrayList(
                 Arrays.stream(UsuarioEnum.values())
@@ -102,7 +107,7 @@ public class ModUserController {
         AsePicker.setItems(opcoesAse);
 
         tipoPicker.setItems(opcoes);
-
+        tipoPickerUser.setItems(opcoes);
             imageUser.setOnMouseClicked(event -> {
                 FileChooser selFoto = new FileChooser();
                 selFoto.setTitle("Escolha uma Foto...");
@@ -148,7 +153,6 @@ public class ModUserController {
             }
         });
     }
-
     private void selectUserFromName(String nomeUser){
         isDiffrentFoto = false;
         for (Pessoa p : users) {
@@ -177,7 +181,9 @@ public class ModUserController {
                     turmaField.setText(String.valueOf(((Aluno) pessoaAtual).getNumTurma()));
                     numUtSaudeField.setText(String.valueOf(((Aluno) pessoaAtual).getNumUtente()));
                     AsePicker.getSelectionModel().select(((Aluno) pessoaAtual).getAse().toString());
-                }
+                    numAlu.setText(String.valueOf(((Aluno) pessoaAtual).getNum_aluno()));}
+                    nf.setVisible(false);
+                    numInterno.setVisible(false);
             } catch (NullPointerException ignored) {
             }
             imageUser.setImage(pessoaAtual.getFoto());
@@ -223,20 +229,6 @@ public class ModUserController {
         }
 
 
-    }
-
-
-
-    private void usersLoad() {
-        var userLoad = UsersBLL.getUsersAll();
-        ObservableList<String> usersLoad = FXCollections.observableArrayList(
-                Arrays.stream(Objects.requireNonNull(userLoad).toArray(new Pessoa[0]))
-                        .map(Pessoa::getNome)
-                        .collect(Collectors.toList())
-
-        );
-        userPicker.setItems(usersLoad);
-        users = userLoad;
     }
 
     @FXML
@@ -393,5 +385,26 @@ public class ModUserController {
                 }
             }
         });
+    }
+    @FXML
+    public void selectTipoUser(ActionEvent actionEvent) {
+        var enumU = UsuarioEnum.valueOf((String) tipoPickerUser.getSelectionModel().getSelectedItem());
+        users.clear();
+        users = UsersBLL.getUsers(enumU);
+        if (users != null) {
+            this.users = users;
+        } else {
+            //feedback
+        }
+
+        if (enumU == UsuarioEnum.ALUNO){
+            List<Integer> alunoNums = UsersBLL.getAlunoNums();
+            ObservableList<Integer> observableAlunoNums = FXCollections.observableArrayList(alunoNums);
+            userPickerAluno.setItems(observableAlunoNums);
+        } else {
+            List<Integer> funcNums = UsersBLL.getFuncNums();
+            ObservableList<Integer> observableFuncNums = FXCollections.observableArrayList(funcNums);
+            userPickerAluno.setItems(observableFuncNums);
+        }
     }
 }

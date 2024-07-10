@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 
 public class Admin extends Pessoa {
 
-    public Admin(String numCartao, String nome, Double saldo, Image foto, LocalDateTime entrou, String morada, int pin, Date dataNasc, String cartaoC, Image horario, int id) {
-        super(id, numCartao, nome, saldo, foto, entrou, morada, pin, dataNasc, cartaoC, horario);
+    public Admin(String numCartao, String nome,int num_func ,Double saldo, Image foto, LocalDateTime entrou, String morada, int pin, Date dataNasc, String cartaoC, Image horario, int id) {
+        super(id, numCartao, nome, saldo, foto, entrou, morada, pin, dataNasc, cartaoC, horario, num_func);
     }
 
     public Admin(int idUser) {

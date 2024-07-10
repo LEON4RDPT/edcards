@@ -22,22 +22,28 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <Label layoutX="46.0" layoutY="40.0" text="Selecionar Utilizador:">
+        <Label layoutX="46.0" layoutY="81.0" text="Selecionar Utilizador:">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <ComboBox fx:id="userPicker" layoutX="46.0" layoutY="75.0" onAction="#loadUser" prefHeight="25.0" prefWidth="285.0" promptText="Escolha Um" visibleRowCount="2" />
-        <Label layoutX="44.0" layoutY="129.0" text="Nome:">
+        <ComboBox fx:id="userPickerAluno" layoutX="46.0" layoutY="116.0" onAction="#loadUser" prefHeight="25.0" prefWidth="285.0" promptText="Escolha Um" visibleRowCount="2" />
+        <Label layoutX="44.0" layoutY="155.0" text="Nome:">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <Text fx:id="nomeText" layoutX="46.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="...">
+        <Text fx:id="nomeText" layoutX="46.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="...">
             <font>
                 <Font size="24.0" />
             </font>
         </Text>
       <Button fx:id="remHorario" layoutX="770.0" layoutY="584.0" mnemonicParsing="false" onAction="#remHorarioBtn" prefHeight="122.0" prefWidth="244.0" text="Remover Horario" />
+      <Label layoutX="46.0" layoutY="14.0" text="Selecionar Tipo">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="tipoPickerUser" layoutX="46.0" layoutY="44.0" onAction="#selectTipoUser" prefHeight="26.0" prefWidth="286.0" promptText="Escolha Um" visibleRowCount="2" />
     </children>
 </AnchorPane>

@@ -130,7 +130,7 @@ public class TransacaoBLL {
             ArredondarController.roundToTwoDecimalPlaces(valorTotal += produto.getPreco());
         }
 
-        double saldo = ArredondarController.roundToTwoDecimalPlaces(CartaoBLL.getSaldo(UsersBLL.getNFCUser(idUser)));
+        double saldo = ArredondarController.roundToTwoDecimalPlacesRetDouble(CartaoBLL.getSaldo(UsersBLL.getNFCUser(idUser)));
 
         if (saldo < valorTotal) {
             feedbackErro("Saldo Insufeciente!");
@@ -138,7 +138,7 @@ public class TransacaoBLL {
             return -1;
         }
         saldo -= valorTotal;
-        saldo = ArredondarController.roundToTwoDecimalPlaces(saldo);
+        saldo = ArredondarController.roundToTwoDecimalPlacesRetDouble(saldo);
 
         Map<String, Object> transacaoCol = new HashMap<>();
         transacaoCol.put("cliente_id", idUser);

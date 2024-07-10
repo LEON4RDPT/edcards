@@ -5,6 +5,7 @@ import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.Enums.ConfEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
+import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
@@ -32,6 +33,8 @@ import static com.edcards.edcards.Programa.Controllers.GlobalVAR.ImageController
 public class AddHorarioController {
     private final boolean isRunning = true;
     private final ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
+    public ComboBox tipoPickerUser;
+    public ComboBox userPickerAluno;
     @FXML
     private ImageView HorarioUser;
     private byte[] image;
@@ -129,4 +132,26 @@ public class AddHorarioController {
         FeedBackController.feedbackConf(String.valueOf(ConfEnum.conf7));
         HorarioUser.setImage(null);
     }
+
+    public void selectTipoUser(ActionEvent actionEvent) {
+        var enumU = UsuarioEnum.valueOf((String) tipoPickerUser.getSelectionModel().getSelectedItem());
+        users.clear();
+        var users = UsersBLL.getUsers(enumU);
+        if (users != null) {
+            this.users = users;
+        } else {
+            //feedback
+        }
+
+        if (enumU == UsuarioEnum.ALUNO){
+            List<Integer> alunoNums = UsersBLL.getAlunoNums();
+            ObservableList<Integer> observableAlunoNums = FXCollections.observableArrayList(alunoNums);
+            userPickerAluno.setItems(observableAlunoNums);
+        } else {
+            List<Integer> funcNums = UsersBLL.getFuncNums();
+            ObservableList<Integer> observableFuncNums = FXCollections.observableArrayList(funcNums);
+            userPickerAluno.setItems(observableFuncNums);
+        }
+    }
+
 }

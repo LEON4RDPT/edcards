@@ -14,10 +14,7 @@ import javafx.scene.image.Image;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class UsersBLL {
@@ -70,7 +67,9 @@ public class UsersBLL {
         columnValues.put("tipo", tipo.toDbValue());
         columnValues.put("cc", cc);
         columnValues.put("foto", foto);
-        columnValues.put("num_func", num_func);
+        if (tipo != UsuarioEnum.ALUNO) {
+            columnValues.put("num_func", num_func);
+        }
         return bll.insertAndGetId(columnValues);
 
 
@@ -294,6 +293,41 @@ public class UsersBLL {
         return (int) new DefaultBLL("dados_aluno").getOne("utente_num", "aluno_id", id);
     }
 
+    public static int getIdbyNumAluno(int num_aluno){
+        if (!isAluno(num_aluno)) {
+            return -1;
+        }
+        return (int) new DefaultBLL("dados_aluno").getOne("aluno_id", "num_aluno" ,num_aluno);
+    }
+    public static int getIdbyNumFunc(int num_func){
+        if (!isAluno(num_func)) {
+            return -1;
+        }
+        return (int) new DefaultBLL("usuario").getOne("id", "num_func" ,num_func);
+    }
+
+    public static List<Integer> getAlunoNums() {
+
+        var list = new DefaultBLL("dados_aluno").getAll("num_aluno");
+
+        return list.stream()
+                .filter(obj -> obj instanceof Integer)
+                .map(obj -> (Integer) obj)
+                .toList();
+
+    }
+
+
+    public static List<Integer> getFuncNums() {
+        List<Object> list = new DefaultBLL("usuario").getAll("num_func");
+
+        return (list != null) ?
+                list.stream()
+                        .filter(obj -> obj instanceof Integer)
+                        .map(obj -> (Integer) obj)
+                        .toList() :
+                Collections.emptyList();
+    }
 
     public static Pessoa transformUser(Map<String, Object> row) {
         if (row == null) {

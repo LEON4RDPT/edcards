@@ -223,10 +223,10 @@ public class CriarUserController {
     private void tipoAction() {
         String selectedTipo = tipoPicker.getValue();
         if (selectedTipo != null) {
-            if (selectedTipo.equals("Aluno")) {
+            if (selectedTipo.equals("ALUNO")) {
                 alunoPane.setVisible(true);
                 numInterno.setVisible(false);
-                nf.setVisible(true);
+                nf.setVisible(false);
                 num_func = 0;
             } else {
                 alunoPane.setVisible(false);
@@ -279,11 +279,12 @@ public class CriarUserController {
         idCartao = nfc;
         ase = AseEnum.valueOf(AsePicker.getValue());
         nus = Integer.parseInt(numUtSaudeField.getText());
+        num_aluno = Integer.parseInt(numAlu.getText());
 
 
         if (nome!= null || idCartao!= null || turma!= 0 || morada!= null || email!= null || cc!= null || numEE!= 0 || num!= 0 || numEEfield!= null || imgUser!= null || ase!= null || nus!= 0 || num_aluno!=0) {
             FeedBackController.feedbackConf(nome + morada + email + cc + numEE + num + idCartao + imgUser + data + ase + nus + num_aluno);
-            var id = UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL,num_func);
+            var id = UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL,0);
             if (id == 0) {
                 FeedBackController.feedbackErro("Erro Não foi possivel inserir os Dados!");
             }

@@ -27,6 +27,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static com.edcards.edcards.Programa.Controllers.ArredondarController.roundToTwoDecimalPlaces;
+import static com.edcards.edcards.Programa.Controllers.ArredondarController.roundToTwoDecimalPlacesRetDouble;
 import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColor;
 import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColorBack;
 import static com.edcards.edcards.Programa.Controllers.FeedBackController.feedbackErro;
@@ -360,7 +361,7 @@ public class Pos {
             return;
         }
 
-        double valorTotal = roundToTwoDecimalPlaces(fatura.stream().mapToDouble(Produto::getPreco).sum());
+        double valorTotal = roundToTwoDecimalPlacesRetDouble(fatura.stream().mapToDouble(Produto::getPreco).sum());
 
         if (cliente.getSaldo() >= valorTotal) {
             //FAQ insertTrasacao automaticamente remove o saldo!!!
