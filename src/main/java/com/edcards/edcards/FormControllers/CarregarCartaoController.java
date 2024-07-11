@@ -103,7 +103,7 @@ public class CarregarCartaoController {
             if (result == buttonTypeOk) {
                 try {
                     int pin = Integer.parseInt(pinField.getText());
-                    pinDb = GlobalVAR.Dados.getClientePOS().getPin();
+                    pinDb = GlobalVAR.Dados.getPessoaAtual().getPin();
                     if (pinDb == pin) {
                         var nfc = UsersBLL.getNFCUser(GlobalVAR.Dados.getClientePOS().getIduser());
                         var saldoAntigo = CartaoBLL.getSaldo(nfc);

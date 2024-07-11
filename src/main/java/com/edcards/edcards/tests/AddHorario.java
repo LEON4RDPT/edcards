@@ -6,8 +6,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 public class AddHorario extends Application {
+    Toolkit toolkit = Toolkit.getDefaultToolkit();
+    Image icon = toolkit.getImage("resources/seu-icone.ico");
 
     @Override
     public void start(Stage stage) throws Exception {
