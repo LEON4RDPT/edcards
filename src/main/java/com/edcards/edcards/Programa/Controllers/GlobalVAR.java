@@ -64,6 +64,8 @@ public class GlobalVAR {
             return pessoaAtual;
         }
 
+
+
         public static void setCartaoAtual(String cartao) {
         }
 

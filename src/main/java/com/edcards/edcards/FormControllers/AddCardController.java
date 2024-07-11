@@ -52,7 +52,7 @@ public class AddCardController {
         idCartao = cardNumber.getText();
         if (idCartao != null) {
             CartaoBLL.inserirCartao(idCartao);
-            FeedBackController.feedbackConf(String.valueOf(ConfEnum.conf7));
+            FeedBackController.feedbackConf(String.valueOf(ConfEnum.conf17));
             GlobalVAR.StageController.setStage("/com/edcards/edcards/POSAdmin.fxml");
         }
 

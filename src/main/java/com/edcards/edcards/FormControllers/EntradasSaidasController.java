@@ -168,8 +168,8 @@ public class EntradasSaidasController {
         dialog.showAndWait().ifPresent(result -> {
             if (result == buttonTypeOk) {
                 try {
-                    int id = Integer.parseInt(numeroAlunoField.getText());
-                    cartao = UsersBLL.getNFCUser(id);
+                    int num = Integer.parseInt(numeroAlunoField.getText());
+                    cartao = UsersBLL.getNFCUserA(num);
 
                     if (cartao == null) {
                         FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err2));
@@ -182,7 +182,7 @@ public class EntradasSaidasController {
                     var userByNFC = CartaoBLL.getUserByNFC(cartao);
                     if (userByNFC != null) {
                         var pessoa = UsersBLL.getUser(userByNFC.getIduser());
-                        UsuarioEnum tipoU = UsersBLL.getTipoUser(id);
+                        UsuarioEnum tipoU = UsersBLL.getTipoUserNum(num);
                         switch (tipoU) {
                             case ALUNO -> tipo ='a';
                             default -> tipo='e';

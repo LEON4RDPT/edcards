@@ -29,7 +29,10 @@ public class UsersBLL {
         }
         new DefaultBLL("dados_aluno").delete("id", id);
     }
-
+    public static void updatePinForUser(int userId, int newPin) {
+        DefaultBLL bll = new DefaultBLL("users"); // Supondo que "users" seja o nome da sua tabela
+        bll.setOne("pin", newPin, "id", userId); // Atualiza o PIN onde o iduser corresponde
+    }
     public static void deleteUser(int id) {
         UsuarioEnum tipo = getTipoUser(id);
         if (tipo == null) {
@@ -45,9 +48,12 @@ public class UsersBLL {
     public static boolean existe(int id) {
         return new DefaultBLL("usuario").hasRows("id", id);
     }
+    public static boolean existeN(int num) {
+        return new DefaultBLL("usuario").hasRows("num", num);
+    }
 
     public static boolean isAluno(int id) {
-        return new DefaultBLL("usuario").hasRows("id", id) && new DefaultBLL("dados_aluno").hasRows("aluno_id", id);
+        return new DefaultBLL("usuario").hasRows("id", id);
     }
 
 
@@ -226,6 +232,12 @@ public class UsersBLL {
         }
         return UsuarioEnum.fromDbValue((int) new DefaultBLL("usuario").getOne("tipo", "id", idUser));
     }
+    public static UsuarioEnum getTipoUserNum(int num) {
+        if (!existeN(num)) {
+            return null;
+        }
+        return UsuarioEnum.fromDbValue((int) new DefaultBLL("usuario").getOne("tipo", "num", num));
+    }
 
     public static String getCCUser(int id) {
         if (!existe(id)) {
@@ -246,6 +258,12 @@ public class UsersBLL {
             return null;
         }
         return (String) new DefaultBLL("usuario").getOne("cartao_id", "id", id);
+    }
+    public static String getNFCUserA(int num) {
+        if (!existeN(num)) {
+            return null;
+        }
+        return (String) new DefaultBLL("usuario").getOne("cartao_id", "num", num);
     }
 
     public static String getNomeUser(int id) {
@@ -312,11 +330,11 @@ public class UsersBLL {
         return (int) new DefaultBLL("dados_aluno").getOne("utente_num", "aluno_id", id);
     }
 
-    public static int getIdbyNumAluno(int num_aluno){
-        if (!isAluno(num_aluno)) {
+    public static int getIdbyNumAluno(int num){
+        if (!existeN(num)) {
             return -1;
         }
-        return (int) new DefaultBLL("dados_aluno").getOne("aluno_id", "num_aluno" ,num_aluno);
+        return (int) new DefaultBLL("usuario").getOne("id", "num" ,num);
     }
     public static int getIdbyNumFunc(int num_func){
         if (!isAluno(num_func)) {
@@ -412,6 +430,17 @@ public class UsersBLL {
 
         return transformUser(bll.getAllinOne("id", idUser));
     }
+    public static Pessoa getUserN(int num) {
+        DefaultBLL bll = new DefaultBLL("usuario");
+
+        if (!existe(num)) {
+            return null;
+        }
+
+        return transformUser(bll.getAllinOne("num", num));
+    }
+
+
 
     public static List<Pessoa> getUsers(UsuarioEnum tipo) {
         DefaultBLL bll = new DefaultBLL("usuario");

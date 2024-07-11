@@ -90,20 +90,24 @@ public class DefaultBLL extends DAL {
             return null;
         }
     }
-    public Object getOneByCustomQuery(String query) {
+
+    public Object getOneWhereType(String column, String identity, Object identityOb, int tipo) {
         Connection connection = getConnection();
         if (connection == null) {
             return null;
         }
-
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-
-            if (resultSet.next()) {
-                return resultSet.getObject(1);
-            } else {
-                return null;
+        try {
+            String query = "SELECT " + column + " FROM " + getTableName()
+                    + formatCondition(identity, identityOb) + " AND tipo = ?";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setInt(1, tipo);
+                try (ResultSet reader = statement.executeQuery()) {
+                    if (reader.next()) {
+                        return reader.getObject(column);
+                    }
+                }
             }
+            return null;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

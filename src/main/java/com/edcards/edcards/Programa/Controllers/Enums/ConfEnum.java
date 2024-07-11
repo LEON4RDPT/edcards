@@ -84,7 +84,12 @@ public enum ConfEnum {
         public String toString() {
             return "PIN's Iguais. Pin alterado com sucesso";
         }
-    };
+    },
+    conf17 {
+        public String toString() {
+            return "Cartão Inserido com Sucesso";
+        }
+    },;
 
 
     public int toDbValue() {

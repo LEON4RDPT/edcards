@@ -258,7 +258,7 @@ public class CriarUserController {
 
         if (tipoPicker.getValue().equals("ALUNO")) {
             inserirAluno();
-        } else if (tipoPicker.getValue().equals("ADMIN") || tipoPicker.getValue().equals("FUNCIONARIO")) {
+        } else if (tipoPicker.getValue().equals("ADMINISTRADOR") || tipoPicker.getValue().equals("FUNCIONARIO")) {
             inserirAdminOrFuncionario();
         }
     }
@@ -290,7 +290,7 @@ public class CriarUserController {
         if (id == 0) {
             FeedBackController.feedbackErro("Erro Dados duplicados!");
         } else {
-            FeedBackController.feedbackErro("Usuario Registado com sucesso! Nome: " + nome);
+            FeedBackController.feedbackConf("Usuario Registado com sucesso! Nome: " + nome);
         }
     }
 
