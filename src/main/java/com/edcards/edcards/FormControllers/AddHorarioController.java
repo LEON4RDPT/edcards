@@ -34,13 +34,12 @@ public class AddHorarioController {
     private final boolean isRunning = true;
     private final ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
     public ComboBox tipoPickerUser;
-    public ComboBox userPickerAluno;
     @FXML
     private ImageView HorarioUser;
     private byte[] image;
     private File foto;
     @FXML
-    private ComboBox<String> userPicker;
+    private ComboBox<Integer> userPickerAluno;
     @FXML
     private Text nomeText;
     Pessoa pessoa;
@@ -49,8 +48,13 @@ public class AddHorarioController {
     private Image imgh;
     @FXML
     public void initialize() {
-        usersLoad();
-
+        //usersLoad();
+        ObservableList<String> opcoes = FXCollections.observableArrayList(
+                Arrays.stream(UsuarioEnum.values())
+                        .map(Enum::name)
+                        .collect(Collectors.toList())
+        );
+        tipoPickerUser.setItems(opcoes);
         HorarioUser.setOnMouseClicked(event -> {
             FileChooser selFoto = new FileChooser();
             selFoto.setTitle("Escolha uma Foto...");
@@ -68,22 +72,22 @@ public class AddHorarioController {
         aguardarCartao();
     }
 
-    private void usersLoad() {
-        var userLoad = UsersBLL.getUsersAll();
-        ObservableList<String> usersLoad = FXCollections.observableArrayList(
-                Arrays.stream(Objects.requireNonNull(userLoad).toArray(new Pessoa[0]))
-                        .map(Pessoa::getNome)
-                        .collect(Collectors.toList())
-        );
-        userPicker.setItems(usersLoad);
-        users = userLoad;
-    }
+//    private void usersLoad() {
+//        var userLoad = UsersBLL.getUsersAll();
+//        ObservableList<String> usersLoad = FXCollections.observableArrayList(
+//                Arrays.stream(Objects.requireNonNull(userLoad).toArray(new Pessoa[0]))
+//                        .map(Pessoa::getNome)
+//                        .collect(Collectors.toList())
+//        );
+//        userPicker.setItems(usersLoad);
+//        users = userLoad;
+//    }
 
     public void loadUser(ActionEvent event) {
-        String nomeUser = userPicker.getValue();
+        int numUser = userPickerAluno.getValue();
 
         for (Pessoa p : users) {
-            if (p.getNome().equals(nomeUser)) {
+            if (p.getNum() == numUser) {
                 pessoa = p;
             }
         }
@@ -133,10 +137,10 @@ public class AddHorarioController {
         HorarioUser.setImage(null);
     }
 
+    @FXML
     public void selectTipoUser(ActionEvent actionEvent) {
         var enumU = UsuarioEnum.valueOf((String) tipoPickerUser.getSelectionModel().getSelectedItem());
-        users.clear();
-        var users = UsersBLL.getUsers(enumU);
+        users = UsersBLL.getUsers(enumU);
         if (users != null) {
             this.users = users;
         } else {
@@ -144,18 +148,17 @@ public class AddHorarioController {
         }
 
         if (enumU == UsuarioEnum.ALUNO){
-            List<Integer> alunoNums = UsersBLL.getAlunoNums(enumU.toDbValue());
+            List<Integer> alunoNums = UsersBLL.getNums(UsuarioEnum.ALUNO.toDbValue());
             ObservableList<Integer> observableAlunoNums = FXCollections.observableArrayList(alunoNums);
             userPickerAluno.setItems(observableAlunoNums);
-        } else if(enumU == UsuarioEnum.ADMINISTRADOR){
-            List<Integer> funcNums = UsersBLL.getFuncNums(enumU.toDbValue());
-            ObservableList<Integer> observableFuncNums = FXCollections.observableArrayList(funcNums);
+        } else if (enumU == UsuarioEnum.ADMINISTRADOR){
+            List<Integer> adminNums = UsersBLL.getNums(UsuarioEnum.ADMINISTRADOR.toDbValue());
+            ObservableList<Integer> observableFuncNums = FXCollections.observableArrayList(adminNums);
             userPickerAluno.setItems(observableFuncNums);
-        } else{
-            List<Integer> funcNums = UsersBLL.getFuncNums(enumU.toDbValue());
+        } else if(enumU == UsuarioEnum.FUNCIONARIO) {
+            List<Integer> funcNums = UsersBLL.getNums(UsuarioEnum.FUNCIONARIO.toDbValue());
             ObservableList<Integer> observableFuncNums = FXCollections.observableArrayList(funcNums);
             userPickerAluno.setItems(observableFuncNums);
         }
     }
-
 }

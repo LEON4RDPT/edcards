@@ -85,6 +85,11 @@ public enum ErrorEnum {
         public String toString() {
             return "Utilizador já tem hórario";
         }
+    },
+    err17{
+        public String toString(){
+            return "Já existe um utilizador desse tipo com o mesmo numero";
+        }
     };
 
     public int toDbValue() {

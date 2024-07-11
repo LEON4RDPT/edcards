@@ -6,7 +6,9 @@ import com.edcards.edcards.Programa.Classes.Aluno;
 import com.edcards.edcards.Programa.Classes.Funcionario;
 import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Controllers.Enums.AseEnum;
+import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
 import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.ImageController;
 import javafx.scene.image.Image;
@@ -14,6 +16,9 @@ import javafx.scene.image.Image;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 
@@ -46,7 +51,7 @@ public class UsersBLL {
     }
 
 
-    public static int inserir(String nfc, String nome, Date dataNc, String morada, UsuarioEnum tipo, String cc, byte[] foto, int num_func) {
+    public static int inserir(String nfc, String nome, Date dataNc, String morada, UsuarioEnum tipo, String cc, byte[] foto, int num) {
         DefaultBLL bll = new DefaultBLL("usuario");
 
         if (nfc != null) {
@@ -56,6 +61,28 @@ public class UsersBLL {
         }
         if (bll.hasRows("cc", cc)) {
             return 0;
+        }
+        String validationSql;
+        if (tipo == UsuarioEnum.ALUNO) {
+            validationSql = "SELECT COUNT(*) FROM usuario WHERE num = ? AND tipo = 'aluno'";
+        } else {
+            validationSql = "SELECT COUNT(*) FROM usuario WHERE num = ? AND (tipo = 'admin' OR tipo = 'funcionario')";
+        }
+
+        try (PreparedStatement validationStmt = bll.getConnection().prepareStatement(validationSql)) {
+            validationStmt.setInt(1, num);
+
+            try (ResultSet rs = validationStmt.executeQuery()) {
+                rs.next();
+                int count = rs.getInt(1);
+                if (count > 0) {
+                    FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err17));
+                    return -1;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -2;
         }
 
 
@@ -67,15 +94,13 @@ public class UsersBLL {
         columnValues.put("tipo", tipo.toDbValue());
         columnValues.put("cc", cc);
         columnValues.put("foto", foto);
-        if (tipo != UsuarioEnum.ALUNO) {
-            columnValues.put("num_func", num_func);
-        }
+        columnValues.put("num", num);
         return bll.insertAndGetId(columnValues);
 
 
     }
 
-    public static void inserirAluno(int idAluno, int num_ee, String email, int numTurma, int numUtente, AseEnum ase, int num_aluno) {
+    public static void inserirAluno(int idAluno, int num_ee, String email, int numTurma, int numUtente, AseEnum ase) {
         if (getTipoUser(idAluno) != UsuarioEnum.ALUNO) {
             return;
         }
@@ -86,7 +111,6 @@ public class UsersBLL {
         dic.put("email", email);
         dic.put("turma_num", numTurma);
         dic.put("utente_num", numUtente);
-        dic.put("num_aluno", num_aluno);
         new DefaultBLL("dados_aluno").insert(dic);
     }
 
@@ -151,9 +175,7 @@ public class UsersBLL {
 
         new DefaultBLL("usuario").setOne("data", data, "id", id);
     }
-    public static void setnum(int id, int num){
-        new DefaultBLL("usuario").setOne("num", num, "id", id);
-    }
+
     public static void setEE_numAluno(int id, int numEE) {
         if (!isAluno(id)) {
             return;
@@ -181,12 +203,13 @@ public class UsersBLL {
         }
         new DefaultBLL("dados_aluno").setOne("ase", ase.toDbValue(), "aluno_id", id);
     }
-    public static void setNumAluno(int id, int num_aluno) {
+    public static void setNum(int id, int num) {
         if (!isAluno(id)) {
             return;
         }
-        new DefaultBLL("dados_aluno").setOne("num_aluno", num_aluno, "aluno_id", id);
+        new DefaultBLL("usuario").setOneCustom("num", num, "id", id);
     }
+
 
     public static void setNumUtenteAluno(int id, int num) {
         if (!isAluno(id)) {
@@ -260,12 +283,6 @@ public class UsersBLL {
         }
         return (String) new DefaultBLL("dados_aluno").getOne("email", "aluno_id", id);
     }
-    public static int getNumAluno(int id) {
-        if (!isAluno(id)) {
-            return -1;
-        }
-        return (int) new DefaultBLL("dados_aluno").getOne("num_aluno", "aluno_id", id);
-    }
 
     public static AseEnum getAseAluno(int id) {
         if (!isAluno(id)) {
@@ -295,31 +312,23 @@ public class UsersBLL {
         return (int) new DefaultBLL("dados_aluno").getOne("utente_num", "aluno_id", id);
     }
 
-//todo
-    public static int getIdbyNum(int num, int tipo){
-        if (!isAluno(num)) {
+    public static int getIdbyNumAluno(int num_aluno){
+        if (!isAluno(num_aluno)) {
             return -1;
         }
-        if (!isAluno(tipo)) {
+        return (int) new DefaultBLL("dados_aluno").getOne("aluno_id", "num_aluno" ,num_aluno);
+    }
+    public static int getIdbyNumFunc(int num_func){
+        if (!isAluno(num_func)) {
             return -1;
         }
-        return (int) new DefaultBLL("usuario").getOneByCustomQuery("SELECT * from usuario WHERE num="+num+ "and tipo="+tipo);
-    }
-//todo
-    public static List<Integer> getAlunoNums(int tipo) {
-
-        var list = new DefaultBLL("usuario").getList("id", "tipo",tipo );
-
-        return list.stream()
-                .filter(obj -> obj instanceof Integer)
-                .map(obj -> (Integer) obj)
-                .toList();
-
+        return (int) new DefaultBLL("usuario").getOne("id", "num_func" ,num_func);
     }
 
-//todo
-    public static List<Integer> getFuncNums(int tipo) {
-        List<Object> list = new DefaultBLL("usuario").getListByCustomQuery("SELECT num FROM usuario where tipo = " + tipo);
+
+
+    public static List<Integer> getNums(int tipo) {
+        List<Object> list = new DefaultBLL("usuario").getAllWhereType("num", tipo );
 
         return (list != null) ?
                 list.stream()
@@ -363,7 +372,7 @@ public class UsersBLL {
                 case "horario" ->
                         pessoa.setHorario(GlobalVAR.ImageController.byteArrayToImage((byte[]) entry.getValue()));
                 case "foto" -> pessoa.setFoto(GlobalVAR.ImageController.byteArrayToImage((byte[]) entry.getValue()));
-                case "num" -> pessoa.setNum((int) entry.getValue());
+                case "num" -> pessoa.setNum((Integer) entry.getValue());
             }
         }
 
@@ -386,7 +395,6 @@ public class UsersBLL {
                 aluno.setAse(getAseAluno(pessoa.getIduser()));
                 aluno.setNumUtente(getUtenteAluno(pessoa.getIduser()));
                 aluno.setEmailEE(getEmailAluno(pessoa.getIduser()));
-                aluno.setNum_aluno(getNumAluno(pessoa.getIduser()));
                 return aluno;
 
             case FUNCIONARIO, ADMINISTRADOR:
@@ -404,33 +412,6 @@ public class UsersBLL {
 
         return transformUser(bll.getAllinOne("id", idUser));
     }
-    public static Pessoa getUserByNum(int numFunc) {
-        DefaultBLL bll = new DefaultBLL("usuario");
-
-        if (!existe(numFunc)) {
-            return null;
-        }
-
-        return transformUser(bll.getAllinOne("num_func", numFunc));
-    }
-    public static Aluno getUserByNumAluno(int numAlu) {
-        DefaultBLL dadosAlunosBLL = new DefaultBLL("dados_aluno");
-        DefaultBLL userBLL = new DefaultBLL("usuario");
-
-        List<Map<String, Object>> alunoData = (List<Map<String, Object>>) dadosAlunosBLL.getAllinOne("num_aluno", numAlu);
-        if (alunoData == null || alunoData.isEmpty()) {
-            return null;
-        }
-        Integer alunoId = (Integer) alunoData.get(0).get("id_aluno");
-
-
-        List<Map<String, Object>> userData = (List<Map<String, Object>>) userBLL.getAllinOne("id", alunoId);
-        if (userData == null || userData.isEmpty()) {
-            return null;
-        }
-        return (Aluno) transformUser(userData.get(0));
-    }
-
 
     public static List<Pessoa> getUsers(UsuarioEnum tipo) {
         DefaultBLL bll = new DefaultBLL("usuario");

@@ -229,6 +229,29 @@ public class DefaultBLL extends DAL {
             return null;
         }
     }
+    public List<Object> getAllWhereType(String attributeName, int tipo) {
+        Connection connection = getConnection();
+        if (connection == null) {
+            return null;
+        }
+
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT " + attributeName + " FROM " + getTableName() + " WHERE tipo = ?")) {
+
+            statement.setInt(1, tipo); // Set tipo as int
+            try (ResultSet reader = statement.executeQuery()) {
+
+                List<Object> rows = new ArrayList<>();
+                while (reader.next()) {
+                    rows.add(reader.getObject(attributeName)); // Get value from specified column
+                }
+                return rows;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle this appropriately in production code
+            return null;
+        }
+    }
 
     public List<Map<String, Object>> getAll() {
         Connection connection = getConnection();
@@ -380,6 +403,60 @@ public class DefaultBLL extends DAL {
 
     }
 
+    public void setOneCustom(String column, Object columnValue, String columnCondition, Object columnConditionValue) {
+        Connection connection = getConnection();
+        if (connection == null) {
+            return;
+        }
+
+        try {
+            // 1. Retrieve User Type
+            String userTypeSql = "SELECT tipo FROM " + getTableName() + " WHERE " + columnCondition + " = ?";
+            try (PreparedStatement userTypeStmt = connection.prepareStatement(userTypeSql)) {
+                userTypeStmt.setObject(1, columnConditionValue);
+                try (ResultSet rs = userTypeStmt.executeQuery()) {
+                    if (!rs.next()) {
+                        throw new SQLException("User not found."); // Or handle as appropriate
+                    }
+                    String userType = rs.getString("tipo");
+
+                    // 2. Perform Validation (Only for 'num' column)
+                    if (column.equals("num")) {
+                        String validationSql;
+                        if (userType.equals("aluno")) {
+                            validationSql = "SELECT COUNT(*) FROM usuario WHERE num = ? AND tipo = 'aluno' AND id <> ?";
+                        } else {
+                            validationSql = "SELECT COUNT(*) FROM usuario WHERE num = ? AND (tipo = 'admin' OR tipo = 'funcionario') AND id <> ?";
+                        }
+
+                        try (PreparedStatement validationStmt = connection.prepareStatement(validationSql)) {
+                            validationStmt.setObject(1, columnValue);
+                            validationStmt.setObject(2, columnConditionValue);
+
+                            try (ResultSet validationRs = validationStmt.executeQuery()) {
+                                validationRs.next();
+                                int count = validationRs.getInt(1);
+                                if (count > 0) {
+                                    throw new SQLException("Número já existe para outro usuário do mesmo tipo.");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 3. Update if Validation Passes
+            String sql = "UPDATE " + getTableName() + " SET " + column + " = ? " + formatCondition(columnCondition, columnConditionValue);
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setObject(1, columnValue);
+                statement.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setOne(String column, Object columnOb) {
         Connection connection = getConnection();
         if (connection == null) {
@@ -444,7 +521,7 @@ public class DefaultBLL extends DAL {
             }
             columns.setLength(columns.length() - 2);
             values.setLength(values.length() - 2);
-
+            String testsql = "SELECT COUNT(*) FROM usuario WHERE num = ? AND tipo = 'aluno'\"";
             String sql = "INSERT INTO " + getTableName() + " (" + columns + ") VALUES (" + values + ")";
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
