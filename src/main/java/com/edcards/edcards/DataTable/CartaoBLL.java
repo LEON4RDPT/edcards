@@ -2,6 +2,7 @@ package com.edcards.edcards.DataTable;
 
 import com.edcards.edcards.DataTable.Settings.DefaultBLL;
 import com.edcards.edcards.Programa.Classes.Pessoa;
+import com.edcards.edcards.Programa.Controllers.Enums.ErrorEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 
 import java.time.LocalDateTime;
@@ -153,6 +154,18 @@ public class CartaoBLL {
             return null;
         }
         return (LocalDateTime) ob;
+    }
+
+    public static void setNewCard(String nfc, int pin, Double saldo ,boolean entrou, LocalDateTime uvp){
+        if (!existenteNFC(nfc)) {
+            FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err2));
+            return;
+        }
+        DefaultBLL bll = new DefaultBLL("cartao");
+        bll.updateRow("pin", pin, "codigo", nfc);
+        bll.updateRow("saldo", saldo, "codigo", nfc);
+        bll.updateRow("entrou", entrou, "codigo", nfc);
+        bll.updateRow("ultima_vez_passou", uvp, "codigo", nfc);
     }
 
     public static void setCodigo(String nfc, String novoNfc) {

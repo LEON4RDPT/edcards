@@ -342,7 +342,9 @@ public class ModUserController {
         }
 
         if(!pessoaAtual.getNumCartao().equals(cardNumber.getText())){
-            CartaoBLL.setCodigo(pessoaAtual.getNumCartao(), cardNumber.getText());
+            boolean entSai = CartaoBLL.getEntSaiu(pessoaAtual.getNumCartao());
+            CartaoBLL.setNewCard(cardNumber.getText(), pessoaAtual.getPin(), pessoaAtual.getSaldo(), entSai ,pessoaAtual.getUltimaVezEntrado());
+            CartaoBLL.setNewCard(pessoaAtual.getNumCartao(), 123456, 0.00 ,false, null);
             UsersBLL.setCodigoUser(id, cardNumber.getText());
         }
 

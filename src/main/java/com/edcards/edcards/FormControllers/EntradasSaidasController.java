@@ -20,6 +20,9 @@ import javafx.scene.layout.Pane;
 
 import javax.smartcardio.CardException;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -60,7 +63,7 @@ public class EntradasSaidasController {
     }
     private void waits() throws InterruptedException {
         executor.submit(this::cartaoLido);
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(2);
     }
     @FXML
     private void addPane(String nomePessoa, String es, Image img) {
@@ -101,13 +104,27 @@ public class EntradasSaidasController {
             p.setLayoutY(row * (paneHeight + vSpacing));
         }
     }
+    private final long DEBOUNCE_DELAY = 500;
+    private final long PROCESSING_DELAY = 1250;
+    private long lastReadTime = 0;
+    private final Map<String, Long> lastProcessedTime = new HashMap<>();
     public String cartaoLido() {
         while (true) {
             try {
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastReadTime < DEBOUNCE_DELAY) {
+                    continue;
+                }
                 cartao="";
                 cartao = LerCartao.lerIDCartao("/com/edcards/edcards/Main.fxml");
+                lastReadTime = currentTime;
                 if (!allNfc.contains(cartao)) {
                     continue;
+                }
+                String uniqueCardId = getUniqueCardIdentifier(cartao);
+                Long lastProcessed = lastProcessedTime.get(cartao);
+                if (lastProcessed != null && currentTime - lastProcessed < PROCESSING_DELAY) {
+                    continue; // Skip if processed within the delay
                 }
                 var userByNFC = CartaoBLL.getUserByNFC(cartao);
                 if (userByNFC != null) {
@@ -125,14 +142,17 @@ public class EntradasSaidasController {
                     img = pessoa.getFoto();
                     userImage.setImage(img);
 
+
                     if (!e_s) {
                         s_e = true;
-                        es = "Entrou";
+                        es = "Entrou -> "+ formattedTime;
                         CartaoBLL.setEntrouSaiu(cartao, true);
+                        CartaoBLL.setLastTimePassed(cartao, LocalDateTime.now());
                     } else {
                         s_e = false;
-                        es = "Saiu";
+                        es = "Saiu -> "+ formattedTime;
                         CartaoBLL.setEntrouSaiu(cartao, false);
+                        CartaoBLL.setLastTimePassed(cartao, LocalDateTime.now());
                     }
                     Platform.runLater(() -> {
                         nome.setText(nomePessoa);
@@ -141,6 +161,7 @@ public class EntradasSaidasController {
                     Platform.runLater(() -> addPane(nomePessoa, es, img));
                 }
                     }
+                lastProcessedTime.put(cartao, currentTime);
             } catch (CardException | InterruptedException e) {
                 e.printStackTrace();
                 if (e instanceof InterruptedException) {
@@ -153,6 +174,11 @@ public class EntradasSaidasController {
         }
         return null;
     }
+    LocalDateTime now = LocalDateTime.now(ZoneId.of("Europe/Lisbon"));
+    int currentHour = now.getHour();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M - H:m");
+    String formattedTime = now.format(formatter);
+
     @FXML
     private void handleAlunoSemCartaoButton() {
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -194,7 +220,7 @@ public class EntradasSaidasController {
                             img = pessoa.getFoto();
 
                             s_e = !e_s;
-                            es = s_e ? "Entrou" : "Saiu";
+                            es = s_e ? "Entrou -> "+formattedTime  : "Saiu -> "+ formattedTime;
 
                             CartaoBLL.setEntrouSaiu(cartao, s_e);
                             userImage.setImage(img);
@@ -216,5 +242,9 @@ public class EntradasSaidasController {
             setStage("/com/edcards/edcards/Main.fxml");
         }
     }
+    private String getUniqueCardIdentifier(String nfcId) {
+        return nfcId + System.currentTimeMillis();
+    }
+
 }
 

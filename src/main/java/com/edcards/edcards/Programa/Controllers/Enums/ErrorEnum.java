@@ -41,7 +41,7 @@ public enum ErrorEnum {
             return "Nome exitente na base de dados";
         }
     },
-    err8 {
+        err8 {
         public String toString() {
             return "Cartão já existente na base de dados";
         }

@@ -407,6 +407,23 @@ public class DefaultBLL extends DAL {
 
     }
 
+    public void updateRow(String column, Object newValue, String conditionColumn, Object conditionValue) {
+        Connection connection = getConnection();
+        if (connection == null) {
+            return; // Handle the connection failure
+        }
+
+        try (PreparedStatement statement = connection.prepareStatement(
+                "UPDATE " + getTableName() + " SET " + column + " = ? WHERE " + conditionColumn + " = ?")) {
+
+            statement.setObject(1, newValue);
+            statement.setObject(2, conditionValue);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(); // Log the error properly in a production environment
+        }
+    }
+
     public void setOneCustom(String column, Object columnValue, String columnCondition, Object columnConditionValue) {
         Connection connection = getConnection();
         if (connection == null) {
