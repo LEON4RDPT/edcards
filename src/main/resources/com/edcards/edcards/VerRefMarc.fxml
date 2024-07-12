@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox fx:id="rootHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.VerRefMarc">
+    <children>
+        <AnchorPane fx:id="leftPane" prefHeight="720.0" prefWidth="320.0" stylesheets="@CSS/styles.css">
+            <children>
+                <Button fx:id="buttonVoltar" layoutX="105.0" layoutY="655.0" mnemonicParsing="false" onAction="#handleButtonClickVoltar" prefHeight="56.0" prefWidth="110.0" styleClass="button-1" stylesheets="@CSS/styles.css" text="Voltar" />
+                <TextArea fx:id="textArea" editable="false" prefHeight="200.0" prefWidth="320.0" styleClass="textarea-medium" stylesheets="@CSS/styles.css" text="Text&#10;" />
+            </children>
+        </AnchorPane>
+        <VBox prefHeight="712.0" prefWidth="895.0" style="-fx-background-color: gray;" HBox.hgrow="ALWAYS">
+            <children>
+                <AnchorPane fx:id="rightPane" prefHeight="720.0">
+                    <children>
+                        <GridPane fx:id="buttonGrid" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <!-- Define 6 columns and 4 rows -->
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="ALWAYS" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                                <ColumnConstraints hgrow="ALWAYS" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints vgrow="ALWAYS" />
+                                <RowConstraints vgrow="ALWAYS" />
+                                <RowConstraints vgrow="ALWAYS" />
+                                <RowConstraints vgrow="ALWAYS" />
+                            </rowConstraints>
+                            <!-- Add 24 buttons to the grid -->
+                            <children>
+                                <Button fx:id="infoB1" style="-fx-background-color: green;" styleClass="button-red" text="B1" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB2" style="-fx-background-color: green;" styleClass="button-red" text="B2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB3" style="-fx-background-color: green;" styleClass="button-red" text="B3" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB4" style="-fx-background-color: green;" styleClass="button-red" text="B4" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB5" style="-fx-background-color: green;" styleClass="button-red" text="B5" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB6" style="-fx-background-color: green;" styleClass="button-red" text="B6" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB7" prefHeight="150.0" prefWidth="208.0" style="-fx-background-color: green;" styleClass="button-red" text="B7" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB8" style="-fx-background-color: green;" styleClass="button-red" text="B8" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB9" style="-fx-background-color: green;" styleClass="button-red" text="B9" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB10" style="-fx-background-color: green;" styleClass="button-red" text="B10" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB11" style="-fx-background-color: green;" styleClass="button-red" text="B11" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB12" style="-fx-background-color: green;" styleClass="button-red" text="B12" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB13" style="-fx-background-color: green;" styleClass="button-red" text="B13" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB14" style="-fx-background-color: green;" styleClass="button-red" text="B14" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB15" style="-fx-background-color: green;" styleClass="button-red" text="B15" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB16" style="-fx-background-color: green;" styleClass="button-red" text="B16" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB17" style="-fx-background-color: green;" styleClass="button-red" text="B17" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB18" style="-fx-background-color: green;" styleClass="button-red" text="B18" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB19" style="-fx-background-color: green;" styleClass="button-red" text="B19" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB20" style="-fx-background-color: green;" styleClass="button-red" text="B20" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB21" style="-fx-background-color: green;" styleClass="button-red" text="B21" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB22" style="-fx-background-color: green;" styleClass="button-red" text="B22" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB23" style="-fx-background-color: green;" styleClass="button-red" text="B23" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                <Button fx:id="infoB24" style="-fx-background-color: green;" styleClass="button-red" text="B24" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+
+                            </children>
+                        </GridPane>
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="buttonsBack" prefHeight="200.0" prefWidth="200.0">
+                    <children>
+                        <Button fx:id="buttonBack" layoutX="357.0" layoutY="31.0" mnemonicParsing="false" onAction="#buttonBackClick" prefHeight="38.0" prefWidth="66.0" styleClass="button-3" text="&lt;" />
+                        <Button fx:id="buttonUp" layoutX="537.0" layoutY="31.0" mnemonicParsing="false" onAction="#buttonUpClick" prefHeight="38.0" prefWidth="66.0" styleClass="button-3" text="&gt;" />
+                        <TextField fx:id="textNum" alignment="CENTER" editable="false" layoutX="440.0" layoutY="30.0" prefHeight="40.0" prefWidth="81.0" styleClass="button-3" />
+                    </children>
+                </AnchorPane>
+            </children>
+        </VBox>
+    </children>
+</HBox>

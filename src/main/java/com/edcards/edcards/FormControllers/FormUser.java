@@ -175,4 +175,8 @@ public class FormUser {
         setStage("/com/edcards/edcards/VerRefeicoes.fxml");
 
     }
+
+    public void handleButtonMarc(ActionEvent actionEvent) throws IOException {
+        setStage("/com/edcards/edcards/VerRefMarc.fxml");
+    }
 }
