@@ -200,7 +200,7 @@ public class UsersBLL {
         if (!isAluno(id)) {
             return;
         }
-        new DefaultBLL("dados_aluno").setOne("turma", turma, "aluno_id", id);
+        new DefaultBLL("dados_aluno").setOne("turma_num", turma, "aluno_id", id);
     }
 
     public static void setAseAluno(int id, AseEnum ase) {
@@ -336,24 +336,11 @@ public class UsersBLL {
         }
         return (int) new DefaultBLL("usuario").getOne("id", "num" ,num);
     }
-    public static int getIdbyNumFunc(int num_func){
-        if (!isAluno(num_func)) {
-            return -1;
-        }
-        return (int) new DefaultBLL("usuario").getOne("id", "num_func" ,num_func);
-    }
 
 
 
     public static List<Integer> getNums(int tipo) {
-        List<Object> list = new DefaultBLL("usuario").getAllWhereType("num", tipo );
-
-        return (list != null) ?
-                list.stream()
-                        .filter(obj -> obj instanceof Integer)
-                        .map(obj -> (Integer) obj)
-                        .toList() :
-                Collections.emptyList();
+        return new DefaultBLL("usuario").getUsersByTipo(tipo);
     }
 
     public static Pessoa transformUser(Map<String, Object> row) {

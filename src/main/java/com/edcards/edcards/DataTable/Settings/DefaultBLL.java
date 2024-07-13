@@ -233,6 +233,31 @@ public class DefaultBLL extends DAL {
             return null;
         }
     }
+
+    public List<Integer> getUsersByTipo(int tipo) {
+        Connection connection = getConnection(); // Assumes you have this method
+        if (connection == null) {
+            return Collections.emptyList();
+        }
+
+        String sql = "SELECT num FROM " + getTableName() + " WHERE tipo = ?"; // Use getTableName()
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, tipo);
+
+            try (ResultSet reader = statement.executeQuery()) {
+                List<Integer> userNums = new ArrayList<>();
+                while (reader.next()) {
+                    userNums.add(reader.getInt("num"));
+                }
+                return userNums;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
     public List<Object> getAllWhereType(String attributeName, int tipo) {
         Connection connection = getConnection();
         if (connection == null) {
