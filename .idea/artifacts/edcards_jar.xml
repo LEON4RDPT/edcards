@@ -5,28 +5,12 @@
       <element id="module-output" name="edcards" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/dlsc/formsfx/formsfx-core/11.6.0/formsfx-core-11.6.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/mysql/mysql-connector-j/8.4.0/mysql-connector-j-8.4.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/21/javafx-controls-21-win.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/21/javafx-fxml-21-win.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/21/javafx-controls-21.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/protobuf/protobuf-java/3.25.1/protobuf-java-3.25.1.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/21/javafx-base-21.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/kordamp/bootstrapfx/bootstrapfx-core/0.4.0/bootstrapfx-core-0.4.0.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/21/javafx-graphics-21.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/21/javafx-graphics-21-win.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-base/21/javafx-base-21-win.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/21/javafx-fxml-21.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-io/commons-io/2.6/commons-io-2.6.jar" path-in-jar="/" />
       <element id="library" level="project" name="Maven: com.mysql:mysql-connector-j:8.4.0" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:win:21" />
       <element id="library" level="project" name="Maven: org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:win:21" />
       <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.25.1" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:win:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-graphics:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:21" />
-      <element id="library" level="project" name="Maven: org.openjfx:javafx-base:win:21" />
       <element id="library" level="project" name="Maven: commons-io:commons-io:2.6" />
       <element id="library" level="project" name="Maven: com.dlsc.formsfx:formsfx-core:11.6.0" />
       <element id="file-copy" path="$USER_HOME$/Desktop/javafx-sdk-22.0.1/bin/api-ms-win-core-console-l1-1-0.dll" />
@@ -88,6 +72,8 @@
       <element id="file-copy" path="$USER_HOME$/Desktop/javafx-sdk-22.0.1/bin/api-ms-win-core-file-l1-2-0.dll" />
       <element id="file-copy" path="$USER_HOME$/Desktop/javafx-sdk-22.0.1/bin/api-ms-win-crt-process-l1-1-0.dll" />
       <element id="file-copy" path="$USER_HOME$/Desktop/javafx-sdk-22.0.1/bin/api-ms-win-core-localization-l1-2-0.dll" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-controls:win:22" />
+      <element id="library" level="project" name="Maven: org.openjfx:javafx-fxml:win:22" />
     </root>
   </artifact>
 </component>
