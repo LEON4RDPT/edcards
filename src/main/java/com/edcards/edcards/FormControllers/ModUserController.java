@@ -22,7 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-
+import static javafx.application.Platform.runLater;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
@@ -37,12 +37,14 @@ import java.util.stream.Collectors;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.ImageController.imageToByteArray;
 
 public class ModUserController {
+    @FXML
     public Label cardNumber;
     public Button readCard;
     public TextField confPin;
     public TextField pin;
     public TextField numInterno;
     public Label nf;
+    @FXML
     public TextField numAlu;
     @FXML
     public ComboBox tipoPickerUser;
@@ -51,7 +53,7 @@ public class ModUserController {
     private TextField turmaField;
     @FXML
     private TextField numUtSaudeField;
-
+    int numP;
     @FXML
     private ComboBox AsePicker;
     @FXML
@@ -84,7 +86,7 @@ public class ModUserController {
     private Pessoa pessoaAtual;
     private List<Pessoa> users = new ArrayList<>();
     private volatile boolean isRunning = true;
-    private ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
+    private final ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
     String nome, morada, email, nif, numEE, turma, tipo, idCartao;
     byte[] imgUserBLL;
     int pinC;
@@ -123,7 +125,8 @@ public class ModUserController {
                 isDiffrentFoto = true;
             }
         });
-//        aguardarCartao();
+            users = UsersBLL.getUsersAll();
+        aguardarCartao();
     }
     private void aguardarCartao() {
         nfcExecutar.submit(() -> {
@@ -131,62 +134,58 @@ public class ModUserController {
                 try {
                     String idCartao = LerCartao.lerIDCartao("/com/edcards/edcards/POSAdmin.fxml");
                     if (idCartao == null) {
-                        //feedback
-                        return;
+                        // More informative feedback
+                        FeedBackController.feedbackErro("Nenhum Cartão encontrado");
+                        continue; // Continue to next iteration of loop
                     }
-                    if (CartaoBLL.existenteNFC(idCartao)) {
-                        cardNumber.setText(idCartao);
 
-                        int idUser = CartaoBLL.getIdUserByNFC(idCartao);
-                        Pessoa user = UsersBLL.getUser(idUser);
-                        int numA = user.getNum();
-                        selectUserFromNum(numA);
+                    if (CartaoBLL.existenteNFC(idCartao)) {
+                        numP = CartaoBLL.getNumUserByNFC(idCartao);
+                        selectUserFromNum(numP);
                     } else {
                         FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err13));
-                        isRunning = true;
                     }
-
                 } catch (Exception e) {
-                    System.err.println("Error reading NFC card: " + e.getMessage());
+                    System.err.println("Erro a ler NFC: " + e.getMessage());
                     e.printStackTrace();
+                    FeedBackController.feedbackErro("Erro a ler NFC:"); // User feedback
                 }
             }
         });
     }
-    private void selectUserFromNum(int num){
+    private void selectUserFromNum(int num) {
         isDiffrentFoto = false;
-        for (Pessoa p : users) {
-            if (p.getNum()== num) {
-                pessoaAtual = p;
-            }
-        }
+        pessoaAtual = users.stream()
+                .filter(p -> p.getNum() == num)
+                .findFirst()
+                .orElse(null);
 
         if (pessoaAtual != null) {
 
-            nameField.setText(pessoaAtual.getNome());
-            dateField.setValue(pessoaAtual.getDataNasc().toLocalDate());
-            ccField.setText(pessoaAtual.getCartaoC());
-            moradaField.setText(pessoaAtual.getMorada());
-            cardNumber.setText(pessoaAtual.getNumCartao());
-            switch (pessoaAtual) {
-                case Aluno ignored -> tipoPicker.getSelectionModel().select(0);
-                case Funcionario ignored -> tipoPicker.getSelectionModel().select(1);
-                case Admin ignored -> tipoPicker.getSelectionModel().select(2);
-                case null, default -> { }
-            }
-            try {
-                if (alunoPane.isVisible() && pessoaAtual instanceof Aluno) {
-                    numEEfield.setText(String.valueOf(((Aluno) pessoaAtual).getNumEE()));
-                    emailField.setText(((Aluno) pessoaAtual).getEmailEE());
-                    turmaField.setText(String.valueOf(((Aluno) pessoaAtual).getNumTurma()));
-                    numUtSaudeField.setText(String.valueOf(((Aluno) pessoaAtual).getNumUtente()));
-                    AsePicker.getSelectionModel().select(((Aluno) pessoaAtual).getAse().toString());
-                    numAlu.setText(String.valueOf(((Aluno) pessoaAtual).getNum_aluno()));}
-                    nf.setVisible(false);
-                    numInterno.setVisible(false);
-            } catch (NullPointerException ignored) {
-            }
-            imageUser.setImage(pessoaAtual.getFoto());
+            runLater(() -> {  // Start of runLater block
+                nameField.setText(pessoaAtual.getNome());
+                dateField.setValue(pessoaAtual.getDataNasc().toLocalDate());
+                ccField.setText(pessoaAtual.getCartaoC());
+                moradaField.setText(pessoaAtual.getMorada());
+                cardNumber.setText(pessoaAtual.getNumCartao());
+                numInterno.setText(String.valueOf(pessoaAtual.getNum()));
+                switch (pessoaAtual) {
+                    case Aluno ignored -> tipoPicker.getSelectionModel().select(0);
+                    case Funcionario ignored -> tipoPicker.getSelectionModel().select(1);
+                    case Admin ignored -> tipoPicker.getSelectionModel().select(2);
+                    case null, default -> { }
+                }
+                try {
+                    if (alunoPane.isVisible() && pessoaAtual instanceof Aluno) {
+                        numEEfield.setText(String.valueOf(((Aluno) pessoaAtual).getNumEE()));
+                        emailField.setText(((Aluno) pessoaAtual).getEmailEE());
+                        turmaField.setText(String.valueOf(((Aluno) pessoaAtual).getNumTurma()));
+                        numUtSaudeField.setText(String.valueOf(((Aluno) pessoaAtual).getNumUtente()));
+                        AsePicker.getSelectionModel().select(((Aluno) pessoaAtual).getAse().toString());}
+                } catch (NullPointerException ignored) {
+                }
+                imageUser.setImage(pessoaAtual.getFoto());
+            }); // End of runLater block
         }
     }
     @FXML
@@ -357,11 +356,11 @@ public class ModUserController {
             }
             GlobalVAR.Dados.setPessoaAtual(pessoaAtual);
         }
-
+        FeedBackController.feedbackConf("Dados Modificados com Sucesso");
     }
 
     public void handleLerCard(ActionEvent actionEvent) {
-        //cardNumber.setText("Passe o cartão...");
+        cardNumber.setText("Passe o cartão...");
         nfcExecutar.submit(() -> {
             while (isRunning) {
                 try {
@@ -369,7 +368,9 @@ public class ModUserController {
                     if (idCartao == null) {
                         return;
                     }
+
                     if (CartaoBLL.existenteNFC(idCartao)) {
+
                         Platform.runLater(() -> {
                             cardNumber.setText(idCartao);
                             saldo = CartaoBLL.getSaldo(idCartao);

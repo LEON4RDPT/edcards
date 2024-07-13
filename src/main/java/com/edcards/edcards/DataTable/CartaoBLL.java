@@ -128,7 +128,7 @@ public class CartaoBLL {
         if (String.valueOf(pin).length() == 6) {
             DefaultBLL bll = new DefaultBLL("cartao");
             bll.setOne("pin", pin, "codigo", nfc);
-            FeedBackController.feedbackErro("Pin alterado com sucesso!");
+            FeedBackController.feedbackConf("Pin alterado com sucesso!");
 
         } else {
             //feedback
@@ -186,6 +186,13 @@ public class CartaoBLL {
             return 0;
         }
         return (int) new DefaultBLL("usuario").getOne("id", "cartao_id", nfc);
+    }
+
+    public static int getNumUserByNFC(String nfc) {
+        if (!existenteNFC(nfc)) {
+            return 0;
+        }
+        return (int) new DefaultBLL("usuario").getOne("num", "cartao_id", nfc);
     }
 
     public static Pessoa getUserByNFC(String nfc) {

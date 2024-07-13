@@ -118,7 +118,7 @@ public class CarregarCartaoController {
                         }
                         if (FeedBackController.feedbackYesNo("Deseja adicionar " + saldoAAdicionar + " €", "Confirmação")) {
                             CartaoBLL.setSaldo(nfc, saldoAntigo + saldoAAdicionar);
-                            FeedBackController.feedbackErro("Saldo adicionado");
+                            FeedBackController.feedbackConf("Saldo adicionado");
                         }
                     }
                 } catch (Exception e) {
@@ -133,6 +133,7 @@ public class CarregarCartaoController {
             saldoAadicionar.setText(String.format("%.2f€", saldoAAdicionar));
         } else {
             saldoAadicionar.setText(1000.00 + "€");
+            saldoAAdicionar = 1000.00;
         }
 
     }

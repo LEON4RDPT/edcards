@@ -9,6 +9,7 @@ import com.edcards.edcards.Programa.Controllers.Enums.UsuarioEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -105,13 +106,19 @@ public class AddHorarioController {
             while (isRunning) {
                 try {
                     String idCartao = LerCartao.lerIDCartao(null);
-                    int user = CartaoBLL.getIdUserByNFC(idCartao);
-                    Pessoa userr = UsersBLL.getUser(user);
-                    nomeText.setText(userr.getNome());
-                    id = userr.getIduser();
-                    HorarioUser.setImage(userr.getHorario());
-                    break;
+                    int userId = CartaoBLL.getIdUserByNFC(idCartao);
+                    Pessoa userr = UsersBLL.getUser(userId);
+
+                    Platform.runLater(() -> {
+                        nomeText.setText(userr.getNome());
+                        id = userr.getIduser();
+                        HorarioUser.setImage(userr.getHorario());
+                    });
+
+                     // Exit loop after successful read
+
                 } catch (Exception ignored) {
+                    // Consider adding more specific error handling or logging here
                 }
             }
         });

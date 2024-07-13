@@ -206,7 +206,7 @@ public class Pos {
             try {
                 var pess = CartaoBLL.getUserByNFC(idCartao);
                 assert pess != null;
-                FeedBackController.feedbackErro("Pessoa: " + pess.getNome() + " Carregada!");
+                FeedBackController.feedbackConf("Pessoa: " + pess.getNome() + " Carregada!");
                 GlobalVAR.Dados.setClientePOS(pess);
                 changeTextBox();
             } finally {
