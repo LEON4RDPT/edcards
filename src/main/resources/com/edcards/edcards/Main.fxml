@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<HBox fx:id="rootHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.FormUser">
+<HBox fx:id="rootHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.FormUser">
     <children>
         <AnchorPane fx:id="leftPane" maxWidth="1.7976931348623157E308" prefWidth="960.0" HBox.hgrow="ALWAYS">
             <ImageView fx:id="imageUser" fitHeight="439.0" fitWidth="446.0" layoutX="220.0" layoutY="123.0" pickOnBounds="true" preserveRatio="true">
@@ -22,9 +21,9 @@
 
                 <Button fx:id="btnHistComp" layoutX="80.0" layoutY="481.0" mnemonicParsing="false" onAction="#handleSeeHistComp" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Historico de Compras" />
                 <Button fx:id="btnPos" layoutX="80.0" layoutY="401.0" mnemonicParsing="false" onAction="#handlePosClick" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="POS" />
-                <Button fx:id="btnMarcRef" layoutX="80.0" layoutY="521.0" mnemonicParsing="false" onAction="#handleButtonMarc" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Marcar Refeiçoes" />
+                <Button fx:id="btnMarcRef" layoutX="80.0" layoutY="521.0" mnemonicParsing="false" onAction="#handleButtonMarc" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Ver Refeições Marcadas" />
                 <Button fx:id="btnHorario" layoutX="80.0" layoutY="441.0" mnemonicParsing="false" onAction="#handleSeeHorario" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Horario" />
-                <Button fx:id="btnRefMarc" layoutX="80.0" layoutY="555.0" mnemonicParsing="false" onAction="#handleButtonVerRef" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Ver Refeiçoes Marcadas" />
+                <Button fx:id="btnRefMarc" layoutX="80.0" layoutY="555.0" mnemonicParsing="false" onAction="#handleButtonVerRef" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Marcar Refeições" />
 
                 <Button fx:id="btnChangePin" layoutX="80.0" layoutY="590.0" mnemonicParsing="false" onAction="#handlePinChange" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Mudar PIN" />
                 <Button fx:id="exit" layoutX="80.0" layoutY="626.0" mnemonicParsing="false" onAction="#handleExit" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Sair" />
