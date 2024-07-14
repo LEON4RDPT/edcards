@@ -2,14 +2,12 @@ package com.edcards.edcards.DataTable;
 
 import com.edcards.edcards.DataTable.Settings.DAL;
 import com.edcards.edcards.DataTable.Settings.DefaultBLL;
+import com.edcards.edcards.Programa.Classes.Produto;
 import com.edcards.edcards.Programa.Classes.Refeicao;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RefeicaoBLL extends DAL {
     public RefeicaoBLL() { super("refeicao"); }
@@ -48,6 +46,45 @@ public class RefeicaoBLL extends DAL {
         }
 
     }
+
+
+
+    public static List<Refeicao> getRefeicaoByIdUser(int id) {
+        DefaultBLL bll = new DefaultBLL("refeicao_marcada");
+        List<Object> x = bll.getAllWhereType("refeicao_id", "usuario_id", id);
+        List<Refeicao> refeicoes = new ArrayList<>();
+        var list = x.stream()
+                .filter(obj -> obj instanceof Integer)
+                .map(obj -> (Integer) obj)
+                .toList();
+
+        Collections.emptyList();
+        for (var ob : list) {
+            Refeicao refeicao = getRefeicaoById(ob);
+            refeicoes.add(refeicao);
+        }
+        return refeicoes;
+
+    }
+
+    private static Refeicao getRefeicaoById(int id) {
+        DefaultBLL bll = new DefaultBLL("refeicao");
+        var x = bll.getAll("id_ref", id);
+        Refeicao refeicao = new Refeicao();
+        for (Map.Entry<String, Object> entry : x.getFirst().entrySet()) {
+            switch (entry.getKey()) {
+                case "produto_id" -> refeicao.setProduto(ProdutoBLL.getProduto((int) entry.getValue()));
+                case "data" -> refeicao.setDataRefeicao((Date) entry.getValue());
+                case "id_ref" -> refeicao.setIdRefeicao((int) entry.getValue());
+                default -> {
+                }
+            }
+        }
+        return refeicao;
+
+
+    }
+
 
     public static List<Refeicao> getRefeicao() {
         DefaultBLL bll = new DefaultBLL("refeicao");

@@ -282,6 +282,29 @@ public class DefaultBLL extends DAL {
         }
     }
 
+    public List<Object> getAllWhereType(String attributeName, String stringCondition, Object obCondition) {
+        Connection connection = getConnection();
+        if (connection == null) {
+            return null;
+        }
+
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT " + attributeName + " FROM " + getTableName() + formatCondition(stringCondition, obCondition));) {
+
+            try (ResultSet reader = statement.executeQuery()) {
+
+                List<Object> rows = new ArrayList<>();
+                while (reader.next()) {
+                    rows.add(reader.getObject(attributeName)); // Get value from specified column
+                }
+                return rows;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle this appropriately in production code
+            return null;
+        }
+    }
+
     public List<Map<String, Object>> getAll() {
         Connection connection = getConnection();
         if (connection == null) {

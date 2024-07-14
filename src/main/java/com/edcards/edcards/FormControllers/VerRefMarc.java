@@ -2,9 +2,11 @@ package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.ProdutoBLL;
+import com.edcards.edcards.DataTable.RefeicaoBLL;
 import com.edcards.edcards.DataTable.TransacaoBLL;
 import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
 import com.edcards.edcards.Programa.Classes.Produto;
+import com.edcards.edcards.Programa.Classes.Refeicao;
 import com.edcards.edcards.Programa.Controllers.ArredondarController;
 import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
@@ -26,6 +28,8 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColor;
+import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColorBack;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
 
 public class VerRefMarc {
@@ -98,8 +102,8 @@ public class VerRefMarc {
     @FXML
     private Button infoB24;
     private Button[] btns = new Button[23];
-    private Produto[] produtos = new Produto[23];
-    private List<Produto> listaProdutosDisponiveis = new ArrayList<>();
+    private Refeicao[] refeicoes = new Refeicao[23];
+    private List<Refeicao> listaProdutosDisponiveis = new ArrayList<>();
     private int buttonPage = 1;
 
     private void loadbtns() {
@@ -115,6 +119,9 @@ public class VerRefMarc {
 
     @FXML
     private void initialize() {
+        var id = GlobalVAR.Dados.getPessoaAtual().getIduser();
+        listaProdutosDisponiveis.clear();
+        listaProdutosDisponiveis.addAll(Objects.requireNonNull(RefeicaoBLL.getRefeicaoByIdUser(id)));
 
         loadbtns();
         resizeAll();
@@ -124,7 +131,75 @@ public class VerRefMarc {
     }
 
     private void setMarc() {
-        
+
+        for (var button : btns) {
+            setButtonColorBack(button);
+        }
+        textNum.setText(String.valueOf(buttonPage));
+
+
+        int btnPg = 24 * buttonPage;
+        int btnPgOld = btnPg - 24;
+
+        refeicoes = new Refeicao[refeicoes.length]; //clear
+        List<Refeicao> refeicoes1 = new ArrayList<>();
+
+        for (int page = btnPgOld; page < btnPg; page++) {
+            if (page >= Objects.requireNonNull(listaProdutosDisponiveis).size()) {
+                refeicoes1.add(null);
+                continue;
+            }
+            refeicoes1.add(listaProdutosDisponiveis.get(page));
+        }
+
+        refeicoes = refeicoes1.toArray(new Refeicao[0]);
+
+        for (int i = 0; i < btns.length; i++) {
+            btns[i].setWrapText(true);
+
+            if (refeicoes[i] == null) {
+                btns[i].setText("NULL");
+                btns[i].setVisible(false);
+                continue;
+            }
+            btns[i].setVisible(true);
+            btns[i].setText(refeicoes[i].getProduto().getNome());
+
+        }
+
+        //color
+        for (int slot = 0; slot < btns.length; slot++) {
+            if (refeicoes[slot] == null) {
+                continue;
+            }
+            setButtonColor(btns[slot], refeicoes[slot].getProduto().getTipo());
+
+        }
+    }
+
+    @FXML
+    private void handleButtonClickMarc(ActionEvent event) {
+        Button clickedButton = (Button) event.getSource();
+        for (int i = 0; i < btns.length; i++) {
+            if (refeicoes[i] == null) {
+                return;
+            }
+            if (clickedButton == btns[i]) {
+                setText(refeicoes[i]);
+                break;
+            }
+        }
+        changeTextBox();
+    }
+
+    private void setText(Refeicao ref) {
+        Produto produto = ref.getProduto();
+        StringBuilder str = new StringBuilder();
+        str.append("Nome: \n").append(produto.getNome());
+        str.append("\n");
+        str.append("Data: ").append(ref.getDataRefeicao());
+        textArea.setText(str.toString());
+
     }
 
 

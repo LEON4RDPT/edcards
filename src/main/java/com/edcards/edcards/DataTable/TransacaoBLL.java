@@ -21,6 +21,7 @@ import static com.edcards.edcards.Programa.Controllers.FeedBackController.feedba
 
 public class TransacaoBLL {
 
+
     //exists done!
     public static boolean existe(int id) {
         return new DefaultBLL("transacao").hasRows("id", id);
