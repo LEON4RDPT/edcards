@@ -270,9 +270,6 @@ public class CriarUserController {
         idCartao = nfc;
         ase = AseEnum.valueOf(AsePicker.getValue());
         nus = Integer.parseInt(numUtSaudeField.getText());
-
-
-
         if (nome!= null || idCartao!= null || turma!= 0 || morada!= null || email!= null || cc!= null || numEE!= 0 || num!= 0 || numEEfield!= null || imgUser!= null || ase!= null || nus!= 0 || num_aluno!=0) {
             FeedBackController.feedbackConf(nome + morada + email + cc + numEE + num + idCartao + imgUser + data + ase + nus + num);
             var id = UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL,num);
@@ -289,8 +286,6 @@ public class CriarUserController {
         var id = UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL,num);
         if (id == 0) {
             FeedBackController.feedbackErro("Erro Dados duplicados!");
-        } else {
-            FeedBackController.feedbackConf("Usuario Registado com sucesso! Nome: " + nome);
         }
     }
 

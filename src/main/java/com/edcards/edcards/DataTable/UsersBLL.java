@@ -60,37 +60,37 @@ public class UsersBLL {
     public static int inserir(String nfc, String nome, Date dataNc, String morada, UsuarioEnum tipo, String cc, byte[] foto, int num) {
         DefaultBLL bll = new DefaultBLL("usuario");
 
-        if (nfc != null) {
-            if (bll.hasRows("cartao_id", nfc)) {
-                return 0;
-            }
-        }
-        if (bll.hasRows("cc", cc)) {
+        if (nfc != null && bll.hasRows("cartao_id", nfc)) {
+            FeedBackController.feedbackErro("Este cartão já está associado a um usuário");
             return 0;
         }
-        String validationSql;
-        if (tipo == UsuarioEnum.ALUNO) {
-            validationSql = "SELECT COUNT(*) FROM usuario WHERE num = ? AND tipo = 'aluno'";
-        } else {
-            validationSql = "SELECT COUNT(*) FROM usuario WHERE num = ? AND (tipo = 'admin' OR tipo = 'funcionario')";
+
+        if (bll.hasRows("cc", cc)) {
+            FeedBackController.feedbackErro("Este número de cartão de cidadão já está associado a um usuário");
+            return 0;
         }
+
+        String validationSql = "SELECT COUNT(*) FROM usuario WHERE num = ? AND tipo != ?";
 
         try (PreparedStatement validationStmt = bll.getConnection().prepareStatement(validationSql)) {
             validationStmt.setInt(1, num);
+            validationStmt.setInt(2, UsuarioEnum.ALUNO.toDbValue());
 
             try (ResultSet rs = validationStmt.executeQuery()) {
                 rs.next();
                 int count = rs.getInt(1);
                 if (count > 0) {
-                    FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err17));
-                    return -1;
+                    FeedBackController.feedbackErro("Este número já está em uso por um administrador ou funcionário");
+                    return 0;
+                }else {
+                    FeedBackController.feedbackConf("Usuario Registado com sucesso! Nome: " + nome);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            FeedBackController.feedbackErro("Ocorreu um erro ao inserir o usuário no banco de dados.");
             return -2;
         }
-
 
         Map<String, Object> columnValues = new HashMap<>();
         columnValues.put("cartao_id", nfc);
@@ -101,9 +101,8 @@ public class UsersBLL {
         columnValues.put("cc", cc);
         columnValues.put("foto", foto);
         columnValues.put("num", num);
+
         return bll.insertAndGetId(columnValues);
-
-
     }
 
     public static void inserirAluno(int idAluno, int num_ee, String email, int numTurma, int numUtente, AseEnum ase) {

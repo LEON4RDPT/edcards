@@ -134,9 +134,8 @@ public class ModUserController {
                 try {
                     String idCartao = LerCartao.lerIDCartao("/com/edcards/edcards/POSAdmin.fxml");
                     if (idCartao == null) {
-                        // More informative feedback
                         FeedBackController.feedbackErro("Nenhum Cartão encontrado");
-                        continue; // Continue to next iteration of loop
+                        continue;
                     }
 
                     if (CartaoBLL.existenteNFC(idCartao)) {
@@ -326,7 +325,7 @@ public class ModUserController {
             UsersBLL.setNomeUser(id,nameField.getText());
         }
         if (pessoaAtual.getNum()!=Integer.parseInt(numInterno.getText())){
-            UsersBLL.setNum(id, num);
+            UsersBLL.setNum(id, Integer.parseInt(numInterno.getText()));
         }
         if (!pessoaAtual.getCartaoC().equals(ccField.getText())) {
             UsersBLL.setCCUser(id,ccField.getText());
