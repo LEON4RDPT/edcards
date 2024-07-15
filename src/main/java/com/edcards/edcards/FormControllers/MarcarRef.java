@@ -1,6 +1,7 @@
 package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.RefeicaoBLL;
+import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
 import com.edcards.edcards.Programa.Classes.Refeicao;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
@@ -14,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
 
-public class VerRef {
+public class MarcarRef {
     public HBox rootHBox;
     public AnchorPane anchorPaneLeft;
     public AnchorPane anchorPaneRight;
@@ -42,6 +42,41 @@ public class VerRef {
     private List<Refeicao> refeicaoList = new ArrayList<>();
     private Refeicao refeicaoAtual;
     private int currentRefeicaoIndex = 0;
+
+    @FXML
+    private void initialize() {
+        dataAtual = LocalDate.now();
+        carregarTodasRefeicoes();  // Carrega todas as refeições ao iniciar a aplicação
+        atualizarTextoData();
+
+        resizeAll();
+    }
+
+    private void resizeAll() {
+        rootHBox.widthProperty().addListener((observable, oldValue, newValue) -> {
+            double width = newValue.doubleValue();
+            anchorPaneLeft.setPrefWidth(width / 4);
+            anchorPaneRight.setPrefWidth((width / 4) * 3);
+        });
+
+        rootHBox.heightProperty().addListener((observable, oldValue, newValue) -> {
+            double height = newValue.doubleValue();
+            anchorPaneLeft.setPrefHeight(height);
+            anchorPaneRight.setPrefHeight(height);
+        });
+
+        double initialWidth = rootHBox.getPrefWidth();
+        anchorPaneLeft.setPrefWidth(initialWidth / 4);
+        anchorPaneRight.setPrefWidth((initialWidth / 4) * 3);
+
+
+        double initialHeight = rootHBox.getPrefHeight();
+        anchorPaneLeft.setPrefHeight(initialHeight);
+        anchorPaneRight.setPrefHeight(initialHeight);
+
+        ResizeUtil.resizeAndPosition(buttonDay,anchorPaneLeft,0.1);
+    }
+
 
     public void handleButtonSair(ActionEvent actionEvent) throws IOException {
         if (FeedBackController.feedbackYesNo("Deseja Sair?", "Confirmação")) {
@@ -108,12 +143,7 @@ public class VerRef {
         }
     }
 
-    @FXML
-    private void initialize() {
-        dataAtual = LocalDate.now();
-        carregarTodasRefeicoes();  // Carrega todas as refeições ao iniciar a aplicação
-        atualizarTextoData();
-    }
+
 
     public void handleButtonUp(ActionEvent actionEvent) {
         dataAtual = dataAtual.plusDays(1);

@@ -27,7 +27,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 
 
-public class ControllerReadCard implements Initializable {
+public class ControllerReadCard {
     private final Lock lock = new ReentrantLock();
     private final Condition cardAvailable = lock.newCondition();
     @FXML
@@ -35,8 +35,8 @@ public class ControllerReadCard implements Initializable {
 
     private List<String> allNfc;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    public void initialize() {
 
 
         var x = CartaoBLL.getAllCards();

@@ -10,7 +10,6 @@ import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -172,7 +171,7 @@ public class FormUser {
     }
 
     public void handleButtonVerRef(ActionEvent actionEvent) throws IOException {
-        setStage("/com/edcards/edcards/VerRefeicoes.fxml");
+        setStage("/com/edcards/edcards/MarcarRef.fxml");
 
     }
 
