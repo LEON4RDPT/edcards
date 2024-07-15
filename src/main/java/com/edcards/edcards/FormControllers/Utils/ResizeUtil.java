@@ -1,5 +1,7 @@
 package com.edcards.edcards.FormControllers.Utils;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -119,6 +121,48 @@ public class ResizeUtil {
             double positionY = height * relativePosition - labelHeight / 2; // Center vertically
             node.setLayoutY(positionY);
         });
+    }
+
+    public static void resizeAndPositionTwoNodes(Node nodeLeft, Node nodeRight, AnchorPane pane, double relativePosition) {
+        ChangeListener<Number> widthListener = new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> obs, Number oldVal, Number newVal) {
+                double width = newVal.doubleValue();
+
+                // Position nodeLeft on the left
+                nodeLeft.setLayoutX(0); // Align left
+
+                // Position nodeRight on the right
+                double nodeRightWidth = nodeRight.getBoundsInParent().getWidth();
+                nodeRight.setLayoutX(width - nodeRightWidth); // Align right
+            }
+        };
+
+        ChangeListener<Number> heightListener = new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> obs, Number oldVal, Number newVal) {
+                double height = newVal.doubleValue();
+
+                // Center vertically with relativePosition
+                double nodeHeight = height * relativePosition;
+
+                // Set both nodes to the same height
+                nodeLeft.resize(nodeLeft.getBoundsInParent().getWidth(), nodeHeight);
+                nodeRight.resize(nodeRight.getBoundsInParent().getWidth(), nodeHeight);
+
+                // Center nodeLeft vertically
+                double positionYLeft = (height - nodeHeight) / 2;
+                nodeLeft.setLayoutY(positionYLeft);
+
+                // Center nodeRight vertically
+                double positionYRight = (height - nodeHeight) / 2;
+                nodeRight.setLayoutY(positionYRight);
+            }
+        };
+
+        // Add listeners to the properties of the pane
+        pane.widthProperty().addListener(widthListener);
+        pane.heightProperty().addListener(heightListener);
     }
 
 

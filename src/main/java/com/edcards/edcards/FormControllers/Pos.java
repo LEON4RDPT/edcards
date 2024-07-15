@@ -324,7 +324,7 @@ public class Pos {
         leftPane.setPrefHeight(initialHeight);
         rightPane.setPrefHeight(initialHeight);
         ResizeUtil.resizeAndPositionButton(buttonVoltar, leftPane, 0.95);
-        ResizeUtil.resizeAndPositionButton(buttonRefeicao, leftPane, 0.85);
+        ResizeUtil.resizeAndPositionTwoNodes(buttonRefeicao,buttonMarcacoes, leftPane, 0.85);
         ResizeUtil.resizeAndPositionButton(buttonRemoveL, leftPane, 0.75);
         ResizeUtil.resizeAndPositionButton(buttonRemoveA, leftPane, 0.65);
         ResizeUtil.resizeAndPositionButton(buttonVender, leftPane, 0.55);
