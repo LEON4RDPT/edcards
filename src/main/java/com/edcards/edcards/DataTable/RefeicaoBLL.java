@@ -47,6 +47,27 @@ public class RefeicaoBLL extends DAL {
 
     }
 
+    public static List<Refeicao> getRefeicaoU(Date data) {
+        if (existeRefeicao(data)) {
+            DefaultBLL bll = new DefaultBLL("refeicao");
+            List<Map<String, Object>> x = bll.getAll("data", data);
+            List<Refeicao> refeicoes = new ArrayList<>();
+            for (var row : x) {
+                Refeicao refeicao = new Refeicao();
+
+                // Optimized ID Retrieval
+                refeicao.setIdRefeicao((int) row.get("id_ref"));
+
+                refeicao.setProduto(ProdutoBLL.getProduto((int) row.get("produto_id")));
+                refeicao.setDataRefeicao((Date) row.get("data"));
+
+                refeicoes.add(refeicao);
+            }
+            return refeicoes;
+        } else {
+            return null;
+        }
+    }
 
 
     public static List<Refeicao> getRefeicaoByIdUser(int id) {

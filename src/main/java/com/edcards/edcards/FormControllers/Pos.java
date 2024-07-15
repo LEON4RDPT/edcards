@@ -30,8 +30,7 @@ import static com.edcards.edcards.Programa.Controllers.ArredondarController.roun
 import static com.edcards.edcards.Programa.Controllers.ArredondarController.roundToTwoDecimalPlacesRetDouble;
 import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColor;
 import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColorBack;
-import static com.edcards.edcards.Programa.Controllers.FeedBackController.feedbackErro;
-import static com.edcards.edcards.Programa.Controllers.FeedBackController.feedbackYesNo;
+import static com.edcards.edcards.Programa.Controllers.FeedBackController.*;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.Dados.getClientePOS;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.Dados.getPessoaAtual;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
@@ -210,7 +209,7 @@ public class Pos {
             try {
                 var pess = CartaoBLL.getUserByNFC(idCartao);
                 assert pess != null;
-                FeedBackController.feedbackConf("Pessoa: " + pess.getNome() + " Carregada!");
+                feedbackConf("Pessoa: " + pess.getNome() + " Carregada!");
                 GlobalVAR.Dados.setClientePOS(pess);
                 changeTextBox();
             } finally {
@@ -373,7 +372,7 @@ public class Pos {
             var funcionario = getPessoaAtual();
             var x = TransacaoBLL.insertTransacao(fatura.toArray(new Produto[0]), cliente.getIduser(), funcionario.getIduser());
             if (x == 0) {
-                feedbackErro("Operação Sucedida");
+                feedbackConf("Operação Sucedida");
             }
             GlobalVAR.Dados.setClientePOS(null);
             fatura.clear();
@@ -488,6 +487,7 @@ public class Pos {
     }
 
     @FXML
-    private void handleMarcacoes(ActionEvent actionEvent) {
+    private void handleMarcacoes() throws IOException {
+        setStage("/com/edcards/edcards/VerRefMarcAll.fxml");
     }
 }

@@ -85,7 +85,6 @@ public class AddRef {
 
             //resize
             ResizeUtil.resizeAndPosition(exit,rightPane,0.9);
-            ResizeUtil.resizeAndPositionTextAreaStickWithPane(textArea,rightPane,0.5,0.26,0.18);
 
 
             ResizeUtil.resizeAndPosition(labelForPicker,leftPane1,0.1);

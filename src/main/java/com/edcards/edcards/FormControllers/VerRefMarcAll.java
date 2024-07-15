@@ -1,22 +1,18 @@
 package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.CartaoBLL;
-import com.edcards.edcards.DataTable.ProdutoBLL;
 import com.edcards.edcards.DataTable.RefeicaoBLL;
-import com.edcards.edcards.DataTable.TransacaoBLL;
+import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
+import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Classes.Produto;
 import com.edcards.edcards.Programa.Classes.Refeicao;
-import com.edcards.edcards.Programa.Controllers.ArredondarController;
-import com.edcards.edcards.Programa.Controllers.Enums.ProdutoEnum;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -26,17 +22,25 @@ import javafx.scene.layout.HBox;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColor;
 import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColorBack;
+import static com.edcards.edcards.Programa.Controllers.GlobalVAR.Dados.getPessoaAtual;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
+import static sun.security.util.KnownOIDs.Data;
 
-public class    VerRefMarc {
-
+public class VerRefMarcAll {
+    private volatile boolean isRunning = true;
+    private final ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
+    private boolean isProcessingCartao = false;
     public TextArea textArea;
+    int idRefeicao;
     @FXML
     private GridPane buttonGrid;
     @FXML
@@ -107,6 +111,7 @@ public class    VerRefMarc {
     private Refeicao[] refeicoes = new Refeicao[23];
     private List<Refeicao> listaProdutosDisponiveis = new ArrayList<>();
     private int buttonPage = 1;
+    LocalDate data;
 
     private void loadbtns() {
         btns = new Button[]{
@@ -121,9 +126,9 @@ public class    VerRefMarc {
 
     @FXML
     private void initialize() {
-        var id = GlobalVAR.Dados.getPessoaAtual().getIduser();
-        listaProdutosDisponiveis.clear();
-        listaProdutosDisponiveis.addAll(Objects.requireNonNull(RefeicaoBLL.getRefeicaoByIdUser(id)));
+        //var id = GlobalVAR.Dados.getPessoaAtual().getIduser();
+        //listaProdutosDisponiveis.clear();
+        //listaProdutosDisponiveis.addAll(Objects.requireNonNull(RefeicaoBLL.getRefeicaoByIdUser(id)));
         Timestamp now = new Timestamp(System.currentTimeMillis());
         List<Refeicao> refeicoesFiltradas = new ArrayList<>();
         for (var ref : listaProdutosDisponiveis) {
@@ -133,14 +138,56 @@ public class    VerRefMarc {
         }
 
         listaProdutosDisponiveis = refeicoesFiltradas;
-
+        data = LocalDate.now();
         loadbtns();
         resizeAll();
         changeTextBox();
 
         setMarc();
+        aguardarCartao();
     }
+    private void aguardarCartao() {
+        nfcExecutar.submit(() -> {
+            while (isRunning) {
+                try {
+                    String idCartao = LerCartao.lerIDCartao("/com/edcards/edcards/Main.fxml");
+                    if (idCartao == null) {
+                        continue; // Skip if no card read
+                    }
 
+                    if (!isProcessingCartao) {
+                        isProcessingCartao = true;
+
+                        int id = CartaoBLL.getIdUserByNFC(idCartao);
+                        Pessoa user = UsersBLL.getUser(id);
+
+                        // Fetch the meal for today (assuming there's only one meal per day)
+                        List<Refeicao> refeicoes = RefeicaoBLL.getRefeicao(Date.valueOf(LocalDate.now()));
+                        if (refeicoes != null && !refeicoes.isEmpty()) {
+                            Refeicao refeicaoToday = refeicoes.get(0); // Get the first (and only) meal
+                            idRefeicao = refeicaoToday.getIdRefeicao();
+
+                            // Check if the user has marked this meal
+                            boolean marcou = RefeicaoBLL.marcou(idRefeicao, id);
+
+                            if (marcou) {
+                                textArea.setText("Utilizador " + user.getNome() + " tem refeição.");
+                            } else {
+                                textArea.setText("Utilizador " + user.getNome() + " não marcou a refeição.");
+                            }
+                        } else {
+                            textArea.setText("Não há refeição definida para hoje.");
+                        }
+                    }
+                } catch (Exception e) {
+                    // Handle exceptions (e.g., log the error)
+                    System.err.println("Error reading card or processing meal: " + e.getMessage());
+                } finally {
+                    isProcessingCartao = false;
+                }
+            }
+        });
+    }
     private void setMarc() {
 
         for (var button : btns) {
