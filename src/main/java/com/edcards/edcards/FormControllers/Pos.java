@@ -12,6 +12,7 @@ import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,10 +23,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+import javax.smartcardio.CardException;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static com.edcards.edcards.Programa.Controllers.ArredondarController.roundToTwoDecimalPlaces;
 import static com.edcards.edcards.Programa.Controllers.ArredondarController.roundToTwoDecimalPlacesRetDouble;
@@ -38,8 +44,6 @@ import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController
 
 public class Pos {
 
-    private volatile boolean isRunning = true;
-    private final ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
 
     @FXML
     private Button buttonMarcacoes;
@@ -128,7 +132,13 @@ public class Pos {
     private List<Produto> listaProdutosDisponiveis = new ArrayList<>();
     private final List<Produto> fatura = new ArrayList<>();
     private int buttonPage = 1;
-    private boolean isProcessingCartao = false;
+
+
+    //leoo
+
+    private final Lock lock = new ReentrantLock();
+    private final Condition cardAvailable = lock.newCondition();
+    private List<String> allNfc;
 
 
     private void loadbtns() {
@@ -154,8 +164,20 @@ public class Pos {
         changeTextBox();
 
         //aguardarCARTAO tem de ser o ultimo!!
-        aguardarCartao();
 
+
+        carregarDados();
+        processCartao();
+
+    }
+
+    private void carregarDados() {
+        var x = CartaoBLL.getAllCards();
+        if (x == null) {
+            FeedBackController.feedbackErro("No cards available in the database.");
+            return;
+        }
+        allNfc = List.of(x);
     }
 
     private void loadMethods() {
@@ -170,47 +192,69 @@ public class Pos {
         textNum.setText("1");
     }
 
-
-    private void aguardarCartao() {
-        nfcExecutar.submit(() -> {
-            while (isRunning) {
+    private void processCartao() {
+        Task<String> initialTask = new Task<String>() {
+            @Override
+            protected String call() {
                 try {
-                    String idCartao = LerCartao.lerIDCartao("/com/edcards/edcards/Main.fxml");
-                    if (idCartao == null) {
-                        continue;
-                    }
-                        if (!isProcessingCartao) {
-                            isProcessingCartao = true;
-                            cartaoCliente(idCartao);
-                        }
-
-                } catch (Exception ignored) {
+                    return cartaoLido();
+                } catch (CardException e) {
+                    return null;
                 }
             }
+        };
+
+        initialTask.setOnSucceeded(event -> {
+            var card = initialTask.getValue();
+            if (card != null) {
+                Platform.runLater(() -> {
+                    GlobalVAR.Dados.setClientePOS(CartaoBLL.getUserByNFC(card));
+                });
+            }
         });
+
+        Thread taskThread = new Thread(initialTask);
+        taskThread.setDaemon(true);
+        taskThread.start();
     }
 
-    public void shutdown() {
-        if (!nfcExecutar.isShutdown()) {
-            isRunning = false;
-            nfcExecutar.shutdown();
 
+    private String cartaoLido() throws CardException {
+        lock.lock();
+        try {
+            while (true) {
+                try {
+                    String cartao = LerCartao.lerIDCartao("/com/edcards/edcards/Main.fxml");
+                    if (cartao == null) {
+                        return null;
+                    }
+
+                    if (allNfc == null || allNfc.isEmpty() || !allNfc.contains(cartao)) {
+                        cardAvailable.await(100, TimeUnit.MILLISECONDS); // wait for 100ms
+                        continue;
+                    }
+                    return cartao;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    Thread.currentThread().interrupt(); // Restore interrupted status
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } finally {
+            lock.unlock();
         }
     }
 
-    private void cartaoCliente(String idCartao) {
-        Platform.runLater(() -> {
-            try {
-                var pess = CartaoBLL.getUserByNFC(idCartao);
-                assert pess != null;
-                feedbackConf("Pessoa: " + pess.getNome() + " Carregada!");
-                GlobalVAR.Dados.setClientePOS(pess);
-                changeTextBox();
-            } finally {
-                isProcessingCartao = false;
-            }
-        });
+    public void shutdown() { //todo
+//        if (!nfcExecutar.isShutdown()) {
+//            isRunning = false;
+//            nfcExecutar.shutdown();
+//
+//        }
     }
+
 
     private void setChoiceEnum() {
 
@@ -371,7 +415,7 @@ public class Pos {
             GlobalVAR.Dados.setClientePOS(null);
             fatura.clear();
             changeTextBox();
-            aguardarCartao();
+            processCartao();
         } else {
             feedbackErro("Utilizador não tem saldo");
 
@@ -441,7 +485,7 @@ public class Pos {
             fatura.clear();
             GlobalVAR.Dados.setClientePOS(null);
             changeTextBox();
-            aguardarCartao();
+            processCartao();
 
         }
     }

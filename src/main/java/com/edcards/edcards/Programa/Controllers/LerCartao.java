@@ -21,7 +21,7 @@ public class LerCartao {
                 });
             } else {
                 Platform.runLater(() -> {
-                    FeedBackController.feedbackErroCloseApp("Nenhum Reader Encontrado!"+ fxml);
+                    FeedBackController.feedbackErroShowOtherForm("Nenhum Reader Encontrado!",fxml);
                 });
             }
             return null;

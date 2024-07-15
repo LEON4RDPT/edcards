@@ -2,24 +2,17 @@ package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
-import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import com.edcards.edcards.Programa.Controllers.LerCartao;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 
 import javax.smartcardio.CardException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -77,7 +70,6 @@ public class ControllerReadCard {
             }
         });
 
-        new Thread(initialTask).start();
     }
 
 
@@ -111,6 +103,7 @@ public class ControllerReadCard {
 
     }
 
+    //optional
     public void runAdditionalLogic(String card) {
         while (true) {
             try {
