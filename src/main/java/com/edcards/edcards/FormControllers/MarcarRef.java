@@ -79,6 +79,7 @@ public class MarcarRef {
         anchorPaneRight.setPrefHeight(initialHeight);
 
         ResizeUtil.resizeAndPosition(buttonDay,anchorPaneLeft,0.1);
+        ResizeUtil.resizeAndPositionButton(buttonDown,anchorPaneRight,0.1);
     }
 
 

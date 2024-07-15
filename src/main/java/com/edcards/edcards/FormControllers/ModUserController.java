@@ -26,6 +26,7 @@ import static javafx.application.Platform.runLater;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -51,6 +52,7 @@ public class ModUserController {
     public ComboBox<Integer> userPickerAluno;
     @FXML
     private TextField turmaField;
+    int c=0;
     @FXML
     private TextField numUtSaudeField;
     int numP;
@@ -249,7 +251,7 @@ public class ModUserController {
     @FXML
     private void handleModUser(ActionEvent actionEvent) throws IOException {
         if (pessoaAtual == null) {
-            FeedBackController.feedbackErro("Erro! Selecione o Usuario!");
+            FeedBackController.feedbackErro("Erro! Selecione o Utilizador!");
             return;
         }
         int id = pessoaAtual.getIduser();
@@ -319,24 +321,34 @@ public class ModUserController {
         }
         if (isDiffrentFoto && !Arrays.equals(imgUserBLL, new byte[0])) {
             UsersBLL.setFotoUser(id,imgUserBLL);
+            c=0;
         }
 
         if (!pessoaAtual.getNome().equals(nameField.getText())) {
             UsersBLL.setNomeUser(id,nameField.getText());
+            c=0;
         }
         if (pessoaAtual.getNum()!=Integer.parseInt(numInterno.getText())){
             UsersBLL.setNum(id, Integer.parseInt(numInterno.getText()));
+            c=0;
         }
         if (!pessoaAtual.getCartaoC().equals(ccField.getText())) {
             UsersBLL.setCCUser(id,ccField.getText());
+            c=0;
         }
 
         if (!pessoaAtual.getMorada().equals(moradaField.getText())) {
             UsersBLL.setMoradaUser(id,moradaField.getText());
+            c=0;
         }
 
-        if (!pessoaAtual.getDataNasc().toLocalDate().equals(dateField.getValue())) {
+        if (!pessoaAtual.getDataNasc().toLocalDate().equals(dateField.getValue()) && dateField.getValue().isBefore(LocalDate.now())) {
             UsersBLL.setDataNascUser(id, Date.valueOf(dateField.getValue()));
+            c=0;
+        }
+        if (dateField.getValue().isAfter(LocalDate.now())){
+            FeedBackController.feedbackErro("Data superior a hoje");
+            c = 1;
         }
 
         if(!pessoaAtual.getNumCartao().equals(cardNumber.getText())){
@@ -344,6 +356,7 @@ public class ModUserController {
             CartaoBLL.setNewCard(cardNumber.getText(), pessoaAtual.getPin(), pessoaAtual.getSaldo(), entSai ,pessoaAtual.getUltimaVezEntrado());
             CartaoBLL.setNewCard(pessoaAtual.getNumCartao(), 123456, 0.00 ,false, null);
             UsersBLL.setCodigoUser(id, cardNumber.getText());
+            c=0;
         }
 
         var adminAtual = GlobalVAR.Dados.getPessoaAtual();
@@ -355,7 +368,11 @@ public class ModUserController {
             }
             GlobalVAR.Dados.setPessoaAtual(pessoaAtual);
         }
-        FeedBackController.feedbackConf("Dados Modificados com Sucesso");
+        if (c == 0){
+            FeedBackController.feedbackConf("Dados Modificados com Sucesso");
+        } else if (c == 1){
+            FeedBackController.feedbackErro("Impossivel Modificar Dados");
+        }
     }
 
     public void handleLerCard(ActionEvent actionEvent) {

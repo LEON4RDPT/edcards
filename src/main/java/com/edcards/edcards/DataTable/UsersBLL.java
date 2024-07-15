@@ -83,12 +83,12 @@ public class UsersBLL {
                     FeedBackController.feedbackErro("Este número já está em uso por um administrador ou funcionário");
                     return 0;
                 }else {
-                    FeedBackController.feedbackConf("Usuario Registado com sucesso! Nome: " + nome);
+                    FeedBackController.feedbackConf("Utilizador Registado com sucesso! Nome: " + nome);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            FeedBackController.feedbackErro("Ocorreu um erro ao inserir o usuário no banco de dados.");
+            FeedBackController.feedbackErro("Ocorreu um erro ao inserir o utilizador no banco de dados.");
             return -2;
         }
 
@@ -178,7 +178,7 @@ public class UsersBLL {
             return;
         }
 
-        new DefaultBLL("usuario").setOne("data", data, "id", id);
+        new DefaultBLL("usuario").setOne("data_nasc", data, "id", id);
     }
 
     public static void setEE_numAluno(int id, int numEE) {

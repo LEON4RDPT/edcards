@@ -271,12 +271,16 @@ public class CriarUserController {
         ase = AseEnum.valueOf(AsePicker.getValue());
         nus = Integer.parseInt(numUtSaudeField.getText());
         if (nome!= null || idCartao!= null || turma!= 0 || morada!= null || email!= null || cc!= null || numEE!= 0 || num!= 0 || numEEfield!= null || imgUser!= null || ase!= null || nus!= 0 || num_aluno!=0) {
-            FeedBackController.feedbackConf(nome + morada + email + cc + numEE + num + idCartao + imgUser + data + ase + nus + num);
-            var id = UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL,num);
-            if (id == 0) {
-                FeedBackController.feedbackErro("Erro Não foi possivel inserir os Dados!");
+            if (data.isBefore(LocalDate.now())) {
+                var id = UsersBLL.inserir(nfc, nome, Date.valueOf(data), morada, tipo, cc, fotoBLL,num);
+                if (id == 0) {
+                    FeedBackController.feedbackErro("Erro Não foi possivel inserir os Dados!");
+                }
+                UsersBLL.inserirAluno(id, numEE, email, turma, nus, ase);
+            } else {
+                FeedBackController.feedbackErro("Data maior que a data de hoje");
             }
-            UsersBLL.inserirAluno(id, numEE, email, turma, nus, ase);
+
         } else {
             FeedBackController.feedbackErro(String.valueOf(ErrorEnum.err5));
         }

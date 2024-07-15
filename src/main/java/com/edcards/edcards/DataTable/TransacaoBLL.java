@@ -115,7 +115,7 @@ public class TransacaoBLL {
     public static int insertTransacao(Produto[] produtos, int idUser, int idFunc) {
 
         if (!UsersBLL.existe(idUser) || !UsersBLL.existe(idFunc)) {
-            feedbackErro("Usuarios Nao Existem!");
+            feedbackErro("Utilizadores Nao Existem!");
             return -1; //TEEM DE EXESTIR!!
         }
 

@@ -91,7 +91,7 @@ public class ControllerPIN {
                     clean();
                 }
             } else {
-                FeedBackController.feedbackErro("Nenhum Usuario encontrado!");
+                FeedBackController.feedbackErro("Nenhum Utilizador encontrado!");
                 clean();
             }
         }

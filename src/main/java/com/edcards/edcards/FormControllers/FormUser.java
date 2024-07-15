@@ -161,7 +161,7 @@ public class FormUser {
         if (GlobalVAR.Dados.getPessoaAtual().getHorario() != null) {
             setStage("/com/edcards/edcards/SeeHorario.fxml");
         } else {
-            FeedBackController.feedbackErro("Usuario não possui horario!");
+            FeedBackController.feedbackErro("Utilizador não possui horario!");
         }
     }
 

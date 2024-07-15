@@ -179,9 +179,6 @@ public class Pos {
                     if (idCartao == null) {
                         continue;
                     }
-
-
-                    //caso nao seja o mesmo funcionario.
                         if (!isProcessingCartao) {
                             isProcessingCartao = true;
                             cartaoCliente(idCartao);
@@ -376,7 +373,7 @@ public class Pos {
             changeTextBox();
             aguardarCartao();
         } else {
-            feedbackErro("Usuario não tem saldo");
+            feedbackErro("Utilizador não tem saldo");
 
         }
     }

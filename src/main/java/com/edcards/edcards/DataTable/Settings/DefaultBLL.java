@@ -1,6 +1,8 @@
 package com.edcards.edcards.DataTable.Settings;
 
 
+import com.edcards.edcards.Programa.Controllers.FeedBackController;
+
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
@@ -542,7 +544,7 @@ public class DefaultBLL extends DAL {
                                 validationRs.next();
                                 int count = validationRs.getInt(1);
                                 if (count > 0) {
-                                    throw new SQLException("Número já existe para outro usuário do mesmo tipo.");
+                                    FeedBackController.feedbackErro("Número já existe para outro usuário do mesmo tipo.");
                                 }
                             }
                         }
