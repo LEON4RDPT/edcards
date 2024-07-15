@@ -162,6 +162,7 @@ public class VerRefMarcAll {
         //todo aguardarCartao(); leoo fix
     }
     private void aguardarCartao() {
+        //todo
         nfcExecutar.submit(() -> {
             while (isRunning) {
                 try {
@@ -175,24 +176,20 @@ public class VerRefMarcAll {
 
                         int id = CartaoBLL.getIdUserByNFC(idCartao);
                         Pessoa user = UsersBLL.getUser(id);
+                        if (user == null) {
+                            continue;
+                        }
 
                         // Fetch the meal for today (assuming there's only one meal per day)
-                        List<Refeicao> refeicoes = RefeicaoBLL.getRefeicao(Date.valueOf(LocalDate.now()));
-                        if (refeicoes != null && !refeicoes.isEmpty()) {
-                            Refeicao refeicaoToday = refeicoes.getFirst(); // Get the first (and only) meal
-                            idRefeicao = refeicaoToday.getIdRefeicao();
-
-                            // Check if the user has marked this meal
-                            boolean marcou = RefeicaoBLL.marcou(idRefeicao, id);
-
-                            if (marcou) {
-                                textArea.setText("Utilizador " + user.getNome() + " tem refeição.");
-                            } else {
-                                textArea.setText("Utilizador " + user.getNome() + " não marcou a refeição.");
+                        for (var pessoa : listaPessoasMarcToday) {
+                            if (pessoa.getNome().equals(user.getNome())) {
+                                //funcionou!
+                                setText(user);
+                                break;
                             }
-                        } else {
-                            textArea.setText("Não há refeição definida para hoje.");
                         }
+
+                        textArea.setText("Não há refeição definida para hoje.");
                     }
                 } catch (Exception e) {
                     // Handle exceptions (e.g., log the error)
