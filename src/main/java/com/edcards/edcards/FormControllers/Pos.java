@@ -167,9 +167,7 @@ public class Pos {
 
 
         carregarDados();
-        //processCartao();         leoo fixme
-        GlobalVAR.Dados.setClientePOS(UsersBLL.getUser(2));         //leoo fixme
-
+        processCartao();
 
     }
 
