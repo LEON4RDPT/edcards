@@ -189,7 +189,7 @@ public class VerRefMarcAll {
                             }
                         }
 
-                        textArea.setText("Não há refeição definida para hoje.");
+                        textAreaInfo.setText("Não há refeição definida para hoje.");
                     }
                 } catch (Exception e) {
                     // Handle exceptions (e.g., log the error)
