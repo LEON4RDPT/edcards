@@ -174,8 +174,6 @@ public class CartaoBLL {
     }
 
 
-    //todo entradas e saidas
-
 
     public static boolean existenteNFC(String nfc) {
         return new DefaultBLL("cartao").hasRows("codigo", nfc);
