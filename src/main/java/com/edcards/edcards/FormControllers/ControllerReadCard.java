@@ -63,7 +63,6 @@ public class ControllerReadCard {
                 Platform.runLater(() -> {
                     try {
                         GlobalVAR.StageController.setStage("/com/edcards/edcards/PIN.fxml");
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

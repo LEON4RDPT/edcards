@@ -197,6 +197,7 @@ public class Pos {
             @Override
             protected String call() {
                 try {
+
                     return cartaoLido();
                 } catch (CardException e) {
                     return null;
@@ -209,6 +210,7 @@ public class Pos {
             if (card != null) {
                 Platform.runLater(() -> {
                     GlobalVAR.Dados.setClientePOS(CartaoBLL.getUserByNFC(card));
+                    changeTextBox();
                 });
             }
         });
