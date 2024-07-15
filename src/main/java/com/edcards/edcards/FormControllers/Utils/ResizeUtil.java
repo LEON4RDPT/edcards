@@ -60,6 +60,38 @@ public class ResizeUtil {
         });
 
     }
+    public static void resizeAndPositionMiddleButtons(Button button1, Button button2, AnchorPane pane, double relativePosition) {
+        pane.widthProperty().addListener((obs, oldVal, newVal) -> {
+            double width = newVal.doubleValue();
+            double buttonWidthSum = button1.getPrefWidth() + button2.getPrefWidth();
+
+            // Calculate the horizontal space between the buttons
+            double spaceBetweenButtons = width - buttonWidthSum;
+
+            // Calculate the X position based on the relative position
+            double baseX = (width - buttonWidthSum) * relativePosition;
+
+            // Set the layout X for the first button
+            button1.setLayoutX(baseX);
+
+            // Calculate the X position of the second button
+            double secondButtonX = baseX + button1.getPrefWidth() + spaceBetweenButtons / 3;
+
+            // Set the layout X for the second button
+            button2.setLayoutX(secondButtonX);
+        });
+
+        // Optional: Add a listener for height changes if necessary
+        pane.heightProperty().addListener((obs, oldVal, newVal) -> {
+            double height = newVal.doubleValue();
+            double buttonHeight = button1.getPrefHeight();
+
+            // Center both buttons vertically
+            double positionY = (height - buttonHeight) / 2;
+            button1.setLayoutY(positionY);
+            button2.setLayoutY(positionY);
+        });
+    }
 
     public static void resizeAndCenterMiddleButtons(Button button1, Button button2, AnchorPane pane) {
         pane.widthProperty().addListener((obs, oldVal, newVal) -> {
