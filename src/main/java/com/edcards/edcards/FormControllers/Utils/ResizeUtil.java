@@ -68,26 +68,27 @@ public class ResizeUtil {
             // Calculate the horizontal space between the buttons
             double spaceBetweenButtons = width - buttonWidthSum;
 
-            // Calculate the X position based on the relative position
-            double baseX = (width - buttonWidthSum) * relativePosition;
+            // Calculate the X position of the first button
+            double firstButtonX = spaceBetweenButtons / 3;
 
             // Set the layout X for the first button
-            button1.setLayoutX(baseX);
+            button1.setLayoutX(firstButtonX);
 
             // Calculate the X position of the second button
-            double secondButtonX = baseX + button1.getPrefWidth() + spaceBetweenButtons / 3;
+            double secondButtonX = firstButtonX + button1.getPrefWidth() + spaceBetweenButtons / 3;
 
             // Set the layout X for the second button
             button2.setLayoutX(secondButtonX);
         });
 
-        // Optional: Add a listener for height changes if necessary
         pane.heightProperty().addListener((obs, oldVal, newVal) -> {
             double height = newVal.doubleValue();
             double buttonHeight = button1.getPrefHeight();
 
-            // Center both buttons vertically
-            double positionY = (height - buttonHeight) / 2;
+            // Calculate the Y position based on the relative position
+            double positionY = height * relativePosition - (buttonHeight / 2);
+
+            // Set the layout Y for both buttons
             button1.setLayoutY(positionY);
             button2.setLayoutY(positionY);
         });

@@ -153,7 +153,7 @@ public class Pos {
         changeTextBox();
 
         //aguardarCARTAO tem de ser o ultimo!!
-        aguardarCartao();
+        // todo aguardarCartao();
 
     }
 
