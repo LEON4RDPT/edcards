@@ -2,6 +2,7 @@ package com.edcards.edcards.DataTable.Settings;
 
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 public class DefaultBLL extends DAL {
@@ -179,8 +180,43 @@ public class DefaultBLL extends DAL {
             return null;
         }
     }
+    public List<Map<String, Object>> getAll(String columnCondition, Date objectCondition) {
+        Connection connection = getConnection();
+        if (connection == null) {
+            return null;
+        }
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            String query = "SELECT * FROM " + getTableName() + " WHERE " + columnCondition + " = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setDate(1, objectCondition); // Set the date parameter
+            resultSet = preparedStatement.executeQuery();
 
-    public List<Object> getAll(String atributeName, String joinTableSQL) {
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            List<Map<String, Object>> rows = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Map<String, Object> rowMap = new HashMap<>();
+                for (int i = 1; i <= columnCount; i++) {
+                    Object columnValue = resultSet.getObject(i);
+                    String columnName = metaData.getColumnName(i);
+                    rowMap.put(columnName, columnValue);
+                }
+                rows.add(rowMap);
+            }
+
+            return rows;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+            public List<Object> getAll(String atributeName, String joinTableSQL) {
         Connection connection = getConnection();
         if (connection == null) {
             return null;
@@ -625,6 +661,25 @@ public class DefaultBLL extends DAL {
             String query = "SELECT * FROM " + getTableName() + formatCondition(column, columnOb);
             var reader = getConnection().createStatement().executeQuery(query);
             return reader.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean hasRows(String column, Date columnDate) {
+        Connection connection = getConnection();
+        if (connection == null) {
+            return false;
+        }
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            String query = "SELECT * FROM " + getTableName() + " WHERE " + column + " = ?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setDate(1, columnDate); // Set the date parameter
+            resultSet = preparedStatement.executeQuery();
+            return resultSet.next();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

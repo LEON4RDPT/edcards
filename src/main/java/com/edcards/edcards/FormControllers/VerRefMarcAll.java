@@ -107,10 +107,11 @@ public class VerRefMarcAll {
     @FXML
     private Button infoB24;
     private Button[] btns = new Button[23];
-    private Refeicao[] refeicoes = new Refeicao[23];
-    private List<Refeicao> listaProdutosDisponiveis = new ArrayList<>();
+    private Pessoa[] pessoas = new Pessoa[23];
+    private List<Refeicao> listaRefeicoesToday = new ArrayList<>();
+    private List<Pessoa> listaPessoasMarcToday = new ArrayList<>();
     private int buttonPage = 1;
-    LocalDate data;
+    private Date data;
 
     private void loadbtns() {
         btns = new Button[]{
@@ -125,25 +126,36 @@ public class VerRefMarcAll {
 
     @FXML
     private void initialize() {
-        //var id = GlobalVAR.Dados.getPessoaAtual().getIduser();
-        //listaProdutosDisponiveis.clear();
-        //listaProdutosDisponiveis.addAll(Objects.requireNonNull(RefeicaoBLL.getRefeicaoByIdUser(id)));
-        Timestamp now = new Timestamp(System.currentTimeMillis());
-        List<Refeicao> refeicoesFiltradas = new ArrayList<>();
-        for (var ref : listaProdutosDisponiveis) {
-            if (!ref.getDataRefeicao().before(now)) {
-                refeicoesFiltradas.add(ref);
+
+        //setAllRef
+        data = Date.valueOf(LocalDate.now());
+        var refs = RefeicaoBLL.getRefeicao(data);
+        if (refs == null) {
+            FeedBackController.feedbackErro("Nenhuma Refeição marcada para hoje!");
+            try {
+                setStage("/com/edcards/edcards/Pos.fxml");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+        } else {
+            listaRefeicoesToday = refs;
+            listaPessoasMarcToday = RefeicaoBLL.getPessoasByRefMarc(data);
+            StringBuilder str = new StringBuilder();
+            str.append("Refeições hoje: ").append(data).append("\n");
+            for (var ref : refs) {
+                str.append(ref.getProduto().getNome());
+            }
+            this.textArea.setText(str.toString());
         }
 
-        listaProdutosDisponiveis = refeicoesFiltradas;
-        data = LocalDate.now();
+
+
         loadbtns();
         resizeAll();
         changeTextBox();
 
         setMarc();
-        aguardarCartao();
+        //todo aguardarCartao(); leoo fix
     }
     private void aguardarCartao() {
         nfcExecutar.submit(() -> {
@@ -163,7 +175,7 @@ public class VerRefMarcAll {
                         // Fetch the meal for today (assuming there's only one meal per day)
                         List<Refeicao> refeicoes = RefeicaoBLL.getRefeicao(Date.valueOf(LocalDate.now()));
                         if (refeicoes != null && !refeicoes.isEmpty()) {
-                            Refeicao refeicaoToday = refeicoes.get(0); // Get the first (and only) meal
+                            Refeicao refeicaoToday = refeicoes.getFirst(); // Get the first (and only) meal
                             idRefeicao = refeicaoToday.getIdRefeicao();
 
                             // Check if the user has marked this meal
@@ -198,51 +210,46 @@ public class VerRefMarcAll {
         int btnPg = 24 * buttonPage;
         int btnPgOld = btnPg - 24;
 
-        refeicoes = new Refeicao[refeicoes.length]; //clear
-        List<Refeicao> refeicoes1 = new ArrayList<>();
+        RefeicaoBLL.getPessoasByRefMarc(data);
+
+
+        pessoas = new Pessoa[pessoas.length]; //clear
+        List<Pessoa> refeicoes1 = new ArrayList<>();
 
         for (int page = btnPgOld; page < btnPg; page++) {
-            if (page >= Objects.requireNonNull(listaProdutosDisponiveis).size()) {
+            if (page >= Objects.requireNonNull(listaPessoasMarcToday).size()) {
                 refeicoes1.add(null);
                 continue;
             }
-            refeicoes1.add(listaProdutosDisponiveis.get(page));
+            refeicoes1.add(listaPessoasMarcToday.get(page));
         }
 
-        refeicoes = refeicoes1.toArray(new Refeicao[0]);
+        pessoas = refeicoes1.toArray(new Pessoa[0]);
 
         for (int i = 0; i < btns.length; i++) {
             btns[i].setWrapText(true);
 
-            if (refeicoes[i] == null) {
+            if (pessoas[i] == null) {
                 btns[i].setText("NULL");
                 btns[i].setVisible(false);
                 continue;
             }
             btns[i].setVisible(true);
-            btns[i].setText(refeicoes[i].getProduto().getNome());
+            btns[i].setText(pessoas[i].getNome());
 
         }
 
-        //color
-        for (int slot = 0; slot < btns.length; slot++) {
-            if (refeicoes[slot] == null) {
-                continue;
-            }
-            setButtonColor(btns[slot], refeicoes[slot].getProduto().getTipo());
-
-        }
     }
 
     @FXML
     private void handleButtonClickMarc(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
         for (int i = 0; i < btns.length; i++) {
-            if (refeicoes[i] == null) {
+            if (pessoas[i] == null) {
                 return;
             }
             if (clickedButton == btns[i]) {
-                setText(refeicoes[i]);
+                //todo setText(pessoas[i]);
                 break;
             }
         }
@@ -250,6 +257,7 @@ public class VerRefMarcAll {
     }
 
     private void setText(Refeicao ref) {
+        //todo
         Produto produto = ref.getProduto();
         StringBuilder str = new StringBuilder();
         str.append("Nome: \n").append(produto.getNome());
@@ -298,7 +306,7 @@ public class VerRefMarcAll {
     @FXML
     private void buttonUpClick() {
         int num = buttonPage * 24;
-        if (num <= listaProdutosDisponiveis.size()) {
+        if (num <= listaRefeicoesToday.size()) {
             buttonPage++;
         }
         changeTextBox();
@@ -306,12 +314,13 @@ public class VerRefMarcAll {
 
     private void changeTextBox() {
         textNum.setText(String.valueOf(buttonPage));
+        setMarc();
     }
 
     @FXML
     private void handleButtonClickVoltar() throws IOException {
         if (FeedBackController.feedbackYesNo("Deseja sair?", "Confirmação")) {
-            setStage("/com/edcards/edcards/Main.fxml");
+            setStage("/com/edcards/edcards/Pos.fxml");
         }
     }
 }

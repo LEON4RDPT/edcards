@@ -260,6 +260,7 @@ public class    VerRefMarc {
 
     private void changeTextBox() {
         textNum.setText(String.valueOf(buttonPage));
+        setMarc();
     }
 
     @FXML

@@ -2,12 +2,14 @@ package com.edcards.edcards.DataTable;
 
 import com.edcards.edcards.DataTable.Settings.DAL;
 import com.edcards.edcards.DataTable.Settings.DefaultBLL;
+import com.edcards.edcards.Programa.Classes.Pessoa;
 import com.edcards.edcards.Programa.Classes.Produto;
 import com.edcards.edcards.Programa.Classes.Refeicao;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 
 import java.sql.Date;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class RefeicaoBLL extends DAL {
     public RefeicaoBLL() { super("refeicao"); }
@@ -47,27 +49,28 @@ public class RefeicaoBLL extends DAL {
 
     }
 
-    public static List<Refeicao> getRefeicaoU(Date data) {
-        if (existeRefeicao(data)) {
-            DefaultBLL bll = new DefaultBLL("refeicao");
-            List<Map<String, Object>> x = bll.getAll("data", data);
-            List<Refeicao> refeicoes = new ArrayList<>();
-            for (var row : x) {
-                Refeicao refeicao = new Refeicao();
-
-                // Optimized ID Retrieval
-                refeicao.setIdRefeicao((int) row.get("id_ref"));
-
-                refeicao.setProduto(ProdutoBLL.getProduto((int) row.get("produto_id")));
-                refeicao.setDataRefeicao((Date) row.get("data"));
-
-                refeicoes.add(refeicao);
-            }
-            return refeicoes;
-        } else {
+    public static List<Pessoa> getPessoasByRefMarc(Date data) {
+        var refs = getRefeicao(data);
+        if (refs == null) {
             return null;
         }
+
+        ArrayList<Pessoa> pessoas = new ArrayList<>();
+        for (Refeicao ref : refs) {
+            DefaultBLL bll = new DefaultBLL("refeicao_marcada");
+            List<Map<String, Object>> records = bll.getAll("refeicao_id", ref.getIdRefeicao());
+            if (records != null) {
+                List<Integer> userIds = records.stream()
+                        .map(record -> (Integer) record.get("usuario_id"))
+                        .toList();
+
+                userIds.stream().map(UsersBLL::getUser).forEach(pessoas::add);
+            }
+        }
+        return pessoas;
     }
+
+
 
 
     public static List<Refeicao> getRefeicaoByIdUser(int id) {
