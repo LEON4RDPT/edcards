@@ -33,7 +33,6 @@ import static com.edcards.edcards.Programa.Controllers.ColorController.ColorCont
 import static com.edcards.edcards.Programa.Controllers.ColorController.ColorController.setButtonColorBack;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.Dados.getPessoaAtual;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
-import static sun.security.util.KnownOIDs.Data;
 
 public class VerRefMarcAll {
     private volatile boolean isRunning = true;
