@@ -213,9 +213,7 @@ public class Pos {
             }
         });
 
-        Thread taskThread = new Thread(initialTask);
-        taskThread.setDaemon(true);
-        taskThread.start();
+        new Thread(initialTask).start();
     }
 
 
