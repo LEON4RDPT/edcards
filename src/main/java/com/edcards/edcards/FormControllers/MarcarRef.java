@@ -78,8 +78,9 @@ public class MarcarRef {
         anchorPaneLeft.setPrefHeight(initialHeight);
         anchorPaneRight.setPrefHeight(initialHeight);
 
-        ResizeUtil.resizeAndPosition(buttonDay,anchorPaneLeft,0.1);
-        ResizeUtil.resizeAndPositionButton(buttonDown,anchorPaneRight,0.1);
+        ResizeUtil.resizeAndPosition(buttonDay,anchorPaneLeft,0.4);
+        ResizeUtil.resizeAndPositionMiddleButtons(buttonDown,buttonUp,anchorPaneLeft,0.52);
+        ResizeUtil.resizeAndPositionButton(exit,anchorPaneLeft,0.9);
     }
 
 
@@ -167,8 +168,13 @@ public class MarcarRef {
     }
 
     public void handleButtonDown(ActionEvent actionEvent) {
-        dataAtual = dataAtual.minusDays(1);
-        atualizarTextoData();
+        var val = dataAtual.compareTo(LocalDate.now());
+        if (val != 0) {
+            dataAtual = dataAtual.minusDays(1);
+            atualizarTextoData();
+        }
+
+
     }
 
 
