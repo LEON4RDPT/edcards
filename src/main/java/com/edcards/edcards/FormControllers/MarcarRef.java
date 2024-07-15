@@ -1,6 +1,8 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.RefeicaoBLL;
+import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
 import com.edcards.edcards.Programa.Classes.Refeicao;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
@@ -16,6 +18,8 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +85,8 @@ public class MarcarRef {
     public void handleButtonSair(ActionEvent actionEvent) throws IOException {
         if (FeedBackController.feedbackYesNo("Deseja Sair?", "Confirmação")) {
             setStage("/com/edcards/edcards/Main.fxml");
+            int idUS= GlobalVAR.Dados.getPessoaAtual().getIduser();
+            GlobalVAR.Dados.setPessoaAtual(UsersBLL.getUser(idUS));
         }
     }
 
@@ -132,14 +138,23 @@ public class MarcarRef {
                 FeedBackController.feedbackErro("Você já marcou esta refeição.");
                 return; // Saímos do método sem fazer mais nada
             }
-
-            // Marcar a refeição
-            var sucesso = RefeicaoBLL.marcarRefeicao(refeicaoAtual.getIdRefeicao(), GlobalVAR.Dados.getPessoaAtual().getIduser());
-            if (sucesso != 0) {
-                FeedBackController.feedbackErro("Refeição marcada com sucesso!");
-            } else {
-                FeedBackController.feedbackErro("Erro ao marcar a refeição.");
+            LocalDate dataa;
+            LocalTime time;
+            dataa = LocalDate.now();
+            time= LocalTime.of(10,0);
+            if ((LocalDate.now().isEqual(dataa) && LocalTime.now().isBefore(time) ) || LocalDate.now().isBefore(refeicaoAtual.getDataRefeicao().toLocalDate())){
+                var sucesso = RefeicaoBLL.marcarRefeicao(refeicaoAtual.getIdRefeicao(), GlobalVAR.Dados.getPessoaAtual().getIduser());
+                if (sucesso != 0) {
+                    double saldoo = GlobalVAR.Dados.getPessoaAtual().getSaldo();
+                    FeedBackController.feedbackErro("Refeição marcada com sucesso!");
+                    CartaoBLL.setSaldo(GlobalVAR.Dados.getPessoaAtual().getNumCartao(), (saldoo - 1.46));
+                } else {
+                    FeedBackController.feedbackErro("Erro ao marcar a refeição.");
+                }
+            }else{
+                FeedBackController.feedbackErro("Já não pode marcar refeição");
             }
+
         }
     }
 

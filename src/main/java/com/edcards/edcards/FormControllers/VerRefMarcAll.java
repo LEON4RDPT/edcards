@@ -159,47 +159,8 @@ public class VerRefMarcAll {
         changeTextBox();
 
         setMarc();
-        //todo aguardarCartao(); leoo fix
     }
-    private void aguardarCartao() {
-        //todo
-        nfcExecutar.submit(() -> {
-            while (isRunning) {
-                try {
-                    String idCartao = LerCartao.lerIDCartao("/com/edcards/edcards/Main.fxml");
-                    if (idCartao == null) {
-                        continue; // Skip if no card read
-                    }
 
-                    if (!isProcessingCartao) {
-                        isProcessingCartao = true;
-
-                        int id = CartaoBLL.getIdUserByNFC(idCartao);
-                        Pessoa user = UsersBLL.getUser(id);
-                        if (user == null) {
-                            continue;
-                        }
-
-                        // Fetch the meal for today (assuming there's only one meal per day)
-                        for (var pessoa : listaPessoasMarcToday) {
-                            if (pessoa.getNome().equals(user.getNome())) {
-                                //funcionou!
-                                setText(user);
-                                break;
-                            }
-                        }
-
-                        textAreaInfo.setText("Não há refeição definida para hoje.");
-                    }
-                } catch (Exception e) {
-                    // Handle exceptions (e.g., log the error)
-                    System.err.println("Error reading card or processing meal: " + e.getMessage());
-                } finally {
-                    isProcessingCartao = false;
-                }
-            }
-        });
-    }
     private void setMarc() {
 
         for (var button : btns) {

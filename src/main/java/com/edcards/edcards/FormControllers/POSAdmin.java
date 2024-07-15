@@ -1,7 +1,9 @@
 package com.edcards.edcards.FormControllers;
 
+import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
+import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -128,6 +130,8 @@ public class POSAdmin {
     private void handleButtonSair(ActionEvent actionEvent) throws IOException {
         if (FeedBackController.feedbackYesNo("Deseja Sair?", "Confirmação")) {
             setStage("/com/edcards/edcards/Main.fxml");
+            int idUS= GlobalVAR.Dados.getPessoaAtual().getIduser();
+            GlobalVAR.Dados.setPessoaAtual(UsersBLL.getUser(idUS));
         }
     }
 }

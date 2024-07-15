@@ -3,6 +3,7 @@ package com.edcards.edcards.FormControllers;
 import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.ProdutoBLL;
 import com.edcards.edcards.DataTable.TransacaoBLL;
+import com.edcards.edcards.DataTable.UsersBLL;
 import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
 import com.edcards.edcards.Programa.Classes.Produto;
 import com.edcards.edcards.Programa.Controllers.ArredondarController;
@@ -153,7 +154,7 @@ public class Pos {
         changeTextBox();
 
         //aguardarCARTAO tem de ser o ultimo!!
-        // todo aguardarCartao();
+        aguardarCartao();
 
     }
 
@@ -181,15 +182,11 @@ public class Pos {
 
 
                     //caso nao seja o mesmo funcionario.
-                    if (!idCartao.equals(getPessoaAtual().getNumCartao())) {
                         if (!isProcessingCartao) {
                             isProcessingCartao = true;
                             cartaoCliente(idCartao);
                         }
-                    } else {
-                        FeedBackController.feedbackErro("Erro! Funcionario não pode ser cliente ao mesmo tempo!");
-                        continue;
-                    }
+
                 } catch (Exception ignored) {
                 }
             }
@@ -392,6 +389,7 @@ public class Pos {
         // instance var
         double saldo;
         String nomeCliente;
+        double valorTotal = 0.0;
         // set var
         if (getClientePOS() != null) { //existe!
             saldo = getClientePOS().getSaldo();
@@ -427,15 +425,17 @@ public class Pos {
             String nomeProduto = entry.getKey();
             int quantidade = entry.getValue();
             Produto produto = produtosInfo.get(nomeProduto);
-
             // Adiciona o produto à string de fatura com sua quantidade
             textInputBuilder.append("Produto: ").append(nomeProduto).append("\n");
             textInputBuilder.append("Quantidade: ").append(quantidade).append("\n");
             textInputBuilder.append("Preço por unidade: ").append(produto.getPreco()).append("€\n");
-            textInputBuilder.append("Preço Total: ").append(ArredondarController.roundToTwoDecimalPlaces(produto.getPreco() * quantidade)).append("€\n");
+            textInputBuilder.append("Preço Total: ").append(roundToTwoDecimalPlaces(produto.getPreco() * quantidade)).append("€\n");
             textInputBuilder.append("Iva: ").append(produto.getIva()).append(" %\n");
             textInputBuilder.append("---------------\n");
+            double precoProduto =(produto.getPreco());
+            valorTotal += Double.parseDouble(ArredondarController.roundToTwoDecimalPlaces(precoProduto * quantidade));
         }
+        textInputBuilder.append("Valor Total: ").append(roundToTwoDecimalPlaces(valorTotal)).append("€\n");
         textArea.setText(textInputBuilder.toString());
     }
     @FXML
@@ -464,19 +464,21 @@ public class Pos {
     }
     @FXML
     private void handleButtonClickVoltar() throws IOException {
-        if (FeedBackController.feedbackYesNo("Deseja sair?", "Confirmação")) {
+        if (feedbackYesNo("Deseja sair?", "Confirmação")) {
             shutdown();
             GlobalVAR.Dados.setClientePOS(null);
+            int idUS= getPessoaAtual().getIduser();
+            GlobalVAR.Dados.setPessoaAtual(UsersBLL.getUser(idUS));
             setStage("/com/edcards/edcards/Main.fxml");
 
         }
     }
     @FXML
     private void handleButtonAddSaldo() throws IOException {
-        if (GlobalVAR.Dados.getClientePOS() != null) {
+        if (getClientePOS() != null) {
             setStage("/com/edcards/edcards/CarregarCartao.fxml");
         } else {
-            FeedBackController.feedbackErro("Nenhum Cliente Selecionado");
+            feedbackErro("Nenhum Cliente Selecionado");
 
         }
 

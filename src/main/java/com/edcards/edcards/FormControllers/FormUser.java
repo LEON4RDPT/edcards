@@ -90,6 +90,10 @@ public class FormUser {
     private void initialize() {
         resizeComponents();
         setHiddenButtons();
+        atualizarDadosPessoa();
+    }
+
+    private void atualizarDadosPessoa() {
         Pessoa pessoaA = GlobalVAR.Dados.getPessoaAtual();
         imageUser.setImage(pessoaA.getFoto());
 
@@ -105,6 +109,8 @@ public class FormUser {
             default -> {
             }
         }
+        str.append("\n");
+        str.append("Numero: ").append(pessoaA.getNum());
         textBox.setText(str.toString());
 
     }
