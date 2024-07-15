@@ -3,15 +3,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox fx:id="hboxRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
-      prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.ViewTransacsAll">
+<HBox fx:id="hboxRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.ViewTransacsAll">
     <children>
       <AnchorPane fx:id="leftPane" prefHeight="720.0" prefWidth="267.0">
          <children>
               <Button fx:id="backBtn" layoutX="14.0" layoutY="122.0" mnemonicParsing="false" onAction="#handleButtonBack" prefHeight="63.0" prefWidth="154.0" styleClass="button-1" text="Voltar" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="rightPane" prefHeight="720.0" prefWidth="1178.0">
+      <AnchorPane fx:id="rightPane" prefHeight="720.0" prefWidth="1178.0" styleClass="textarea-medium">
          <children>
               <SplitPane fx:id="splitPane" dividerPositions="0.5" prefHeight="720.0" prefWidth="1280.0">
                   <items>
