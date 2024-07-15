@@ -46,7 +46,7 @@ public class CarregarCartaoController {
     @FXML
     public void initialize() {
 
-        resizeAll();
+        //resizeAll();
 
 
 

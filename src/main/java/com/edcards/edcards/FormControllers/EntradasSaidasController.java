@@ -104,7 +104,7 @@ public class EntradasSaidasController {
             p.setLayoutY(row * (paneHeight + vSpacing));
         }
     }
-    private final long DEBOUNCE_DELAY = 500;
+    private final long DEBOUNCE_DELAY = 1500;
     private final long PROCESSING_DELAY = 1250;
     private long lastReadTime = 0;
     private final Map<String, Long> lastProcessedTime = new HashMap<>();
@@ -124,7 +124,7 @@ public class EntradasSaidasController {
                 String uniqueCardId = getUniqueCardIdentifier(cartao);
                 Long lastProcessed = lastProcessedTime.get(cartao);
                 if (lastProcessed != null && currentTime - lastProcessed < PROCESSING_DELAY) {
-                    continue; // Skip if processed within the delay
+                    continue;
                 }
                 var userByNFC = CartaoBLL.getUserByNFC(cartao);
                 if (userByNFC != null) {

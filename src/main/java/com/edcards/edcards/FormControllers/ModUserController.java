@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import static javafx.application.Platform.runLater;
@@ -104,7 +105,7 @@ public class ModUserController {
                         .map(Enum::name)
                         .collect(Collectors.toList())
         );
-
+        setVerificationControllers();
         ObservableList<String> opcoesAse = FXCollections.observableArrayList(
                 Arrays.stream(AseEnum.values())
                         .map(Enum::name)
@@ -156,6 +157,58 @@ public class ModUserController {
             }
         });
     }
+
+    private void setVerificationControllers() {
+        nameField.addEventFilter(KeyEvent.KEY_TYPED, e -> {
+            if (e.getCharacter().matches("[0-9]")) {
+                e.consume();
+            }
+        });
+
+        turmaField.addEventFilter(KeyEvent.KEY_TYPED, e -> {
+            if (!e.getCharacter().matches("[0-9]")) {
+                e.consume();
+            }
+        });
+
+        numEEfield.addEventFilter(KeyEvent.KEY_TYPED, e -> {
+            if (!e.getCharacter().matches("[0-9]")) {
+                e.consume();
+            }
+        });
+
+        numUtSaudeField.addEventFilter(KeyEvent.KEY_TYPED, e -> {
+            if (!e.getCharacter().matches("[0-9]")) {
+                e.consume();
+            }
+        });
+
+
+        numEEfield.lengthProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue() > oldValue.intValue()) {
+                if (numEEfield.getText().length() > 9) {
+                    numEEfield.setText(numEEfield.getText().substring(0, 9));
+                }
+            }
+        });
+
+//        turmaPicker.lengthProperty().addListener((observable, oldValue, newValue) -> {
+//            if (newValue.intValue() > oldValue.intValue()) {
+//                if (turmaPicker.getText().length() > 6) {
+//                    turmaPicker.setText(turmaPicker.getText().substring(0, 6));
+//                }
+//            }
+//        });
+
+        numUtSaudeField.lengthProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue() > oldValue.intValue()) {
+                if (numUtSaudeField.getText().length() > 9) {
+                    numUtSaudeField.setText(numUtSaudeField.getText().substring(0, 9));
+                }
+            }
+        });
+    }
+
     private void selectUserFromNum(int num) {
         isDiffrentFoto = false;
         pessoaAtual = users.stream()
@@ -307,6 +360,7 @@ public class ModUserController {
         else {
             if (pessoaAtual instanceof Aluno) { //caso seja aluno e QUEIRA TROCAR
                 UsersBLL.deleteAluno(id);
+                UsersBLL.setTipoUser(pessoaAtual.getIduser(), UsuarioEnum.fromDbValue(tipoPicker.getSelectionModel().getSelectedIndex()));
             }
 
 

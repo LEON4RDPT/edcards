@@ -28,7 +28,7 @@ public class UsersBLL {
         if (!isAluno(id)) {
             return;
         }
-        new DefaultBLL("dados_aluno").delete("id", id);
+        new DefaultBLL("dados_aluno").delete("aluno_id", id);
     }
     public static void updatePinForUser(int userId, int newPin) {
         DefaultBLL bll = new DefaultBLL("users"); // Supondo que "users" seja o nome da sua tabela
