@@ -40,7 +40,11 @@ public class Pos {
 
     private volatile boolean isRunning = true;
     private final ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
-    public TextArea textArea;
+
+    @FXML
+    private Button buttonMarcacoes;
+    @FXML
+    private TextArea textArea;
     @FXML
     private GridPane buttonGrid;
     @FXML
@@ -481,5 +485,9 @@ public class Pos {
     @FXML
     private void handleRefeicao() throws IOException {
         setStage("/com/edcards/edcards/AddRef.fxml");
+    }
+
+    @FXML
+    private void handleMarcacoes(ActionEvent actionEvent) {
     }
 }
