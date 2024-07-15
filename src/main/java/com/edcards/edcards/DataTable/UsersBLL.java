@@ -1,6 +1,7 @@
 package com.edcards.edcards.DataTable;
 
 import com.edcards.edcards.DataTable.Settings.DefaultBLL;
+import com.edcards.edcards.FormControllers.ModUserController;
 import com.edcards.edcards.Programa.Classes.Admin;
 import com.edcards.edcards.Programa.Classes.Aluno;
 import com.edcards.edcards.Programa.Classes.Funcionario;
@@ -15,11 +16,11 @@ import javafx.scene.image.Image;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.*;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
+
+import static com.edcards.edcards.Programa.Controllers.GlobalVAR.Dados.pessoaAtual;
 
 
 public class UsersBLL {
@@ -47,6 +48,9 @@ public class UsersBLL {
     //exists done
     public static boolean existe(int id) {
         return new DefaultBLL("usuario").hasRows("id", id);
+    }
+    public static boolean existeCC(String cc) {
+        return new DefaultBLL("usuario").hasRows("cc", cc);
     }
     public static boolean existeN(int num) {
         return new DefaultBLL("usuario").hasRows("num", num);
@@ -163,6 +167,12 @@ public class UsersBLL {
         if (!existe(id)) {
             return;
         }
+        if(existeCC(cc)){
+            FeedBackController.feedbackErro("Numero de Cartão de Cidadão já existente");
+            ModUserController.d =1;
+            return;
+        }
+        ModUserController.d =0;
         new DefaultBLL("usuario").setOne("cc", cc, "id", id);
     }
     public static void setCodigoUser(int id, String novoNfc) {
@@ -199,6 +209,7 @@ public class UsersBLL {
         if (!isAluno(id)) {
             return;
         }
+
         new DefaultBLL("dados_aluno").setOne("turma_num", turma, "aluno_id", id);
     }
 
@@ -208,11 +219,48 @@ public class UsersBLL {
         }
         new DefaultBLL("dados_aluno").setOne("ase", ase.toDbValue(), "aluno_id", id);
     }
-    public static void setNum(int id, int num) {
+    public static void setNum(int id, int num) throws SQLException {
         if (!isAluno(id)) {
             return;
         }
-        new DefaultBLL("usuario").setOneCustom("num", num, "id", id);
+
+        DefaultBLL bll = new DefaultBLL("usuario");
+        int tipoUsuario = (int) bll.getOne("tipo", "id", id);
+
+        // Bloco try-with-resources para a conexão
+        try (Connection conn = bll.getConnection()) {
+
+            // Consulta SQL para verificar se o número já existe em outro aluno
+            String validationSql = "SELECT COUNT(*) FROM usuario WHERE num = ? AND tipo = ? AND id != ?";
+            try (PreparedStatement validationStmt = conn.prepareStatement(validationSql)) {
+
+                validationStmt.setInt(1, num);
+                validationStmt.setInt(2, tipoUsuario); // Verifica apenas alunos
+                validationStmt.setInt(3, id); // Exclui o próprio aluno da verificação
+
+                try (ResultSet rs = validationStmt.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        FeedBackController.feedbackErro("Este número já está em uso por outro Utilizador do mesmo tipo.");
+                        return;
+                    }
+                }
+            }
+            //Segunda validação
+            String validationSql1 = "SELECT COUNT(*) FROM usuario WHERE num = ? AND tipo != ?";
+            try (PreparedStatement validationStmt = conn.prepareStatement(validationSql1)) {
+                validationStmt.setInt(1, num);
+                validationStmt.setInt(2, tipoUsuario);
+
+                try (ResultSet rs = validationStmt.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        FeedBackController.feedbackErro("Este número já está em uso por outro usuário de outro tipo.");
+                        return;
+                    }
+                }
+            }
+
+            bll.setOneCustom("num", num, "id", id);
+        } // A conexão 'conn' é fechada automaticamente aqui
     }
 
 

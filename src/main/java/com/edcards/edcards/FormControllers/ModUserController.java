@@ -26,6 +26,7 @@ import static javafx.application.Platform.runLater;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,6 +39,7 @@ import java.util.stream.Collectors;
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.ImageController.imageToByteArray;
 
 public class ModUserController {
+    public static int d;
     @FXML
     public Label cardNumber;
     public Button readCard;
@@ -249,7 +251,7 @@ public class ModUserController {
     }
 
     @FXML
-    private void handleModUser(ActionEvent actionEvent) throws IOException {
+    private void handleModUser(ActionEvent actionEvent) throws IOException, SQLException {
         if (pessoaAtual == null) {
             FeedBackController.feedbackErro("Erro! Selecione o Utilizador!");
             return;
@@ -368,9 +370,9 @@ public class ModUserController {
             }
             GlobalVAR.Dados.setPessoaAtual(pessoaAtual);
         }
-        if (c == 0){
+        if (c == 0 && d == 0){
             FeedBackController.feedbackConf("Dados Modificados com Sucesso");
-        } else if (c == 1){
+        } else if (c == 1 || d ==1){
             FeedBackController.feedbackErro("Impossivel Modificar Dados");
         }
     }

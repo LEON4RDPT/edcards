@@ -30,7 +30,7 @@ public class GlobalVAR {
 
     public static class Dados {
 
-        private static Pessoa pessoaAtual;
+        public static Pessoa pessoaAtual;
         private static Pessoa clientePOS;
         public static Stage currentStage;
 
