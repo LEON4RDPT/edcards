@@ -35,11 +35,15 @@ import static com.edcards.edcards.Programa.Controllers.GlobalVAR.Dados.getPessoa
 import static com.edcards.edcards.Programa.Controllers.GlobalVAR.StageController.setStage;
 
 public class VerRefMarcAll {
-    private volatile boolean isRunning = true;
+
+    private final boolean isRunning = true;
     private final ExecutorService nfcExecutar = Executors.newSingleThreadExecutor();
     private boolean isProcessingCartao = false;
     public TextArea textArea;
     int idRefeicao;
+
+    @FXML
+    private TextArea textAreaInfo;
     @FXML
     private GridPane buttonGrid;
     @FXML
@@ -249,24 +253,19 @@ public class VerRefMarcAll {
                 return;
             }
             if (clickedButton == btns[i]) {
-                //todo setText(pessoas[i]);
+                setText(pessoas[i]);
                 break;
             }
         }
 
     }
 
-    private void setText(Refeicao ref) {
-        //todo
-        Produto produto = ref.getProduto();
-        StringBuilder str = new StringBuilder();
-        str.append("Nome: \n").append(produto.getNome());
-        str.append("\n");
-        str.append("Data: ").append(ref.getDataRefeicao());
-        textArea.setText(str.toString());
+    private void setText(Pessoa pessoa) {
+        String str = "Nome: " + pessoa.getNome() +
+                "\nMarcou Refeição.";
+        textAreaInfo.setText(str);
 
     }
-
 
     private void resizeAll() {
 
@@ -294,6 +293,7 @@ public class VerRefMarcAll {
         ResizeUtil.resizeAndCenterMiddleButtons(buttonBack, buttonUp, buttonsBack);
         ResizeUtil.resizeAndCenterText(textNum, buttonsBack);
         ResizeUtil.resizeAndPositionTextArea(textArea, leftPane, 0.15);
+        ResizeUtil.resizeAndPositionTextArea(textAreaInfo, leftPane, 0.45);
 
     }
     @FXML
