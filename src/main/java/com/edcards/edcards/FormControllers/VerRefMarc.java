@@ -24,6 +24,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -122,6 +124,15 @@ public class VerRefMarc {
         var id = GlobalVAR.Dados.getPessoaAtual().getIduser();
         listaProdutosDisponiveis.clear();
         listaProdutosDisponiveis.addAll(Objects.requireNonNull(RefeicaoBLL.getRefeicaoByIdUser(id)));
+        Timestamp now = new Timestamp(System.currentTimeMillis());
+        List<Refeicao> refeicoesFiltradas = new ArrayList<>();
+        for (var ref : listaProdutosDisponiveis) {
+            if (!ref.getDataRefeicao().before(now)) {
+                refeicoesFiltradas.add(ref);
+            }
+        }
+
+        listaProdutosDisponiveis = refeicoesFiltradas;
 
         loadbtns();
         resizeAll();
@@ -189,7 +200,7 @@ public class VerRefMarc {
                 break;
             }
         }
-        changeTextBox();
+
     }
 
     private void setText(Refeicao ref) {
@@ -236,18 +247,19 @@ public class VerRefMarc {
         if (buttonPage > 1) {
             buttonPage--;
         }
+        changeTextBox();
     }
     @FXML
     private void buttonUpClick() {
         int num = buttonPage * 24;
         if (num <= listaProdutosDisponiveis.size()) {
             buttonPage++;
-
         }
+        changeTextBox();
     }
 
     private void changeTextBox() {
-
+        textNum.setText(String.valueOf(buttonPage));
     }
 
     @FXML
