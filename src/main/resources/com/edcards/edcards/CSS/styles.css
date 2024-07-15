@@ -16,6 +16,16 @@
     -fx-max-height: 150px; /* Set maximum height */
 }
 
+.textFont-1 {
+    -fx-font-family: "Roobert", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    -fx-font-size: 14;
+}
+
+.textFont-2 {
+    -fx-font-family: "Roobert", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica", "Arial", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    -fx-font-size: 44;
+}
+
 .button-1 {
 
     -fx-appearance: none;

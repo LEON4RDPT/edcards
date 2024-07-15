@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<HBox fx:id="HboxRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0"
-      prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.ControllerPINChange">
+<HBox fx:id="HboxRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@CSS/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.edcards.edcards.FormControllers.ControllerPINChange">
     <children>
       <AnchorPane fx:id="leftPane" prefHeight="720.0" prefWidth="530.0" style="-fx-background-color: gray;">
          <children>
-            <Button fx:id="buttonBack" layoutX="101.0" layoutY="628.0" mnemonicParsing="false" onAction="#handleExit" prefHeight="52.0" prefWidth="159.0" text="Voltar" />
-            <Label fx:id="textLabel" layoutX="105.0" layoutY="41.0" text="TextLabel" textAlignment="CENTER">
+            <Button fx:id="buttonBack" layoutX="101.0" layoutY="615.0" mnemonicParsing="false" onAction="#handleExit" prefHeight="65.0" prefWidth="184.0" styleClass="button-3" text="Voltar" />
+            <Label fx:id="textLabel" layoutX="105.0" layoutY="41.0" styleClass="textFont-2" text="TextLabel" textAlignment="CENTER">
                <font>
                   <Font size="36.0" />
                </font>
