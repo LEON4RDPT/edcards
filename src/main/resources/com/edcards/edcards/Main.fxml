@@ -29,7 +29,7 @@
                 <Button fx:id="exit" layoutX="80.0" layoutY="626.0" mnemonicParsing="false" onAction="#handleExit" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Sair" />
                 <Button fx:id="btnPosAdmin" layoutX="80.0" layoutY="361.0" mnemonicParsing="false" onAction="#handlePosAdmClick" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Painel Admin" />
                 <Button fx:id="btnEntradasSaidas" layoutX="80.0" layoutY="321.0" mnemonicParsing="false" onAction="#handleEntradas" prefHeight="25.0" prefWidth="230" styleClass="button-1" text="Entradas e Saidas" />
-                <TextArea fx:id="textBox" disable="true" layoutX="17.0" layoutY="2.0" prefHeight="197.0" prefWidth="288.0">
+                <TextArea fx:id="textBox" disable="true" layoutX="17.0" layoutY="2.0" prefHeight="175.0" prefWidth="288.0" styleClass="textarea-medium">
                <font>
                   <Font size="24.0" />
                </font></TextArea>

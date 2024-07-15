@@ -81,7 +81,7 @@ public class FormUser {
 
         //labels
 
-        ResizeUtil.resizeAndPositionTextAreaStickWithPane(textBox, rightPane, 0.8,0.26,0.18);
+        ResizeUtil.resizeAndPositionTextAreaStickWithPane(textBox, rightPane, 0.8,0.23,0.16);
     }
 
 

@@ -2,18 +2,31 @@ package com.edcards.edcards.FormControllers;
 
 import com.edcards.edcards.DataTable.CartaoBLL;
 import com.edcards.edcards.DataTable.UsersBLL;
+import com.edcards.edcards.FormControllers.Utils.ResizeUtil;
+import com.edcards.edcards.Programa.Controllers.ArredondarController;
 import com.edcards.edcards.Programa.Controllers.FeedBackController;
 import com.edcards.edcards.Programa.Controllers.GlobalVAR;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
 
 public class CarregarCartaoController {
+
+    public AnchorPane leftPane;
+    public AnchorPane rightPane;
+    public HBox root;
+    public Button buttonLimpar;
+    public Button buttonAddSaldo;
+    @FXML
+    private GridPane grid;
     @FXML
     private Label labelnome;
     @FXML
@@ -25,11 +38,17 @@ public class CarregarCartaoController {
     @FXML
     private ImageView nota5, nota10, nota20, nota50, m1cent, m2cent, m5cent, m10cent, m20cent, m50cent, m1e, m2e;
     @FXML
-    private Text saldoAadicionar;
+    private Label saldoAadicionar;
+
+    private final String saldoAdd = "Saldo a Adicionar";
 
     int pinDb;
     @FXML
     public void initialize() {
+
+        resizeAll();
+
+
 
         labelnome.setText(GlobalVAR.Dados.getClientePOS().getNome());
         labelSaldo.setText(GlobalVAR.Dados.getClientePOS().getSaldo().toString());
@@ -87,6 +106,42 @@ public class CarregarCartaoController {
         }));
     }
 
+    private void resizeAll() {
+        root.widthProperty().addListener((observable, oldValue, newValue) -> {
+            double width = newValue.doubleValue();
+            leftPane.setPrefWidth(width / 4);
+            rightPane.setPrefWidth((width / 4) * 3);
+        });
+
+        root.heightProperty().addListener((observable, oldValue, newValue) -> {
+            double height = newValue.doubleValue();
+            leftPane.setPrefHeight(height);
+            rightPane.setPrefHeight(height);
+        });
+
+        double initialWidth = root.getPrefWidth();
+        leftPane.setPrefWidth(initialWidth / 4);
+        rightPane.setPrefWidth((initialWidth / 4) * 3);
+
+        double initialHeight = root.getPrefHeight();
+        leftPane.setPrefHeight(initialHeight);
+        rightPane.setPrefHeight(initialHeight);
+
+
+
+        //grid
+
+        ResizeUtil.resizeAndPosition(labelnome,leftPane,0.1);
+        ResizeUtil.resizeAndPosition(labelSaldo,leftPane,0.2);
+        ResizeUtil.resizeAndPosition(saldoAadicionar,leftPane,0.3);
+        ResizeUtil.resizeAndPosition(buttonBack,leftPane,0.9);
+
+        //ResizeUtil.resizeAndCenterMiddleButtons(buttonLimpar,buttonAddSaldo);
+        ResizeUtil.resizeAndPosition(buttonAddSaldo,leftPane,0.8);
+        ResizeUtil.resizeAndPosition(buttonLimpar,leftPane,0.7);
+
+    }
+
     @FXML
     public void addSaldo() {
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -117,7 +172,8 @@ public class CarregarCartaoController {
                             return;
                         }
                         if (FeedBackController.feedbackYesNo("Deseja adicionar " + saldoAAdicionar + " €", "Confirmação")) {
-                            CartaoBLL.setSaldo(nfc, saldoAntigo + saldoAAdicionar);
+                            var x = ArredondarController.roundToTwoDecimalPlacesRetDouble(saldoAntigo + saldoAAdicionar);
+                            CartaoBLL.setSaldo(nfc,  + x);
                             FeedBackController.feedbackConf("Saldo adicionado");
                         }
                     }
@@ -130,7 +186,8 @@ public class CarregarCartaoController {
 
     public void refreshSaldo() {
         if (saldoAAdicionar < 1000) {
-            saldoAadicionar.setText(String.format("%.2f€", saldoAAdicionar));
+            var x = ArredondarController.roundToTwoDecimalPlaces(saldoAAdicionar);
+            saldoAadicionar.setText(String.format(saldoAdd + " " + x ));
         } else {
             saldoAadicionar.setText(1000.00 + "€");
             saldoAAdicionar = 1000.00;

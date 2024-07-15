@@ -167,7 +167,9 @@ public class Pos {
 
 
         carregarDados();
-        processCartao();
+        //processCartao();         leoo fixme
+        GlobalVAR.Dados.setClientePOS(UsersBLL.getUser(2));         //leoo fixme
+
 
     }
 
@@ -247,13 +249,6 @@ public class Pos {
         }
     }
 
-    public void shutdown() { //todo
-//        if (!nfcExecutar.isShutdown()) {
-//            isRunning = false;
-//            nfcExecutar.shutdown();
-//
-//        }
-    }
 
 
     private void setChoiceEnum() {
@@ -360,6 +355,8 @@ public class Pos {
         double initialHeight = rootHBox.getPrefHeight();
         leftPane.setPrefHeight(initialHeight);
         rightPane.setPrefHeight(initialHeight);
+
+
         ResizeUtil.resizeAndPositionButton(buttonVoltar, leftPane, 0.95);
         ResizeUtil.resizeAndPositionMiddleButtons(buttonRefeicao,buttonMarcacoes, leftPane, 0.85);
         ResizeUtil.resizeAndPositionButton(buttonRemoveL, leftPane, 0.75);
@@ -506,7 +503,6 @@ public class Pos {
     @FXML
     private void handleButtonClickVoltar() throws IOException {
         if (feedbackYesNo("Deseja sair?", "Confirmação")) {
-            shutdown();
             GlobalVAR.Dados.setClientePOS(null);
             int idUS= getPessoaAtual().getIduser();
             GlobalVAR.Dados.setPessoaAtual(UsersBLL.getUser(idUS));
