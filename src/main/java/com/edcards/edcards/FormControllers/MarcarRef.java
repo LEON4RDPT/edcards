@@ -148,7 +148,7 @@ public class MarcarRef {
                 var sucesso = RefeicaoBLL.marcarRefeicao(refeicaoAtual.getIdRefeicao(), GlobalVAR.Dados.getPessoaAtual().getIduser());
                 if (sucesso != 0) {
                     double saldoo = GlobalVAR.Dados.getPessoaAtual().getSaldo();
-                    FeedBackController.feedbackErro("Refeição marcada com sucesso!");
+                    FeedBackController.feedbackConf("Refeição marcada com sucesso!");
                     CartaoBLL.setSaldo(GlobalVAR.Dados.getPessoaAtual().getNumCartao(), (saldoo - 1.46));
                 } else {
                     FeedBackController.feedbackErro("Erro ao marcar a refeição.");
